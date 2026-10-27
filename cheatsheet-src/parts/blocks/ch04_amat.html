@@ -1,0 +1,5 @@
+<div class="sec"><h3><i>Ch04</i>AMAT · CPU time กับ memory stall</h3><div class="bd">
+<div class="f">AMAT = Hit time + Miss rate × Miss penalty<br>CPU time = (execution cycles + <b>memory stall cycles</b>) × cycle time<br>Stall cycles = (Mem accesses/Program) × Miss rate × Penalty = (Instr/Program) × (Misses/Instr) × Penalty</div>
+<div class="ex"><b>ตย. AMAT</b> clock 1 ns, hit 1 cycle, penalty 20 cycles, miss 5% → 1 + 0.05×20 = <b>2 ns</b> &nbsp;·&nbsp; <b>ตย. CPI</b> base CPI 2, I-miss 2%, D-miss 4%, load/store 36%, penalty 100 → 2 + 0.02×100 + 0.36×0.04×100 = 2 + 2 + 1.44 = <b>5.44</b> → ideal เร็วกว่า 5.44/2 = <b>2.72 เท่า</b></div>
+<ul class="l"><li>Multilevel: L1 เน้น <b>hit time ต่ำ</b> · L2 เน้น <b>miss rate ต่ำ</b> · block L1 &lt; block L2 · ตย. CPI = 1 + 0.02×20 + 0.005×400 = 3.4 (เทียบ 9 ถ้ามี L1 อย่างเดียว → 2.6 เท่า)</li></ul>
+</div></div>

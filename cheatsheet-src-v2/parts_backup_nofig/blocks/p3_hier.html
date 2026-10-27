@@ -1,0 +1,21 @@
+<div class="sec"><h3><i>Ch04</i>Memory Hierarchy · SRAM/DRAM<em>★ จำรูปพีระมิด</em></h3><div class="bd">
+<ul class="l">
+<li><b>บนพีระมิด</b> = เร็ว · แพง · จุน้อย</li>
+<li><b>ล่างพีระมิด</b> = ช้า · ถูก · จุมาก</li>
+<li>เรียง: <b>Register → Cache → Main memory</b></li>
+<li>→ (นอกบอร์ด) Magnetic disk, CD, DVD, Blu-ray → <b>Magnetic tape</b></li>
+<li><b>Magnetic tape</b> = <b>ถูกสุด จุมากสุด</b> (offline) <b class="s">★ อาจารย์ถาม</b></li>
+</ul>
+<table class="t"><tr><th></th><th>ความเร็ว</th><th>ราคา</th><th>หมายเหตุ</th></tr>
+<tr><td><b>SRAM</b></td><td><b>เร็ว</b> 0.5–2.5 ns<br>(~100× DRAM)</td><td>แพง</td><td>transistor ไม่กี่ตัว ใช้เป็น Cache</td></tr>
+<tr><td><b>DRAM</b></td><td>ช้ากว่า 50–70 ns</td><td>ถูก</td><td>เก็บเป็น<b>ประจุใน capacitor</b> ต้องชาร์จ (refresh)</td></tr>
+<tr><td>Disk</td><td>5–20 ms</td><td>ถูกมาก</td><td>เขียนด้วย magnetic</td></tr></table>
+<ul class="l">
+<li><b>RAM</b> = ชั่วคราว (ไฟดับหาย)</li>
+<li><b>ROM</b> = ถาวร (ปิดไฟแล้วอยู่)</li>
+<li><b>Cache</b> คั่นกลาง CPU ↔ Main memory เก็บข้อมูลที่<b>ใช้บ่อย/ซ้ำ</b></li>
+<li><b>L1</b> อยู่ใน CPU · <b>L2/L3</b> อยู่นอก CPU</li>
+<li><b>Hit</b> = เจอใน cache</li>
+<li><b>Miss</b> = ไม่เจอ → ดึงจาก main memory มาใส่ cache แล้วส่ง CPU</li>
+</ul>
+</div></div>

@@ -1,0 +1,16 @@
+<div class="sec"><h3><i>Ch08</i>Parallel · Flynn · GPU<em>★ จับคู่ SISD/SIMD/MIMD</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">Flynn</th><th>ที่อาจารย์อธิบาย</th></tr>
+<tr><td><b>SISD</b></td><td>CPU ปกติ <b>1 คำสั่ง 1 ข้อมูล</b></td></tr>
+<tr><td><b>SIMD</b></td><td><b>vector / array · GPU</b><br>คำสั่งเดียว ข้อมูลหลายตัวพร้อมกัน (เช่นลบ background ภาพ)</td></tr>
+<tr><td><b>MISD</b></td><td>แทบไม่มี</td></tr>
+<tr><td><b>MIMD</b></td><td><b>Shared memory = SMP</b> (PC / Intel)<br><b>Distributed memory = cluster</b></td></tr></table>
+<ul class="l">
+<li><b>Multi-core</b> = duplicate core จริง</li>
+<li><b>Multithread</b> = ซอยงานเป็น thread แล้ว schedule ไม่เพิ่ม hardware</li>
+<li>VM = ซอย hardware ให้ ไม่มี core จริงรองรับ</li>
+<li><b>Shared memory</b>: sync ง่าย แต่ทุก core <b>แย่งกัน</b> access</li>
+<li><b>Distributed</b>: sync ข้อมูลยาก</li>
+<li><b>GPU</b> = SIMD · <b>Fermi</b> = vector-based · <b>Tesla</b> = multiprocessor</li>
+<li><b>DGX</b> ใช้ train AI · ตอนรันโมเดลใช้การ์ดทั่วไป (PCIe) ได้</li>
+</ul>
+</div></div>

@@ -1,0 +1,15 @@
+<div class="sec"><h3><i>Ch04</i>คำนวณบิต Tag/Index/Offset<em>เสริม</em></h3><div class="bd">
+<div class="f">Offset = log₂(bytes ต่อ block)<br>Index = log₂(จำนวน block)<br><b>Tag = บิต address − Index − Offset</b></div>
+<div class="ex x"><b>ตย.</b> 4 KB direct-mapped, 16 B/block, address 32 บิต
+<ul class="l">
+<li>4096 / 16 = <b>256 block</b></li>
+<li>Index 8 · Offset 4 · Tag 32 − 8 − 4 = <b>20</b></li>
+<li>ถ้า <b>2-way</b>: sets = 128 → Index 7 · Tag <b>21</b></li>
+</ul></div>
+<ul class="l x">
+<li>Hit ratio = hits / accesses</li>
+<li>Miss ratio = 1 − hit ratio</li>
+<li>Block ใหญ่ขึ้น: miss rate ลด (spatial locality)</li>
+<li>แต่ cache เท่าเดิมมี block น้อยลง แย่งกันมากขึ้น miss penalty สูงขึ้น → <b>ใหญ่ ≠ ดีเสมอ</b></li>
+</ul>
+</div></div>

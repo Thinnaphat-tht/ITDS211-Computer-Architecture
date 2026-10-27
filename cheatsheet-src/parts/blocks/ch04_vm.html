@@ -1,0 +1,6 @@
+<div class="sec"><h3><i>Ch04</i>Virtual Memory · Coherence<em>ท้ายบท (สไลด์)</em></h3><div class="bd"><ul class="l">
+<li><b>Virtual memory</b> = ใช้ main memory เป็น “cache” ของ disk · แต่ละโปรแกรมมี <b>virtual address space</b> ส่วนตัว (ป้องกันกัน) · CPU+OS แปล virtual → physical · block = <b>page</b> (เช่น 4 KB) · miss = <b>page fault</b> (ช้ามาก OS จัดการ)</li>
+<li><b>Page table</b> (index ด้วย virtual page number; page table register ใน CPU) เก็บ physical page number + status (referenced, dirty) · วางแบบ <b>fully associative</b> · LRU ประมาณด้วย reference bit · เขียนแบบ <b>write-back</b> เท่านั้น (dirty bit)</li>
+<li><b>TLB</b> (Translation Look-aside Buffer) = cache ของ page table · 16–512 PTE · hit 0.5–1 cycle · miss 10–100 cycle · miss rate 0.01–1%</li>
+<li><b>Cache coherence</b> (หลาย core): <b>snooping</b> (ทุก cache ดัก bus; invalidate ก่อนเขียน) vs <b>directory-based</b> · <b>Virtual machine</b>: host/VMM จำลอง guest OS (VMware, VM/370)</li>
+</ul></div></div>

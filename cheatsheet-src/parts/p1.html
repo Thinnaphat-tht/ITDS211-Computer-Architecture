@@ -1,0 +1,102 @@
+<section class="page">
+<div class="ph"><b>ITDS211 · หน้า 1/4 · Ch01–03 Basic · Bus · Interrupt · Data Rep</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง (ไม่มีในสไลด์/ซับ)</span></div>
+<div class="cols">
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch01</i>พื้นฐาน<em>Basic Computer Components</em></h3><div class="bd"><ul class="l">
+<li><b>Architecture</b> = สิ่งที่ programmer เห็น (ISA, addressing mode, data type) “อะไร” · <b>Organization</b> = ตัว implement (cache, pipeline, bus width, clock) “อย่างไร”</li>
+<li>องค์ประกอบ: CPU (<b>Control Unit</b> · <b>ALU</b> · <b>Registers</b> · interconnect), Memory, Storage, I/O, Motherboard, PSU, GPU</li>
+<li><b class="s">★</b> <b>Machine cycle</b>: Fetch → Decode → Execute → Store (Write back) — อาจารย์ย้ำเรื่อง <b>ลำดับ</b></li>
+<li><b>PC</b> = address ของคำสั่งถัดไป (+ หลัง fetch) · <b>IR</b> = คำสั่งที่ fetch มา · <b>Status/Flag</b> = Overflow, Negative</li>
+<li><b>Multi-core</b> = hardware จริง ทำงานขนาน · <b>Multi-thread</b> = แบ่งงานเสมือนบน core (Hyper-Threading / SMT)</li>
+<li><b>RISC</b> = Reduced Instruction Set (Decoder ถอดตรง) · <b>CISC</b> = Complex (microprogram mPC/mPM) · pipeline ใช้ได้ทั้งคู่</li>
+<li>Cloud: <b>SaaS</b> ให้ซอฟต์แวร์ · <b>PaaS</b> ให้แพลตฟอร์มรัน app · <b>IaaS</b> ให้ VM/ฮาร์ดแวร์ผ่าน API</li>
+<li>8 Great Ideas: Moore's Law · Abstraction · Common case fast · Parallelism · Pipelining · Prediction · Hierarchy of memories · Dependability via redundancy</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch01</i>Performance · CPU time · CPI<em>★ ข้อคำนวณ</em></h3><div class="bd">
+<div class="f">Performance = 1 / Execution time<br>X เร็วกว่า Y n เท่า: Perf<sub>X</sub>/Perf<sub>Y</sub> = Time<sub>Y</sub>/Time<sub>X</sub> = n &nbsp;(ตย. A 10 s, B 15 s → 15/10 = <b>1.5</b>)</div>
+<div class="f">CPU time = Clock cycles × Cycle time = Clock cycles / Clock rate<br>Clock cycles = IC × CPI ⇒ <b>CPU time = IC × CPI × Cycle time = IC × CPI / Clock rate</b></div>
+<ul class="l">
+<li>Clock rate = 1/period (250 ps = 0.25 ns · 4 GHz = 4×10⁹ Hz) · Elapsed time (รวม I/O, OS, idle) ≠ CPU time (user + system)</li>
+<li>IC ← โปรแกรม/ISA/compiler · CPI ← hardware · CPI เฉลี่ย ← instruction mix = Σ(CPI<sub>i</sub> × IC<sub>i</sub>/IC)</li>
+</ul>
+<div class="ex"><b>ตย. CPI (สไลด์)</b> ISA เดียวกัน A: 250 ps, CPI 2.0 · B: 500 ps, CPI 1.2 → A = I×2.0×250 = <b>500I</b> ps · B = I×1.2×500 = <b>600I</b> ps → <b>A เร็วกว่า 1.2 เท่า</b> (IC ตัดทิ้ง ถ้าไม่รู้ค่าติดตัวแปรไว้)</div>
+<div class="ex"><b>ตย. Clock (สไลด์)</b> A: 2 GHz, 10 s · B ต้องเสร็จใน 6 s แต่ใช้ cycles มากกว่า 1.2 เท่า → Clock rate<sub>B</sub> = 1.2×(10×2×10⁹)/6 = <b>4 GHz</b></div>
+<div class="tr">⚠ “เร็วกว่า” = ใช้เวลา<b>น้อยกว่า</b> · อ่านโจทย์ดี ๆ ว่าใครหารใคร (บัญญัติไตรยางศ์)</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Model · Bus · Arbitration<em>★ Bus Arbitration 4 แบบ</em></h3><div class="bd">
+<table class="t"><tr><th style="width:50%">Von Neumann</th><th>Harvard</th></tr>
+<tr><td>Memory <b>เดียว</b> เก็บคำสั่ง+ข้อมูล (stored program) · เข้าถึงแบบ sequential</td><td>Instruction memory <b>แยก</b> Data memory (+bus แยก) ตัดคอขวด แต่ซับซ้อน · DSP/Microcontroller · Hybrid = Harvard ที่ L1, Von Neumann ที่ main memory</td></tr></table>
+<ul class="l">
+<li>Bus: <b>Address</b> (ตำแหน่ง Memory/I/O) · <b>Data</b> (ข้อมูล) · <b>Control</b> (ทิศทาง/ใครใช้ bus ได้เมื่อไร, เปิด-ปิด)</li>
+<li><b>Point-to-point</b> = แยกทุกเส้น ง่ายแต่<b>เปลืองสาย</b> · <b>Multipoint</b> = shared ประหยัด (ไฮเวย์+ซอย) แต่ต้องมี <b>protocol</b></li>
+</ul>
+<table class="t"><tr><th style="width:27%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>Daisy chain</b></td><td>ส่งสิทธิ์ตาม <b>priority</b> สูง→ต่ำ (CPU สูงสุด) นิยมสุด · ข้อเสีย: priority ต่ำ (I/O) แทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>arbitration circuit กลาง</b></td></tr>
+<tr><td><b>Distributed self-detection</b></td><td>ไม่มีตัวกลาง อุปกรณ์<b>ตัดสินกันเอง</b> เช็กว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>Distributed collision-detection</b></td><td>ส่งได้เลย ถ้าข้อมูล<b>ชน</b>เสียหาย → <b>ส่งซ้ำ</b> (retransmit)</td></tr></table>
+<div class="tr">⚠ ตัวที่เลือกว่าใครได้ใช้ bus = <b>Bus Arbitrator / arbitration circuit</b> (ไม่ใช่ Control Unit · ไม่ใช่ control line)</div>
+<ul class="l"><li><b>Hardware</b> (วงจรเฉพาะงาน เร็ว แต่ตายตัว) vs <b>Software</b> (instruction codes + interpreter ยืดหยุ่น = ร้านตามสั่ง)</li></ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Register · Instruction cycle<em>Program Execution</em></h3><div class="bd">
+<ul class="l">
+<li><b>MAR</b> = address ใน memory ที่จะอ่าน/เขียน · <b>MBR</b> = data ที่อ่านมา/จะเขียน · <b>IOAR</b> = address อุปกรณ์ I/O · <b>IOBR</b> = data แลกกับ I/O · <b>AC</b> = accumulator</li>
+<li>Cycle: Fetch → Decode (instruction operation decoding) → Operand address calc → Operand fetch → Data operation (execute) → Operand store → <b>Interrupt check</b> (ไม่มี → fetch คำสั่งถัดไป · มี → ทำ ISR)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> คำสั่ง 16 บิต = <b>opcode 4 บิต + address 12 บิต</b> · <code>0001</code> Load AC←M · <code>0010</code> Store AC→M · <code>0101</code> Add M ใส่ AC<br>Mem: 300:<code>1940</code> 301:<code>5941</code> 302:<code>2941</code> · 940:<code>0003</code> 941:<code>0002</code><br>PC=300 → IR=1940 (Load, addr 940) → AC=0003 → PC=301, IR=5941 → AC=3+2=<b>0005</b> → PC=302, IR=2941 → M[941]=0005</div>
+</div></div>
+
+</div>
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ ขั้นตอน “จำไว้เลย”</em></h3><div class="bd">
+<ul class="l">
+<li>Interrupt = ขัดจังหวะการทำงานแบบ sequence ของ CPU · ชนิด: <b>Program</b> (overflow, หาร 0, illegal instr) · <b>Timer</b> · <b>I/O</b> (เสร็จ/ขอบริการ/error) · <b>Hardware failure</b> (ไฟดับ, parity) · Hardware vs Software interrupt (system call)</li>
+</ul>
+<ol class="n">
+<li><b>เซฟ</b> context (PC/PSW, register, ตัวแปร) ไว้ก่อน</li>
+<li>ดู <b>Interrupt Vector table</b> หา <b>ISR address</b> (ใครเป็นคนเรียก)</li>
+<li>ใส่ address นั้นใน <b>PC</b> → กระโดดไปทำ <b>ISR</b> (Interrupt Service Routine)</li>
+<li>เสร็จ → <b>Restore</b> ค่าที่เซฟ แล้วกลับไปทำงานเดิมต่อ</li>
+</ol>
+<ul class="l">
+<li><b>Sequential</b>: ทำทีละตัวตามลำดับ (เกิด→ทำ→กลับ→เกิดอีก) · <b>Nested</b>: ระหว่าง ISR ของ X มี Y ซ้อน → เซฟสถานะ X → ทำ Y → คืน X → ทำ X ต่อ → return · <b>ซ้อนได้กี่ชั้นขึ้นกับ CPU</b> (จำนวนชุด register ที่เก็บ context)</li>
+<li>มักปิด interrupt ระหว่างทำ ISR (<b>maskable</b> ปิดได้ · <b>nonmaskable</b> ต้องทำ) · interrupt ต้องรอ <b>instruction cycle จบ</b></li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch03</i>Data Representation<em>★ “จะมีข้อนี้แน่ๆ” ต้องทำได้เต็ม</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%"></th><th>Sign-Magnitude</th><th>1's complement</th><th>2's complement</th></tr>
+<tr><td><b>ค่าลบ</b></td><td>กลับ <b>sign bit</b> (0=+, 1=−) ที่เหลือ = magnitude</td><td>กลับ<b>ทุกบิต</b> = (2ⁿ−1)−m</td><td>กลับทุกบิต <b>+1</b> = 2ⁿ−m</td></tr>
+<tr><td><b>ช่วง 8 บิต</b></td><td class="c">−127…+127</td><td class="c">−127…+127</td><td class="c"><b>−128…+127</b></td></tr>
+<tr><td><b>ศูนย์</b></td><td>2 ตัว 0000 0000 / 1000 0000</td><td>2 ตัว 0000 0000 / 1111 1111</td><td><b>ตัวเดียว</b> (ช่วงไม่สมมาตร)</td></tr>
+<tr><td><b>บวก/ลบ</b></td><td>บวกเลขลบ ≠ ลบ ต้องวงจรต่างหาก</td><td>มี carry-out → <b>บวกกลับ LSB</b></td><td>ไม่ต้อง end-around · ลบ = บวก 2's แล้ว<b>ทิ้ง carry-out</b> · ไม่ต้องวงจรลบ</td></tr></table>
+<ul class="l">
+<li>n บิต: unsigned 0…2ⁿ−1 · 2's: <b>−2ⁿ⁻¹…2ⁿ⁻¹−1</b> · sign extension: ขยายด้วยบิต sign (lb) / zero-extend (lbu) · สูตร r's comp = rⁿ−m ; (r−1)'s = (rⁿ−1)−m (ตย. m=382, n=3: 9's = <b>617</b>, 10's = <b>618</b>)</li>
+<li><b>Shortcut 2's</b>: จาก LSB หา <b>1 ตัวแรก</b> คงไว้ แล้วกลับบิตทางซ้ายทั้งหมด · ตย. 0101011 → 1010101</li>
+<li>Sign-Magnitude บวก/ลบ †: sign เหมือนกัน → บวก magnitude (carry-out = overflow) · sign ต่าง → ลบตัวเล็กจากตัวใหญ่ ใช้ sign ตัวใหญ่ · A−B = A+(−B) กลับ sign B</li>
+<li>Overflow (2's) †: (+)+(+) ได้ลบ หรือ (−)+(−) ได้บวก · ตย. 0111 1111 + 1 = 1000 0000</li>
+<li><b>Bias (excess-B)</b>: ค่า = unsigned − B · bias 127: 0000 0000 = −127 · 0111 1111 = 0 · 1000 0000 = +1 · 1111 1111 = +128</li>
+</ul>
+<div class="ex"><b>ตย. 8 บิต</b> +25 = 0001 1001 · −25: SM <code>1001 1001</code> · 1's <code>1110 0110</code> · 2's <code>1110 0111</code><br>
+2's: 25 + (−12) = 0001 1001 + 1111 0100 = 1|<b>0000 1101</b> (=13, ทิ้ง carry) · สไลด์: 6 + (−5) 4 บิต = 0110 + 1011 = 1|<b>0001</b> · 1's: 6 + (−3) 3 บิต = 110 + 100 = 1|010 → +1 = <b>011</b></div>
+<div class="sec2"><b>IEEE 754 ★</b> &nbsp;<span class="f2">N = (−1)<sup>S</sup> × [1.m] × 2<sup>E−127</sup> &nbsp; E = e + 127 (เก็บค่า E)</span>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:8;background:#e4edff">Exponent 8</div><div style="flex:23;background:#fff0d6">Mantissa 23 (bit 22–0)</div></div>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:11;background:#e4edff">Exponent 11</div><div style="flex:52;background:#fff0d6">Mantissa 52 (bit 51–0)</div></div></div>
+<ul class="l">
+<li><b>Single 32 บิต: exponent 8 · mantissa 23 · Double 64 บิต: exponent 11 · mantissa 52</b> (อาจารย์ถาม) · double bias = 1023 † · E เก็บ 1–254 (0 และ 255 สงวน: ±∞, NaN) → e = −126…+127 · max ≈ 2×2¹²⁷ = 2¹²⁸</li>
+<li>ตย. <b>17.15</b> = 10001.0010011₂ = 1.00010010011×2⁴ → E = 4+127 = <b>131 = 1000 0011</b> · S = 0 · m = 0001 0010 011… · ตย. † −0.75 = −1.1₂×2⁻¹ → S=1, E=126=01111110, m=100… = BF40 0000₁₆</li>
+<li>เศษส่วน: 101.1101₂ = 4+1+0.5+0.25+0.0625 = <b>5.8125</b> · 5.8125 → 101 และ 0.8125×2 ซ้ำ (1.625→1.25→0.5→1.0) = .1101</li>
+<li><b>Endian ★</b>: <b>Little</b> (RISC-V) = byte <b>LSB</b> อยู่ address ต่ำสุดของ word · <b>Big</b> = <b>MSB</b> อยู่ address ต่ำสุด · memory เรียกทีละ <b>byte (8 บิต)</b> · ASCII 128 ตัว (95 graphic+33 control) · Latin-1 256 · Unicode 32 บิต · UTF-8/16 ยาวไม่คงที่</li>
+</ul>
+</div></div>
+
+</div>
+</div>
+</section>

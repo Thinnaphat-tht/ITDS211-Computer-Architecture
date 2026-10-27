@@ -1,0 +1,8 @@
+<div class="sec"><h3><i>Ch04</i>Dependability · Hamming/ECC<em>ท้ายบท (สไลด์)</em></h3><div class="bd"><ul class="l">
+<li><b>Reliability</b> = MTTF (เวลาเฉลี่ยก่อนเสีย) · <b>MTTR</b> = เวลาซ่อม (service interruption) · <b>MTBF = MTTF + MTTR</b></li>
+</ul>
+<div class="f">Availability = MTTF / (MTTF + MTTR) &nbsp;· เพิ่มได้โดย ↑MTTF (fault avoidance/tolerance/forecasting) หรือ ↓MTTR</div>
+<ul class="l">
+<li><b>Hamming distance</b> = จำนวนบิตที่ต่างกัน · distance <b>2</b> = ตรวจ error 1 บิต (parity) · distance <b>3</b> = <b>แก้</b> 1 บิต + ตรวจ 2 บิต · parity bit อยู่ตำแหน่งที่เป็นกำลังของ 2 (1,2,4,8…) · ถอดรหัส: parity ทั้งหมด 0000 = ไม่ error · 1010 = บิตที่ 10 พลิก</li>
+<li><b>SEC/DEC</b> = เพิ่ม parity ทั้งคำ (distance 4): H คู่ &amp; p<sub>n</sub> คู่ = ปกติ · H คี่ &amp; p<sub>n</sub> คี่ = แก้ได้ 1 บิต · H คู่ &amp; p<sub>n</sub> คี่ = error ที่ p<sub>n</sub> · H คี่ &amp; p<sub>n</sub> คู่ = error 2 บิต · <b>ECC DRAM</b> = 8 บิตป้องกันทุก 64 บิต</li>
+</ul></div></div>

@@ -1,0 +1,12 @@
+<div class="sec"><h3><i>Ch06</i>SSD · Optical · Tape<em>★ SSD ดีกว่า HDD (แต่แพง) · tape ถูกสุด</em></h3><div class="bd">
+<ul class="l">
+<li><b>SSD vs HDD</b>: SSD <b>เร็วกว่า</b> (IOPS สูง, latency ต่ำ) · <b>ประหยัดไฟ</b> · ทน/เงียบ/เย็น · อายุยาว แต่ <b>แพงกว่า/GB</b> · ปัญหา: เขียนช้าลง (ต้องอ่านทั้ง block → ลบ → เขียนกลับ) · flash <b>สึกหรอ</b> ตามจำนวนเขียน → <b>wear leveling</b>, bad-block mgmt, cache รวมเขียน · ภายในมี <b>SSD controller</b> (addressing, buffer, ECC)</li>
+<li>สไลด์ Table 6.5: copy/write <b>200–550</b> vs 50–120 Mbps · ไฟ 2–3 W vs 6–7 W · ≈ $0.50 vs $0.15 /GB</li>
+</ul>
+<table class="t"><tr><th style="width:15%">Optical</th><th>ข้อมูล</th></tr>
+<tr><td><b>CD</b></td><td>12 cm · CD-ROM ≈ 650–682 MB · laser <b>780 nm</b> · CD-ROM อ่านอย่างเดียว (pit บน polycarbonate) · CD-R เขียนครั้งเดียว (dye) · CD-RW เขียนซ้ำ (phase change: amorphous สะท้อนน้อย / crystalline สะท้อนดี)</td></tr>
+<tr><td><b>DVD</b></td><td>laser <b>650 nm</b> · 2 หน้า 2 ชั้น สูงสุด <b>17 GB</b> · มี DVD-R/RW/RAM</td></tr>
+<tr><td><b>Blu-ray</b></td><td>laser <b>405 nm</b> (blue-violet) · 1 ชั้น 1 หน้า <b>25 GB</b></td></tr></table>
+<div class="tr">⚠ <b>CD vs DVD ★</b>: ทางกายภาพแผ่นกลมเหมือนกัน ต่างที่ <b>sector/pit ของ DVD เล็กกว่า → density มากกว่า → เก็บได้มากกว่า</b> (sector CD ใหญ่/ห่างกว่า)</div>
+<ul class="l"><li><b>Magnetic tape ★</b>: <b>ถูกที่สุด · จุมากสุดในพีระมิด · offline</b> storage (big data center) · เข้าถึง<b>แบบ serial</b> · track ขนานตามความยาว · serpentine recording · LTO-1 (2000) 200 GB → LTO-8 32 TB (compressed)</li></ul>
+</div></div>

@@ -1,0 +1,17 @@
+<div class="sec"><h3><i>Ch05</i>I/O Module · เทคนิค 3 แบบ<em>★ DMA เร็วสุด / นิยมใช้ปัจจุบัน</em></h3><div class="bd">
+<ul class="l">
+<li><b>External device</b> 3 กลุ่ม: Human readable (จอ/คีย์บอร์ด) · Machine readable (disk/sensor) · Communication · ประกอบด้วย Control logic + <b>Buffer</b> + <b>Transducer</b> (แปลง digital↔analog) · สัญญาณ Control / Status / Data</li>
+<li><b>I/O module 5 หน้าที่</b>: ① Control &amp; timing ② Processor communication (ถอดรหัส command, ส่งข้อมูล, รายงาน status, จำ address) ③ Device communication ④ <b>Data buffering</b> (memory เร็ว I/O ช้า → balance speed) ⑤ Error detection</li>
+<li><b>I/O command 4</b>: <b>Control</b> (สั่งให้ทำ) · <b>Test</b> (ดู status) · <b>Read</b> (ดึงข้อมูลจากอุปกรณ์เข้า buffer) · <b>Write</b> (เอาข้อมูลจาก data bus ส่งอุปกรณ์) · สายของ module: Address · Control · Data</li>
+<li><b>I/O addressing</b>: <b>Memory-mapped</b> = address space เดียวกับ memory ใช้คำสั่ง memory ได้หมด ไม่มีคำสั่ง I/O พิเศษ · <b>Isolated</b> = แยก space ต้องมี I/O/memory select line + คำสั่ง I/O เฉพาะ (จำกัด)</li>
+</ul>
+<div class="ex"><b>Flow (สไลด์)</b> <b>Programmed</b>: Issue Read → Read status → Check (ไม่พร้อม = <b>วนกลับ</b>) → Read word → Write ลง memory → Done? (ยัง = วนอีก) · <b>Interrupt-driven</b>: Issue Read → <b>ทำงานอื่น</b> → รอ interrupt จึง Read status/word · <b>DMA</b>: Issue Read-block ให้ DMA → <b>ทำงานอื่นทั้งหมด</b> → DMA interrupt เมื่อเสร็จ</div>
+<table class="t"><tr><th style="width:15%"></th><th>1 Programmed I/O</th><th>2 Interrupt-driven</th><th>3 DMA ★</th></tr>
+<tr><td><b>CPU ทำ</b></td><td>สั่งแล้ว <b>รอ</b> (วนเช็ก status) ไม่มี interrupt · ง่ายสุด</td><td>สั่งแล้ว<b>ไปทำงานอื่น</b> · I/O <b>interrupt</b> เมื่อพร้อม</td><td>ตั้งค่า block command แล้วไปทำงานอื่น · DMA interrupt ตอนจบ</td></tr>
+<tr><td><b>ข้อมูลผ่าน</b></td><td>I/O → <b>CPU</b> → memory</td><td>I/O → <b>CPU</b> → memory</td><td>I/O ↔ memory <b>ตรง</b> (CPU ไม่ยุ่ง)</td></tr>
+<tr><td><b>ข้อเสีย</b></td><td>เสียเวลา CPU · rate จำกัดด้วย CPU</td><td>CPU ยังผูกกับการโอน · rate จำกัดด้วย CPU</td><td>ต้องมี DMA controller · flow ฝั่ง CPU ง่ายสุด</td></tr></table>
+<ul class="l">
+<li><b>ทำไม DMA เร็วสุด ★</b>: คุยกับ memory ได้<b>ทุก slot ของ processor cycle</b> (breakpoint ก่อน fetch / หลัง decode / fetch operand / execute / store) ผ่าน hardware bus ตรง · ส่วน <b>interrupt ต้องรอ instruction cycle จบ</b> (เช่น pipeline 4–5 stage ต้องรอครบ) · DMA module: Data count · Data register · Address register · Control logic</li>
+<li>DMA config 3 แบบ: single-bus <b>detached</b> DMA · single-bus <b>integrated DMA-I/O</b> · <b>I/O bus</b> · ตย. chip 8237 (HRQ/HLDA, DREQ/DACK) · Direct Cache Access (DCA/DDIO) ใช้กับ network 10–100 Gbps</li>
+<li>วิวัฒนาการ I/O 6 ขั้น: CPU คุมตรง → controller + programmed I/O → interrupt → DMA → <b>I/O channel</b> (module เป็น processor เฉพาะ) → <b>I/O processor</b> (มี local memory)</li>
+</ul></div></div>

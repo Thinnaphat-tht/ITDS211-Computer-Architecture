@@ -1,0 +1,21 @@
+<div class="sec"><h3><i>Ch04</i>Direct-Mapped Cache<em>★ ข้อคำนวณ hit/miss</em></h3><div class="bd">
+<div class="f">Cache index = (Block address) <b>mod</b> (#Blocks)<br>→ ใช้ <b>บิตล่าง</b> เป็น index</div>
+<div class="f">Address = <b>[ Tag | Index | Offset ]</b></div>
+<ul class="l">
+<li>เช็ก hit: ดู <b>Index</b> → เทียบ <b>Tag</b> → ดู <b>Valid (V) = Y</b></li>
+<li>เริ่มต้น cache <b>ว่าง (V = N)</b></li>
+<li><b>ครั้งแรกของทุก address = Miss แน่นอน</b></li>
+<li>ข้อเสีย: หลาย address ชิงช่อง index เดียวกัน</li>
+</ul>
+<div class="ex"><b>★ ตย. สไลด์</b> cache 8 block · Tag = 2 บิตบน · Index = 3 บิตล่าง
+<table class="t" style="margin-top:.6mm"><tr><th>ขอ</th><th class="c">22</th><th class="c">26</th><th class="c">22</th><th class="c">26</th><th class="c">16</th><th class="c">3</th><th class="c">16</th><th class="c">18</th></tr>
+<tr><td>Tag Idx</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 000</td><td class="c">00 011</td><td class="c">10 000</td><td class="c">10 010</td></tr>
+<tr><td><b>ผล</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c"><b>Hit</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c">Miss*</td></tr></table>
+<span class="nt">*18: index 010 มี tag 11 แต่ขอ tag 10 → <b>tag ไม่ตรง = Miss</b> แล้วเขียนทับ</span></div>
+<div class="ex"><b>★ ตย. บล็อกใหญ่</b> 64 block × 16 B/block, address <b>1200</b>
+<ul class="l">
+<li>Block address = ⌊1200 / 16⌋ = <b>75</b></li>
+<li>Block number = 75 mod 64 = <b>11</b></li>
+</ul></div>
+<div class="f2" style="margin:.5mm 0">Block address = ⌊address / bytes per block⌋<br>Block number = Block address mod #blocks</div>
+</div></div>

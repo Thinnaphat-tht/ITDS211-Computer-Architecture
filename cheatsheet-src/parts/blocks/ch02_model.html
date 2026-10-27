@@ -1,0 +1,15 @@
+<div class="sec"><h3><i>Ch02</i>Model · Bus · Arbitration<em>★ Bus Arbitration 4 แบบ</em></h3><div class="bd">
+<table class="t"><tr><th style="width:50%">Von Neumann</th><th>Harvard</th></tr>
+<tr><td>Memory <b>เดียว</b> เก็บคำสั่ง+ข้อมูล (stored program) · เข้าถึงแบบ sequential</td><td>Instruction memory <b>แยก</b> Data memory (+bus แยก) ตัดคอขวด แต่ซับซ้อน · DSP/Microcontroller · Hybrid = Harvard ที่ L1, Von Neumann ที่ main memory</td></tr></table>
+<ul class="l">
+<li>Bus: <b>Address</b> (ตำแหน่ง Memory/I/O) · <b>Data</b> (ข้อมูล) · <b>Control</b> (ทิศทาง/ใครใช้ bus ได้เมื่อไร, เปิด-ปิด)</li>
+<li><b>Point-to-point</b> = แยกทุกเส้น ง่ายแต่<b>เปลืองสาย</b> · <b>Multipoint</b> = shared ประหยัด (ไฮเวย์+ซอย) แต่ต้องมี <b>protocol</b></li>
+</ul>
+<table class="t"><tr><th style="width:27%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>Daisy chain</b></td><td>ส่งสิทธิ์ตาม <b>priority</b> สูง→ต่ำ (CPU สูงสุด) นิยมสุด · ข้อเสีย: priority ต่ำ (I/O) แทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>arbitration circuit กลาง</b></td></tr>
+<tr><td><b>Distributed self-detection</b></td><td>ไม่มีตัวกลาง อุปกรณ์<b>ตัดสินกันเอง</b> เช็กว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>Distributed collision-detection</b></td><td>ส่งได้เลย ถ้าข้อมูล<b>ชน</b>เสียหาย → <b>ส่งซ้ำ</b> (retransmit)</td></tr></table>
+<div class="tr">⚠ ตัวที่เลือกว่าใครได้ใช้ bus = <b>Bus Arbitrator / arbitration circuit</b> (ไม่ใช่ Control Unit · ไม่ใช่ control line)</div>
+<ul class="l"><li><b>Hardware</b> (วงจรเฉพาะงาน เร็ว แต่ตายตัว) vs <b>Software</b> (instruction codes + interpreter ยืดหยุ่น = ร้านตามสั่ง)</li></ul>
+</div></div>

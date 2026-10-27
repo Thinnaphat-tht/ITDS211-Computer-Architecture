@@ -1,0 +1,15 @@
+<div class="sec"><h3><i>Ch04</i>Associative · Write Policy<em>★ ถูกถาม</em></h3><div class="bd">
+<ul class="l">
+<li><b>Set-associative</b>: index เดียวเก็บได้หลายชุด</li>
+<li><b>2-way</b> เก็บ 2 · <b>4-way</b> เก็บ 4 · <b>8-way</b> เก็บ 8</li>
+<li>แค่เพิ่มที่เก็บต่อ index → โอกาส hit มากขึ้น</li>
+<li><b>★ Fully associative = miss น้อยสุด</b> (hit มากสุด)</li>
+<li>Miss rate: <b>1-way 10.3% · 2-way 8.6% · 4-way 8.3% · 8-way 8.1%</b></li>
+<li>ดีขึ้นแต่ได้น้อยลงเรื่อยๆ</li>
+</ul>
+<table class="t"><tr><th style="width:30%">Write policy</th><th>ความหมาย</th></tr>
+<tr><td><b>Write-through</b></td><td>เขียนลง cache แล้วส่ง CPU เลย</td></tr>
+<tr><td><b>Write-back</b></td><td>ส่ง CPU <b>ก่อน</b> แล้วค่อยอัปเดต cache ทีหลัง</td></tr>
+<tr><td><b>Write-allocate</b></td><td>อีกทางเลือกของ write-through</td></tr></table>
+<span class="nt">ปัจจุบัน memory เร็วขึ้น กลไกการเขียนหมดความสำคัญ เน้นยัดโค้ดที่ใช้บ่อยเข้า L1 · แต่ต้องรู้ชื่อทั้ง 3 คำ</span>
+</div></div>

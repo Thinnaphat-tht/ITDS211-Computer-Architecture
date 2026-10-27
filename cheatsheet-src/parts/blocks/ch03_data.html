@@ -1,0 +1,30 @@
+<div class="sec"><h3><i>Ch03</i>Data Representation<em>★ “จะมีข้อนี้แน่ๆ” ต้องทำได้เต็ม</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%"></th><th>Sign-Magnitude</th><th>1's complement</th><th>2's complement</th></tr>
+<tr><td><b>ค่าลบ</b></td><td>กลับ <b>sign bit</b> (0=+, 1=−) ที่เหลือ = magnitude</td><td>กลับ<b>ทุกบิต</b> = (2ⁿ−1)−m</td><td>กลับทุกบิต <b>+1</b> = 2ⁿ−m</td></tr>
+<tr><td><b>ช่วง 8 บิต</b></td><td class="c">−127…+127</td><td class="c">−127…+127</td><td class="c"><b>−128…+127</b></td></tr>
+<tr><td><b>ศูนย์</b></td><td>2 ตัว 0000 0000 / 1000 0000</td><td>2 ตัว 0000 0000 / 1111 1111</td><td><b>ตัวเดียว</b> (ช่วงไม่สมมาตร)</td></tr>
+<tr><td><b>บวก/ลบ</b></td><td>บวกเลขลบ ≠ ลบ ต้องวงจรต่างหาก</td><td>มี carry-out → <b>บวกกลับ LSB</b></td><td>ไม่ต้อง end-around · ลบ = บวก 2's แล้ว<b>ทิ้ง carry-out</b> · ไม่ต้องวงจรลบ</td></tr></table>
+<ul class="l">
+<li>n บิต: unsigned 0…2ⁿ−1 · 2's: <b>−2ⁿ⁻¹…2ⁿ⁻¹−1</b> · sign extension: ขยายด้วยบิต sign (lb) / zero-extend (lbu) · สูตร r's comp = rⁿ−m ; (r−1)'s = (rⁿ−1)−m (ตย. m=382, n=3: 9's = <b>617</b>, 10's = <b>618</b>)</li>
+<li><b>Shortcut 2's</b>: จาก LSB หา <b>1 ตัวแรก</b> คงไว้ แล้วกลับบิตทางซ้ายทั้งหมด · ตย. 0101011 → 1010101</li>
+<li>Sign-Magnitude บวก/ลบ †: sign เหมือนกัน → บวก magnitude (carry-out = overflow) · sign ต่าง → ลบตัวเล็กจากตัวใหญ่ ใช้ sign ตัวใหญ่ · A−B = A+(−B) กลับ sign B</li>
+<li>Overflow (2's) †: (+)+(+) ได้ลบ หรือ (−)+(−) ได้บวก · ตย. 0111 1111 + 1 = 1000 0000</li>
+<li><b>Bias (excess-B)</b>: ค่า = unsigned − B · bias 127: 0000 0000 = −127 · 0111 1111 = <b>0</b> · 1111 1111 = +128</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> 2's: 6 + (−5) 4 บิต = 0110 + 1011 = 1|<b>0001</b> (ทิ้ง carry) · 1's: 6 + (−3) 3 บิต = 110 + 100 = 1|010 → +1 = <b>011</b></div>
+<div class="ex"><b>ตย. 16 บิต (แนว Assignment 2) †</b> &nbsp;<code>+100 = 0000 0000 0110 0100</code> · <code>+37 = 0000 0000 0010 0101</code><br>
+<b>−100</b> SM <code>1000 0000 0110 0100</code> · 2's <code>1111 1111 1001 1100</code><br>
+<b>−37</b> SM <code>1000 0000 0010 0101</code> · 2's <code>1111 1111 1101 1011</code><br>
+<b>2's</b> 100−37 = <code>0000 0000 0110 0100</code> + <code>1111 1111 1101 1011</code> = 1|<code>0000 0000 0011 1111</code> → ทิ้ง carry = <b>63</b><br>
+<b>2's</b> 37−100 = <code>0000 0000 0010 0101</code> + <code>1111 1111 1001 1100</code> = <code>1111 1111 1100 0001</code> → ลบ (กลับ+1 = 63) = <b>−63</b><br>
+<b>SM</b> 37−100: sign ต่าง → |100|−|37| = 63 ใช้ sign ของ 100 (ลบ) = <code>1000 0000 0011 1111</code> · 100+37 = <code>0000 0000 1000 1001</code> (137)</div>
+<div class="sec2"><b>IEEE 754 ★</b> &nbsp;<span class="f2">N = (−1)<sup>S</sup> × [1.m] × 2<sup>E−127</sup> &nbsp; E = e + 127 (เก็บค่า E)</span>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:8;background:#e4edff">Exponent 8</div><div style="flex:23;background:#fff0d6">Mantissa 23 (bit 22–0)</div></div>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:11;background:#e4edff">Exponent 11</div><div style="flex:52;background:#fff0d6">Mantissa 52 (bit 51–0)</div></div></div>
+<ul class="l">
+<li><b>Single 32 บิต: exponent 8 · mantissa 23 · Double 64 บิต: exponent 11 · mantissa 52</b> (อาจารย์ถาม) · double bias = 1023 † · E เก็บ 1–254 (0 และ 255 สงวน: ±∞, NaN) → e = −126…+127 · max ≈ 2×2¹²⁷ = 2¹²⁸</li>
+<li>ตย. <b>17.15</b> = 10001.0010011₂ = 1.00010010011×2⁴ → E = 4+127 = <b>131 = 1000 0011</b> · S = 0 · m = 0001 0010 011…</li>
+<li>เศษส่วน: 101.1101₂ = 4+1+0.5+0.25+0.0625 = <b>5.8125</b> · 5.8125 → 101 และ 0.8125×2 ซ้ำ (1.625→1.25→0.5→1.0) = .1101</li>
+<li><b>Endian ★</b>: <b>Little</b> (RISC-V) = byte <b>LSB</b> อยู่ address ต่ำสุดของ word · <b>Big</b> = <b>MSB</b> อยู่ address ต่ำสุด · memory เรียกทีละ <b>byte (8 บิต)</b> · ASCII 128 ตัว · Unicode 32 บิต</li>
+</ul>
+</div></div>

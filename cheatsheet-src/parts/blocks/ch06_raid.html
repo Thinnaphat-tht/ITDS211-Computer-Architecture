@@ -1,0 +1,12 @@
+<div class="sec"><h3><i>Ch06</i>RAID 0–6<em>★ Redundant Array of Independent Disks</em></h3><div class="bd">
+<div class="nt">3 ลักษณะ: ① OS เห็นเป็น logical drive เดียว ② data กระจายข้าม drive (<b>striping</b>) ③ มี capacity ส่วนเกินเก็บ <b>parity</b> กู้ข้อมูลได้ · N = จำนวน data disk</div>
+<table class="t"><tr><th class="c" style="width:4%">L</th><th style="width:28%">หลักการ · จำนวนดิสก์</th><th>ข้อดี / ข้อเสีย / ใช้กับ</th></tr>
+<tr><td class="c"><b>0</b></td><td><b>Striping</b> ไม่ redundant · N</td><td>I/O สูงมาก ง่าย ไม่มี parity · แต่ <b>ดิสก์เดียวเสีย = ข้อมูลทั้ง array หาย</b> · video/image editing</td></tr>
+<tr><td class="c"><b>1</b></td><td><b>Mirroring</b> (copy ซ้ำ) · 2N</td><td>redundant 100% ไม่ต้อง rebuild · read ได้จากดิสก์ใดก็ได้ · แต่ <b>overhead สูงสุด</b> · accounting/payroll</td></tr>
+<tr><td class="c"><b>2</b></td><td>Parallel access + <b>Hamming code</b> (ECC) · N+m (m∝log N)</td><td>transfer สูงมาก · แต่ ECC disk เยอะ ไม่คุ้ม · <b>ไม่มีใช้เชิงพาณิชย์</b></td></tr>
+<tr><td class="c"><b>3</b></td><td>Parallel access, parity <b>ระดับ bit/byte</b> · <b>ดิสก์ parity เดียว</b> · N+1</td><td>transfer สูงสุด · ดิสก์เสียแทบไม่กระทบ · แต่ transaction rate ≈ ดิสก์เดียว · video streaming</td></tr>
+<tr><td class="c"><b>4</b></td><td>Independent access, parity ระดับ <b>block</b> · <b>parity disk แยก</b> · N+1</td><td>read สูง · แต่ <b>write penalty</b> (อ่าน 2 เขียน 2) <b>parity disk = bottleneck</b> · ไม่มีใช้</td></tr>
+<tr><td class="c"><b>5</b></td><td>block parity <b>กระจาย (distributed) ทุกดิสก์</b> · N+1</td><td>read สูงสุด ไม่มี bottleneck · เขียนช้ากว่า rebuild ยาก · file/database/web server · <b>versatile สุด</b></td></tr>
+<tr><td class="c"><b>6</b></td><td>block parity <b>2 ชุด</b> (dual distributed) · N+2</td><td>ทน<b>ดิสก์เสีย 2 ตัวพร้อมกัน</b> availability สูงสุด · controller ซับซ้อน write penalty สูง · mission critical</td></tr></table>
+<div class="nt" style="margin-top:.5mm"><b>ตย. †</b> ดิสก์ 1 TB × 4 ตัว: RAID 0 = 4 TB · RAID 1 = 2 TB (mirror) · RAID 5 = 3 TB (เสีย 1 ดิสก์ใช้ทำ parity) · RAID 6 = 2 TB</div>
+</div></div>

@@ -1,0 +1,12 @@
+<div class="sec"><h3><i>Ch04</i>Associativity · Replacement · Miss<em>★ Fully assoc = miss น้อยสุด</em></h3><div class="bd">
+<table class="t"><tr><th>ชนิด</th><th>วางได้ที่ไหน</th><th class="c">เทียบ tag</th></tr>
+<tr><td><b>Direct-mapped</b></td><td>ที่เดียว (index) — 1 ทางเลือก</td><td class="c">1</td></tr>
+<tr><td><b>n-way set associative</b></td><td>set = (block no.) mod (#sets) · วางได้ <b>n ช่อง</b>ใน set (2-way เก็บ 2 · 4-way เก็บ 4 …)</td><td class="c">n</td></tr>
+<tr><td><b>Fully associative</b></td><td>ช่องไหนก็ได้ · เทียบทุก entry</td><td class="c">#entries</td></tr></table>
+<ul class="l">
+<li>Set-associative = “ไม่ได้ฉลาดขึ้น” แค่<b>ขยายที่เก็บใน index เดียวกัน</b> → hit มากขึ้น · miss rate (64 KB, SPEC2000): <b>1-way 10.3% · 2-way 8.6% · 4-way 8.3% · 8-way 8.1%</b> → ดีขึ้นแต่ได้น้อยลงเรื่อย ๆ (diminishing returns)</li>
+<li>ตย. 4-block cache ขอ 0, 8, 0, 6, 8: Direct = M M M M M · 2-way = M M <b>H</b> M M · Fully = M M <b>H</b> M <b>H</b></li>
+<li>Replacement: ถ้ามีช่อง non-valid ใช้ก่อน ไม่งั้น <b>LRU</b> (ไม่ถูกใช้นานสุด) / FIFO / LFU / <b>Random</b> (direct ไม่มีตัวเลือก)</li>
+<li>Miss 3 แบบ: <b>Compulsory</b> (ครั้งแรก) · <b>Capacity</b> (cache เล็ก) · <b>Conflict</b> (ชนช่อง; fully assoc ไม่มี) · ↑ขนาด cache → ลด capacity miss · ↑associativity → ลด conflict miss · ↑block size → ลด compulsory miss แต่ penalty ↑</li>
+<li>Cache design: addresses (logical/physical) · size · mapping · replacement · write policy · line size · จำนวน cache (1–2 level; unified/split)</li>
+</ul></div></div>

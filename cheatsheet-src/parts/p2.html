@@ -1,0 +1,110 @@
+<section class="page">
+<div class="ph"><b>ITDS211 · หน้า 2/4 · Ch03 Assembly · Ch04 Memory &amp; Cache</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง</span></div>
+<div class="cols">
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch03</i>Assembly (RISC-V)<em>★ ช้อยส์: รู้ว่าคำสั่ง “ทำอะไร” · self-study ไม่ออก</em></h3><div class="bd">
+<table class="t"><tr><th style="width:30%">คำสั่ง</th><th>ทำอะไร</th></tr>
+<tr><td><code>add rd,rs1,rs2</code></td><td>rd = rs1 + rs2 (<code>sub</code> = ลบ) · รูปทั่วไป <code>ADD A,B,C</code> = A ← B + C (2 source + 1 dest)</td></tr>
+<tr><td><code>addi rd,rs1,imm</code></td><td>rd = rs1 + <b>ค่าคงที่</b> · <code>addi x22,x22,4</code> → x22 ← x22 + 4</td></tr>
+<tr><td><code>ld/lw rd,off(rs1)</code></td><td><b>LOAD Memory → Register</b> (ld 64 บิต · lw 32 · lb/lh sign-ext · lbu/lhu/lwu zero-ext)</td></tr>
+<tr><td><code>sd/sw rs2,off(rs1)</code></td><td><b>STORE Register → Memory</b> (sd 64 · sw 32 · sh 16 · sb 8 เก็บบิตขวาสุด)</td></tr>
+<tr><td><code>and or xor</code> (+i)</td><td>bitwise · <b>and</b> = mask (เก็บบางบิต ที่เหลือ 0) · <b>or</b> = บังคับบิตเป็น 1 · <b>xor</b> กับ 1…1 = NOT</td></tr>
+<tr><td><code>slli / srli rd,rs1,i</code></td><td>shift ซ้าย i บิต = <b>×2<sup>i</sup></b> (เติม 0) · shift ขวา = <b>÷2<sup>i</sup></b> (unsigned)</td></tr>
+<tr><td><code>beq / bne rs1,rs2,L</code></td><td>กระโดดไป L ถ้า rs1 <b>=</b> rs2 / <b>≠</b> rs2 (ไม่ใช่ → ทำคำสั่งถัดไป)</td></tr>
+<tr><td><code>blt / bge rs1,rs2,L</code></td><td>ถ้า rs1 <b>&lt;</b> rs2 / rs1 <b>≥</b> rs2 (signed) · <code>bltu bgeu</code> = unsigned (−1 &lt; +1 แต่ unsigned 4,294,967,295 &gt; 1)</td></tr>
+<tr><td><code>jal rd,L</code> · <code>jalr</code></td><td>กระโดด + เก็บ address ถัดไปใน rd (เรียก procedure: <code>jal x1,L</code>) · <b>return</b> = <code>jalr x0,0(x1)</code></td></tr>
+<tr><td><code>lui rd,imm20</code></td><td>ใส่ imm 20 บิตที่ rd[31:12] เคลียร์ [11:0] → สร้างค่าคงที่ 32 บิตคู่ <code>addi</code></td></tr></table>
+<ul class="l">
+<li><b>Regs</b> 32×64 บิต (ข้อมูล 64 บิต = doubleword · 32 บิต = word): <b>x0 = 0 เสมอ</b> · x1 return addr · x2 stack ptr · x3 global ptr · x4 thread ptr · x5–7, x28–31 temporaries · x8 frame ptr · x9, x18–27 saved · x10–11 args/ผลลัพธ์ · x12–17 args</li>
+<li>Memory <b>byte-addressed</b> · RISC-V = Little-endian · ไม่บังคับ word-aligned · offset = index × 8 (doubleword)</li>
+</ul>
+<div class="bf"><b>R</b><div style="flex:7">funct7</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>I</b><div style="flex:12">immediate[11:0]</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>S</b><div style="flex:7">imm[11:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:0]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>SB</b><div style="flex:7">imm[12|10:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:1|11]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>UJ</b><div style="flex:20">imm[20|10:1|11|19:12]</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>Shift</b><div style="flex:6">funct6</div><div style="flex:6">immed</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<ul class="l">
+<li>ทุกคำสั่ง <b>32 บิต</b> · opcode <b>7 บิต</b> (2⁷ = 128 แบบ) · rs1/rs2/rd <b>5 บิต</b> (2⁵ = 32 reg) · funct3/funct7 = opcode เสริม · <b>I</b>: imm 12 บิต (2's, sign-ext) ใช้กับ addi/load · <b>S</b>: store แยก imm เพื่อให้ rs1/rs2 อยู่ที่เดิม · <b>SB</b>: PC-relative, <b>target = PC + imm × 2</b></li>
+</ul>
+<div class="ex"><b>ตย. R-format</b> <code>add x9,x20,x21</code> → funct7 <b>0</b> · rs2 <b>21</b> · rs1 <b>20</b> · f3 <b>0</b> · rd <b>9</b> · opcode <b>51</b><br><code>0000000 10101 10100 000 01001 0110011</code> = <b>015A04B3</b><sub>16</sub> (ข้อสอบ: จะมี chart ให้ว่า opcode คืออะไร)</div>
+<div class="ex"><b>ตย. C → RISC-V</b> (f…j = x19…x23) &nbsp;<code>f=(g+h)−(i+j)</code>: <code>add x5,x20,x21</code> ; <code>add x6,x22,x23</code> ; <code>sub x19,x5,x6</code><br>
+<code>A[12]=h+A[8]</code> (h=x21, A=x22): <code>ld x9,64(x22)</code> ; <code>add x9,x21,x9</code> ; <code>sd x9,96(x22)</code> (8×8=64, 12×8=96)<br>
+<code>if(i==j) f=g+h; else f=g−h</code> (i=x22, j=x23): <code>bne x22,x23,Else</code> ; <code>add x19,x20,x21</code> ; <code>beq x0,x0,Exit</code> ; <code>Else: sub x19,x20,x21</code> ; <code>Exit:</code> (beq x0,x0 = กระโดดเสมอ)</div>
+<ul class="l">
+<li><b>Procedure ★</b> = ฟังก์ชัน (เหมือน software interrupt): ① วาง arg ที่ x10–x17 ② <code>jal x1,L</code> ③ จองที่ + <b>save ค่าลง stack</b> (<code>addi sp,sp,−n</code>; <code>sd</code>) ④ ทำงาน ⑤ ผลลัพธ์ใส่ x10 ⑥ <b>restore</b> จาก stack (<code>ld</code>; <code>addi sp,sp,n</code>) ⑦ <code>jalr x0,0(x1)</code> กลับ · non-leaf ต้อง save x1 + arg/temp ที่ใช้ต่อ</li>
+<li>Memory layout: <b>Text</b> (โค้ด) · <b>Static data</b> (global, x3) · <b>Heap</b> (dynamic) · <b>Stack</b> · Design: ① Simplicity favours regularity ② Smaller is faster ③ Good design demands good compromises ④ Make the common case fast</li>
+<li>RISC-V extension: M (คูณ/หาร) · A (atomic) · F/D (float single/double) · C (compressed 16 บิต)</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>Memory Hierarchy<em>★ “ให้จำรูปพีระมิดเอาไว้”</em></h3><div class="bd">
+<div class="pyr">
+<div class="pr" style="--t:30;--b:44"><div class="sh" style="background:#0b2a6f">Registers</div><div class="ds"><b>เร็วสุด · แพงสุด · จุน้อยสุด</b> — อยู่ใน CPU</div></div>
+<div class="pr" style="--t:44;--b:58"><div class="sh" style="background:#1e40af">Cache</div><div class="ds"><b>SRAM</b> (L1/L2/L3) 0.5–2.5 ns · $2000–5000/GB · L1 ชิด CPU ก้อนเดียวกัน · L2/L3 อยู่นอก core</div></div>
+<div class="pr" style="--t:58;--b:72"><div class="sh" style="background:#2563eb">Main memory</div><div class="ds"><b>DRAM</b> 50–70 ns · $20–75/GB <span class="nt">(Inboard memory ถึงตรงนี้)</span></div></div>
+<div class="pr" style="--t:72;--b:86"><div class="sh" style="background:#5b8def;color:#06214f">Disk · CD · DVD · Blu-ray</div><div class="ds"><b>Magnetic disk</b> 5–20 ms · $0.20–2/GB <span class="nt">(Outboard storage)</span></div></div>
+<div class="pr" style="--t:86;--b:100"><div class="sh" style="background:#9dbcf5;color:#06214f">Magnetic tape</div><div class="ds"><b>Off-line</b> · ถูกสุด · <b>จุมากสุด</b> · ช้าสุด (big data center)</div></div>
+</div>
+<ul class="l">
+<li><b>บน</b> = เร็ว/แพง/จุน้อย · <b>ล่าง</b> = ช้า/ถูก/จุมาก · SRAM เร็วกว่า DRAM ~<b>100 เท่า</b> (transistor on-off ไม่กี่ตัว) แต่แพงกว่า · <b>DRAM</b> = ประจุใน capacitor ต้อง <b>refresh</b> ตลอด ช้ากว่า ถูกกว่า</li>
+<li><b>RAM</b> = ชั่วคราว (volatile) · <b>ROM</b> = ถาวร ปิดไฟข้อมูลยังอยู่ · <b>Flash</b> (nonvolatile; เร็วกว่า disk 100–1000×; $/GB ระหว่าง disk กับ DRAM; สึกหรอ → wear leveling): <b>NOR</b> random access ใช้เก็บคำสั่งใน embedded · <b>NAND</b> หนาแน่น/ถูก เขียนทีละ block (USB, media)</li>
+<li>Locality: <b>Temporal</b> = ของที่เพิ่งใช้ มักถูกใช้ซ้ำเร็ว ๆ (loop) · <b>Spatial</b> = ของใกล้ ๆ ที่เพิ่งใช้ มักถูกใช้ตาม (array, คำสั่งต่อเนื่อง)</li>
+</ul>
+</div></div>
+
+</div>
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch04</i>Cache: Hit/Miss · Direct-Mapped<em>★ อาจารย์ “เน้นเรื่อง Cache”</em></h3><div class="bd">
+<ul class="l">
+<li><b>Cache</b> = หน่วยความจำเร็วคั่นกลาง CPU↔Main memory เก็บข้อมูลที่<b>ใช้บ่อย/ซ้ำ</b> · <b>Block (line)</b> = หน่วยที่ copy · <b>Hit</b> = เจอใน cache · <b>Miss</b> = ไม่เจอ → ดึง block จาก main memory มาใส่ cache แล้วส่ง CPU (เวลา = <b>miss penalty</b>) · Hit ratio = hits/accesses · Miss ratio = 1 − hit ratio</li>
+</ul>
+<div class="f">Direct-mapped: Cache index = (Block address) modulo (#Blocks in cache) → ใช้ <b>บิตล่าง</b> เป็น index<br>Address = <b>[ Tag | Index | Block offset ]</b> &nbsp; offset = log₂(bytes/block) · index = log₂(#blocks) · tag = ที่เหลือ</div>
+<ul class="l">
+<li>เช็ก hit/miss: ดู <b>Index</b> → เทียบ <b>Tag</b> → ดู <b>Valid bit (V)</b> = 1 (เริ่มต้น cache ว่าง V=0) · ข้อเสีย: หลาย address ชิงช่องเดียวกัน (แย่งกัน/conflict)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> cache 8 blocks, 1 word/block (Tag = 2 บิตบน · Index = 3 บิตล่าง)
+<table class="t" style="margin-top:.6mm"><tr><th>ขอ</th><th class="c">22</th><th class="c">26</th><th class="c">22</th><th class="c">26</th><th class="c">16</th><th class="c">3</th><th class="c">16</th><th class="c">18</th></tr>
+<tr><td>Tag Idx</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 000</td><td class="c">00 011</td><td class="c">10 000</td><td class="c">10 010</td></tr>
+<tr><td><b>ผล</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c"><b>Hit</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c">Miss*</td></tr></table>
+<span class="nt">*18: index 010 มี tag 11 แต่ขอ tag 10 → tag ไม่ตรง → Miss แล้ว <b>เขียนทับ</b> · ครั้งแรกของทุกตัว = Miss แน่นอน (cache ว่าง)</span></div>
+<div class="ex"><b>ตย. ★ บล็อกใหญ่</b> 64 blocks × 16 B/block, address <b>1200</b>: Block address = ⌊1200/16⌋ = <b>75</b> → Block number = 75 mod 64 = <b>11</b> · fields: offset 4 บิต [3:0] · index 6 บิต [9:4] · tag 22 บิต [31:10]<br>
+16 KB, 4 word (16 B)/block, address 32 บิต: 1024 blocks → offset 4 · index 10 · tag <b>18</b> (+ valid + dirty) · bits ทั้งหมด † = #blocks × (8×bytes/block + tag + 1)</div>
+<ul class="l">
+<li><b>Block ใหญ่ขึ้น</b>: miss rate ลด (spatial locality) แต่ cache ขนาดคงที่ → blocks น้อยลง แย่งกัน miss rate กลับเพิ่ม · miss penalty สูงขึ้น · ใหญ่ ≠ ดีเสมอ ⚠</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>Write Policy<em>★ ควรรู้นิยามสามคำ</em></h3><div class="bd"><ul class="l">
+<li><b>Write-through</b>: เขียนทั้ง cache <b>และ memory</b> ทุกครั้ง (consistent แต่ช้า: CPI = 1 + 0.1×100 = 11) → ใช้ <b>write buffer</b> (CPU ไปต่อ · stall เมื่อ buffer เต็ม)</li>
+<li><b>Write-back</b>: เขียน<b>เฉพาะ cache</b> + ตั้ง <b>dirty bit</b> · เขียนกลับ memory เมื่อ block ถูกแทนที่</li>
+<li><b>Write allocation</b> (เมื่อ write miss): <b>allocate</b> = ดึง block มาก่อนเขียน · <b>write around</b> = ไม่ดึง เขียนลง memory ตรง ๆ · write-back มัก fetch block</li>
+<li>อาจารย์: เมื่อก่อนมีงานวิจัยแข่งกลไกเขียน แต่ปัจจุบัน transistor เล็ก (2–4 nm) เร็วขึ้น ความต่างน้อย → เน้นให้โค้ดที่ใช้บ่อยอยู่ <b>L1</b> ให้มากที่สุด</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch04</i>Associativity · Replacement · Miss<em>★ Fully assoc = miss น้อยสุด</em></h3><div class="bd">
+<table class="t"><tr><th>ชนิด</th><th>วางได้ที่ไหน</th><th class="c">เทียบ tag</th></tr>
+<tr><td><b>Direct-mapped</b></td><td>ที่เดียว (index) — 1 ทางเลือก</td><td class="c">1</td></tr>
+<tr><td><b>n-way set associative</b></td><td>set = (block no.) mod (#sets) · วางได้ <b>n ช่อง</b>ใน set (2-way เก็บ 2 · 4-way เก็บ 4 …)</td><td class="c">n</td></tr>
+<tr><td><b>Fully associative</b></td><td>ช่องไหนก็ได้ · เทียบทุก entry</td><td class="c">#entries</td></tr></table>
+<ul class="l">
+<li>Set-associative = “ไม่ได้ฉลาดขึ้น” แค่<b>ขยายที่เก็บใน index เดียวกัน</b> → hit มากขึ้น · miss rate (64 KB, SPEC2000): <b>1-way 10.3% · 2-way 8.6% · 4-way 8.3% · 8-way 8.1%</b> → ดีขึ้นแต่ได้น้อยลงเรื่อย ๆ (diminishing returns)</li>
+<li>ตย. 4-block cache ขอ 0, 8, 0, 6, 8: Direct = M M M M M · 2-way = M M <b>H</b> M M · Fully = M M <b>H</b> M <b>H</b></li>
+<li>Replacement: ถ้ามีช่อง non-valid ใช้ก่อน ไม่งั้น <b>LRU</b> (ไม่ถูกใช้นานสุด) / FIFO / LFU / <b>Random</b> (direct ไม่มีตัวเลือก)</li>
+<li>Miss 3 แบบ: <b>Compulsory</b> (ครั้งแรก) · <b>Capacity</b> (cache เล็ก) · <b>Conflict</b> (ชนช่อง; fully assoc ไม่มี) · ↑ขนาด cache → ลด capacity miss · ↑associativity → ลด conflict miss · ↑block size → ลด compulsory miss แต่ penalty ↑</li>
+<li>Cache design: addresses (logical/physical) · size · mapping · replacement · write policy · line size · จำนวน cache (1–2 level; unified/split)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch04</i>AMAT · CPU time กับ memory stall</h3><div class="bd">
+<div class="f">AMAT = Hit time + Miss rate × Miss penalty<br>CPU time = (execution cycles + <b>memory stall cycles</b>) × cycle time<br>Stall cycles = (Mem accesses/Program) × Miss rate × Penalty = (Instr/Program) × (Misses/Instr) × Penalty</div>
+<div class="ex"><b>ตย. AMAT</b> clock 1 ns, hit 1 cycle, penalty 20 cycles, miss 5% → 1 + 0.05×20 = <b>2 ns</b> &nbsp;·&nbsp; <b>ตย. CPI</b> base CPI 2, I-miss 2%, D-miss 4%, load/store 36%, penalty 100 → 2 + 0.02×100 + 0.36×0.04×100 = 2 + 2 + 1.44 = <b>5.44</b> → ideal เร็วกว่า 5.44/2 = <b>2.72 เท่า</b></div>
+<ul class="l"><li>Multilevel: L1 เน้น <b>hit time ต่ำ</b> · L2 เน้น <b>miss rate ต่ำ</b> · block L1 &lt; block L2 · ตย. CPI = 1 + 0.02×20 + 0.005×400 = 3.4 (เทียบ 9 ถ้ามี L1 อย่างเดียว → 2.6 เท่า)</li></ul>
+</div></div>
+
+</div>
+</div>
+</section>

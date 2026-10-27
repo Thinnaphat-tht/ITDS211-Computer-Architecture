@@ -1,0 +1,25 @@
+<div class="sec"><h3><i>Ch03</i>Assembly (RISC-V)<em>★ ช้อยส์ ไม่ต้องเขียนโค้ด</em></h3><div class="bd">
+<ul class="l">
+<li>ต้องรู้แค่ว่าคำสั่ง<b>ทำอะไร</b> ไม่เจาะจงตระกูล</li>
+<li><code>ADD A,B,C</code> = <b>B + C เก็บใน A</b></li>
+<li><b>LOAD</b> = Memory → Register</li>
+<li><b>STORE</b> = Register → Memory</li>
+<li><b>ADDI</b> = register + <b>ค่าคงที่ (immediate)</b></li>
+<li><code>addi x22,x22,4</code> = x22 ← x22 + 4</li>
+</ul>
+<div class="sec2"><b class="s">★ Instruction Format</b> (ถ้าออก <b>จะมี chart ให้</b>)
+<div class="bf"><b>R</b><div style="flex:7">funct7</div><div class="r" style="flex:5">rs2</div><div class="r" style="flex:5">rs1</div><div style="flex:3">f3</div><div class="o" style="flex:5">rd</div><div style="flex:7;background:#d9e6ff">opcode</div></div>
+<div class="bf"><b>I</b><div class="o" style="flex:12">immediate 12 บิต</div><div class="r" style="flex:5">rs1</div><div style="flex:3">f3</div><div class="o" style="flex:5">rd</div><div style="flex:7;background:#d9e6ff">opcode</div></div>
+<ul class="l">
+<li><b>opcode 7 บิตล่าง</b> → 2⁷ แบบ</li>
+<li><b>rs1, rs2, rd ละ 5 บิต</b> → 2⁵ = <b>32 register</b></li>
+<li>I-format: <b>12 บิตบน = immediate</b></li>
+<li><b>ตย.</b> <code>add x9,x20,x21</code> → <b>opcode = 51</b>, rd = 9, rs1 = 20, rs2 = 21</li>
+</ul></div>
+<table class="t"><tr><th style="width:26%">กลุ่ม</th><th>คำสั่ง</th></tr>
+<tr><td>Logic</td><td><b>AND · OR · XOR</b></td></tr>
+<tr><td>Shift</td><td><b>left = คูณ</b><br><b>right = หาร</b></td></tr>
+<tr><td>Branch<br><span class="nt">เช็กเงื่อนไขก่อน</span></td><td><code>beq</code> เท่ากัน<br><code>bne</code> ไม่เท่ากัน<br><code>blt</code> rs1 &lt; rs2<br><code>bge</code> rs1 ≥ rs2<br>→ กระโดดไป L1</td></tr>
+<tr><td>Procedure</td><td>= ฟังก์ชัน = <b>software interrupt</b><br><b>save ทุกค่าลง stack</b> แล้ว return คืนจาก stack</td></tr></table>
+<span class="nt">RISC-V ส่วน self-study ที่อาจารย์ทิ้งให้อ่านเอง: ไม่ออก</span>
+</div></div>

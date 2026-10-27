@@ -1,0 +1,34 @@
+<div class="sec"><h3><i>Ch03</i>Assembly (RISC-V)<em>★ ช้อยส์: รู้ว่าคำสั่ง “ทำอะไร” · self-study ไม่ออก</em></h3><div class="bd">
+<table class="t"><tr><th style="width:30%">คำสั่ง</th><th>ทำอะไร</th></tr>
+<tr><td><code>add rd,rs1,rs2</code></td><td>rd = rs1 + rs2 (<code>sub</code> = ลบ) · รูปทั่วไป <code>ADD A,B,C</code> = A ← B + C (2 source + 1 dest)</td></tr>
+<tr><td><code>addi rd,rs1,imm</code></td><td>rd = rs1 + <b>ค่าคงที่</b> · <code>addi x22,x22,4</code> → x22 ← x22 + 4</td></tr>
+<tr><td><code>ld/lw rd,off(rs1)</code></td><td><b>LOAD Memory → Register</b> (ld 64 บิต · lw 32 · lb/lh sign-ext · lbu/lhu/lwu zero-ext)</td></tr>
+<tr><td><code>sd/sw rs2,off(rs1)</code></td><td><b>STORE Register → Memory</b> (sd 64 · sw 32 · sh 16 · sb 8 เก็บบิตขวาสุด)</td></tr>
+<tr><td><code>and or xor</code> (+i)</td><td>bitwise · <b>and</b> = mask (เก็บบางบิต ที่เหลือ 0) · <b>or</b> = บังคับบิตเป็น 1 · <b>xor</b> กับ 1…1 = NOT</td></tr>
+<tr><td><code>slli / srli rd,rs1,i</code></td><td>shift ซ้าย i บิต = <b>×2<sup>i</sup></b> (เติม 0) · shift ขวา = <b>÷2<sup>i</sup></b> (unsigned)</td></tr>
+<tr><td><code>beq / bne rs1,rs2,L</code></td><td>กระโดดไป L ถ้า rs1 <b>=</b> rs2 / <b>≠</b> rs2 (ไม่ใช่ → ทำคำสั่งถัดไป)</td></tr>
+<tr><td><code>blt / bge rs1,rs2,L</code></td><td>ถ้า rs1 <b>&lt;</b> rs2 / rs1 <b>≥</b> rs2 (signed) · <code>bltu bgeu</code> = unsigned (−1 &lt; +1 แต่ unsigned 4,294,967,295 &gt; 1)</td></tr>
+<tr><td><code>jal rd,L</code> · <code>jalr</code></td><td>กระโดด + เก็บ address ถัดไปใน rd (เรียก procedure: <code>jal x1,L</code>) · <b>return</b> = <code>jalr x0,0(x1)</code></td></tr>
+<tr><td><code>lui rd,imm20</code></td><td>ใส่ imm 20 บิตที่ rd[31:12] เคลียร์ [11:0] → สร้างค่าคงที่ 32 บิตคู่ <code>addi</code></td></tr></table>
+<ul class="l">
+<li><b>Regs</b> 32×64 บิต (ข้อมูล 64 บิต = doubleword · 32 บิต = word): <b>x0 = 0 เสมอ</b> · x1 return addr · x2 stack ptr · x3 global ptr · x4 thread ptr · x5–7, x28–31 temporaries · x8 frame ptr · x9, x18–27 saved · x10–11 args/ผลลัพธ์ · x12–17 args</li>
+<li>Memory <b>byte-addressed</b> · RISC-V = Little-endian · ไม่บังคับ word-aligned · offset = index × 8 (doubleword)</li>
+</ul>
+<div class="bf"><b>R</b><div style="flex:7">funct7</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>I</b><div style="flex:12">immediate[11:0]</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>S</b><div style="flex:7">imm[11:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:0]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>SB</b><div style="flex:7">imm[12|10:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:1|11]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>UJ</b><div style="flex:20">imm[20|10:1|11|19:12]</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>Shift</b><div style="flex:6">funct6</div><div style="flex:6">immed</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<ul class="l">
+<li>ทุกคำสั่ง <b>32 บิต</b> · opcode <b>7 บิต</b> (2⁷ = 128 แบบ) · rs1/rs2/rd <b>5 บิต</b> (2⁵ = 32 reg) · funct3/funct7 = opcode เสริม · <b>I</b>: imm 12 บิต (2's, sign-ext) ใช้กับ addi/load · <b>S</b>: store แยก imm เพื่อให้ rs1/rs2 อยู่ที่เดิม · <b>SB</b>: PC-relative, <b>target = PC + imm × 2</b></li>
+</ul>
+<div class="ex"><b>ตย. R-format</b> <code>add x9,x20,x21</code> → funct7 <b>0</b> · rs2 <b>21</b> · rs1 <b>20</b> · f3 <b>0</b> · rd <b>9</b> · opcode <b>51</b><br><code>0000000 10101 10100 000 01001 0110011</code> = <b>015A04B3</b><sub>16</sub> (ข้อสอบ: จะมี chart ให้ว่า opcode คืออะไร)</div>
+<div class="ex"><b>ตย. C → RISC-V</b> (f…j = x19…x23) &nbsp;<code>f=(g+h)−(i+j)</code>: <code>add x5,x20,x21</code> ; <code>add x6,x22,x23</code> ; <code>sub x19,x5,x6</code><br>
+<code>A[12]=h+A[8]</code> (h=x21, A=x22): <code>ld x9,64(x22)</code> ; <code>add x9,x21,x9</code> ; <code>sd x9,96(x22)</code> (8×8=64, 12×8=96)<br>
+<code>if(i==j) f=g+h; else f=g−h</code> (i=x22, j=x23): <code>bne x22,x23,Else</code> ; <code>add x19,x20,x21</code> ; <code>beq x0,x0,Exit</code> ; <code>Else: sub x19,x20,x21</code> ; <code>Exit:</code> (beq x0,x0 = กระโดดเสมอ)</div>
+<ul class="l">
+<li><b>Procedure ★</b> = ฟังก์ชัน (เหมือน software interrupt): ① วาง arg ที่ x10–x17 ② <code>jal x1,L</code> ③ จองที่ + <b>save ค่าลง stack</b> (<code>addi sp,sp,−n</code>; <code>sd</code>) ④ ทำงาน ⑤ ผลลัพธ์ใส่ x10 ⑥ <b>restore</b> จาก stack (<code>ld</code>; <code>addi sp,sp,n</code>) ⑦ <code>jalr x0,0(x1)</code> กลับ · non-leaf ต้อง save x1 + arg/temp ที่ใช้ต่อ</li>
+<li><b>Addressing 4 แบบ</b>: Immediate · Register · Base (reg + offset) · PC-relative · Memory layout: <b>Text</b> (โค้ด) · <b>Static data</b> (global, x3) · <b>Heap</b> (dynamic) · <b>Stack</b> · Design: ① Simplicity favours regularity ② Smaller is faster ③ Good design demands good compromises ④ Make the common case fast</li>
+</ul>
+</div></div>

@@ -1,0 +1,7 @@
+<div class="sec"><h3><i>Ch02</i>Register · Instruction cycle<em>Program Execution</em></h3><div class="bd">
+<ul class="l">
+<li><b>MAR</b> = address ใน memory ที่จะอ่าน/เขียน · <b>MBR</b> = data ที่อ่านมา/จะเขียน · <b>IOAR</b> = address อุปกรณ์ I/O · <b>IOBR</b> = data แลกกับ I/O · <b>AC</b> = accumulator</li>
+<li><b>State diagram</b>: Instruction address calc → <b>Instruction fetch</b> → Instruction operation <b>decoding</b> → Operand address calc → <b>Operand fetch</b> (หลาย operand วนได้) → <b>Data operation</b> → Operand address calc → <b>Operand store</b> (หลาย result วนได้) → <b>Interrupt check</b> (ไม่มี → คำสั่งถัดไป · มี → ทำ ISR)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> คำสั่ง 16 บิต = <b>opcode 4 บิต + address 12 บิต</b> · <code>0001</code> Load AC←M · <code>0010</code> Store AC→M · <code>0101</code> Add M ใส่ AC<br>Mem: 300:<code>1940</code> 301:<code>5941</code> 302:<code>2941</code> · 940:<code>0003</code> 941:<code>0002</code><br>PC=300 → IR=1940 (Load, addr 940) → AC=0003 → PC=301, IR=5941 → AC=3+2=<b>0005</b> → PC=302, IR=2941 → M[941]=0005</div>
+</div></div>
