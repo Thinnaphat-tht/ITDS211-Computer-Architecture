@@ -1,0 +1,20 @@
+<div class="sec"><h3><i>Ch02</i>Bus · Arbitration<em>★ Daisy chain = priority</em></h3><div class="bd">
+<ul class="l">
+<li><b>Address bus</b> บอกตำแหน่งใน Memory</li>
+<li><b>Data bus</b> ส่งข้อมูล</li>
+<li><b>Control bus</b> สัญญาณเปิด/ปิด/เลือกอุปกรณ์</li>
+<li><b>Point-to-point</b>: แยกทุกหน้าที่ ง่ายสุดแต่ <b>เปลืองเส้น</b></li>
+<li><b>Multipoint</b>: ประหยัด (ไฮเวย์ + ซอย) แต่ต้องมี <b>โปรโตคอลควบคุม</b></li>
+</ul>
+<table class="t"><tr><th style="width:30%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>1 Daisy chain</b></td><td>ตาม <b>priority</b> (CPU &gt; Memory &gt; I/O)<br><b>นิยมสุด ใช้ถึงวันนี้</b><br>ข้อเสีย: priority ต่ำแทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>2 Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>ตัวควบคุมกลาง</b></td></tr>
+<tr><td><b>3 Distributed self-detection</b></td><td>ไม่มีตัวกลาง ตัดสินกันเอง เช็กเองว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>4 Distributed + collision detection</b></td><td>เหมือน 3 + ตรวจจับการชน ถ้าชน <b>ส่งซ้ำ</b></td></tr></table>
+<ul class="l">
+<li><b class="s">★</b> ตัวเลือกว่าอุปกรณ์ไหนได้ใช้ bus = <b>Bus Arbitrator</b></li>
+<li><b>⚠ ไม่ใช่</b> Control Unit และ <b>ไม่ใช่</b> control line</li>
+<li>การ์ดจอเสียบเมนบอร์ดผ่าน <b>PCIe</b></li>
+<li><b>InfiniBand</b> = I/O ความเร็วสูงสุด ใช้กับ GPU ↔ memory</li>
+</ul>
+</div></div>

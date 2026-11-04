@@ -1,0 +1,13 @@
+<div class="sec"><h3><i>Ch08</i>Parallel Processors<em>★ Flynn · SMP/Cluster · Vector · GPU</em></h3><div class="bd">
+<table class="t"><tr><th style="width:11%">Flynn</th><th>ความหมาย</th><th style="width:25%">ตัวอย่าง</th></tr>
+<tr><td><b>SISD</b></td><td><b>1 คำสั่ง 1 ข้อมูล</b> (CPU ปกติ) ⚠ ไม่ใช่ประมวลผลหลายคำสั่งพร้อมกัน</td><td>Pentium 4</td></tr>
+<tr><td><b>SIMD</b></td><td><b>1 คำสั่ง หลายข้อมูล</b>พร้อมกัน: vector/array processor, <b>GPU</b></td><td>SSE (x86), GPU</td></tr>
+<tr><td><b>MISD</b></td><td>หลายคำสั่ง 1 ข้อมูล — <b>แทบไม่มี/ไม่มีเลยแล้ว</b></td><td>–</td></tr>
+<tr><td><b>MIMD</b></td><td>หลายคำสั่ง หลายข้อมูล: <b>Shared memory (SMP)</b> หรือ <b>Distributed memory (cluster)</b></td><td>Xeon e5345</td></tr></table>
+<ul class="l">
+<li><b>Multi-core</b> = duplicate core จริง ๆ ทำงานขนาน (≠ แบ่ง task บน resource เดียว/VM) · <b>Multithreading</b> = replicate register+PC สลับ thread เร็ว: <b>Fine-grain</b> (สลับทุก cycle) · <b>Coarse-grain</b> (สลับเมื่อ stall ยาว เช่น L2 miss; ไม่ซ่อน stall สั้น) · <b>SMT</b> (คำสั่งจากหลาย thread รันพร้อมกันบน function unit ที่ว่าง; Intel Hyper-Threading 2 thread)</li>
+<li><b>Vector processor</b>: function unit pipelined ลึก · <b>vector register</b> (RISC-V: v0–v31, 32×64-element) · ลดการ fetch คำสั่ง · เหมาะ data-parallel: <b>multiply–accumulate</b> (digital filter, ภาพ, linear algebra — ตย. <b>DAXPY</b>: Y = a×X + Y) · vector = ความกว้างปรับได้ + stride ≠ multimedia SIMD (SSE/MMX 128 บิต กว้างคงที่)</li>
+<li><b>Shared memory</b> (SMP: hardware ให้ address space เดียว, sync ด้วย lock; UMA/NUMA): ✓ ไม่ต้อง duplicate/ไม่ต้อง sync ข้อมูล ✗ ทุก core <b>รุมเข้า memory ตัวเดียว</b> · <b>Distributed memory</b> (แต่ละตัวมี memory เอง = <b>cluster</b>, message passing): ✗ sync/update ยาก ✓ scalable/ถูก/availability สูง · cluster = คอมพิวเตอร์อิสระ+OS ของตัวเอง ต่อด้วย Ethernet (loosely coupled) · Grid computing เช่น SETI@home</li>
+<li>ปัญหา parallel programming: <b>Partitioning · Coordination · Communications overhead</b> · SPMD = Single Program Multiple Data · topology: Bus · Ring · 2D Mesh · N-cube · Fully connected · benchmark: Linpack · SPECrate · SPLASH · NAS · PARSEC · performance model: GFLOPs, arithmetic intensity = FLOPs/byte (Roofline)</li>
+</ul>
+</div></div>

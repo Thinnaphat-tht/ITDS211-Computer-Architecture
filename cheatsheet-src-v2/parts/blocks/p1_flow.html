@@ -1,0 +1,20 @@
+<div class="sec"><h3><i>Ch01–02</i>CPU ทำงานยังไง · Register<em>★ ดู flow ให้ออก</em></h3><div class="bd">
+<svg class="dg" viewBox="0 0 200 34" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="22.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Fetch</text><text x="22" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">PC → Mem → IR</text><rect x="54" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="74.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Decode</text><text x="74" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">แยก opcode</text><rect x="106" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="126.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Execute</text><text x="126" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">ALU คำนวณ</text><rect x="158" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="178.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Store</text><text x="178" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">ผลลง Reg/Mem</text><line x1="42" y1="8.5" x2="54" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="94" y1="8.5" x2="106" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="146" y1="8.5" x2="158" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><path d="M178 24 V31 H22 V24" fill="none" stroke="#1d4ed8" stroke-width=".7" stroke-dasharray="2 1.4" marker-end="url(#ar)"/><text x="100" y="29.3" text-anchor="middle" font-size="4.6" fill="#52627f">วนซ้ำ · PC ชี้คำสั่งถัดไป</text></svg><ul class="l">
+<li><b>CPU</b> = Control Unit + ALU + Registers + Bus</li>
+<li>วงจร: <b>Fetch → Decode → Execute → Store</b> (Write back)</li>
+<li><b>PC</b> เก็บ <b>ตำแหน่ง</b>คำสั่งถัดไป</li>
+<li><b>IR</b> เก็บ<b>คำสั่งที่ fetch มาแล้ว</b></li>
+<li><b>Status/Flag</b> เก็บ overflow, negative</li>
+<li><b>MAR</b> = address ใน Memory</li>
+<li><b>MBR</b> = data ที่เข้า/ออก Memory</li>
+<li><b>IOAR</b> = address ของ I/O</li>
+<li><b>IOBR</b> = data ที่รับจาก I/O</li>
+</ul>
+<div class="ex"><b>★ ตัวอย่างอาจารย์ (assignment)</b>
+<ul class="l">
+<li>PC = 300 → Mem[300] = <b>1940</b> → โหลดเข้า <b>IR</b></li>
+<li>1940: <b>4 บิตบน = opcode</b> (0001 = Load AC จาก Memory)</li>
+<li>ที่เหลือ <b>940 = address</b> ของข้อมูล</li>
+<li>Mem[940] = 0003 → <b>AC = 0003</b></li>
+</ul></div>
+</div></div>

@@ -1,0 +1,6 @@
+<div class="sec"><h3><i>สูตร</i>รวมสูตรที่ใช้คำนวณ<em>Quick reference</em></h3><div class="bd"><table class="t">
+<tr><td><b>Perf / CPU time</b></td><td>Perf<sub>X</sub>/Perf<sub>Y</sub> = Time<sub>Y</sub>/Time<sub>X</sub> · <b>CPU time = IC × CPI × Cycle time</b> · CPI เฉลี่ย = Σ CPI<sub>i</sub>×IC<sub>i</sub>/IC</td></tr>
+<tr><td><b>Cache</b></td><td>Block addr = floor(addr/B) · index = Block addr mod #blocks · offset = log₂B · index = log₂#blocks · <b>AMAT = hit + miss rate × penalty</b></td></tr>
+<tr><td><b>Disk / Pipeline</b></td><td>Access = seek + <b>0.5/(rpm/60)</b> + size/rate + controller · T<sub>c</sub> = stage ช้าสุด · เวลา = (n+k−1)×T<sub>c</sub></td></tr>
+<tr><td><b>Data rep</b></td><td>2's: −x = ~x+1 · ช่วง −2<sup>n−1</sup>…2<sup>n−1</sup>−1 · SM/1's: ±(2<sup>n−1</sup>−1) · IEEE: (−1)<sup>S</sup>×1.m×2<sup>E−127</sup></td></tr>
+<tr><td><b>RISC-V / อื่น ๆ</b></td><td>shift i บิต = ×/÷2<sup>i</sup> · branch target = PC + imm×2 · array offset = index×8 · Availability = MTTF/(MTTF+MTTR)</td></tr></table></div></div>

@@ -1,0 +1,14 @@
+<div class="sec"><h3><i>Ch04</i>Memory Hierarchy<em>★ “ให้จำรูปพีระมิดเอาไว้”</em></h3><div class="bd">
+<div class="pyr">
+<div class="pr" style="--t:30;--b:44"><div class="sh" style="background:#0b2a6f">Registers</div><div class="ds"><b>เร็วสุด · แพงสุด · จุน้อยสุด</b> (ใน CPU)</div></div>
+<div class="pr" style="--t:44;--b:58"><div class="sh" style="background:#1e40af">Cache</div><div class="ds"><b>SRAM</b> 0.5–2.5 ns · $2000–5000/GB</div></div>
+<div class="pr" style="--t:58;--b:72"><div class="sh" style="background:#2563eb">Main memory</div><div class="ds"><b>DRAM</b> 50–70 ns · $20–75/GB</div></div>
+<div class="pr" style="--t:72;--b:86"><div class="sh" style="background:#5b8def;color:#06214f">Disk · CD · DVD · Blu-ray</div><div class="ds"><b>Magnetic disk</b> 5–20 ms · $0.20–2/GB</div></div>
+<div class="pr" style="--t:86;--b:100"><div class="sh" style="background:#9dbcf5;color:#06214f">Magnetic tape</div><div class="ds"><b>ช้าสุด · ถูกสุด · จุมากสุด</b> (off-line)</div></div>
+</div>
+<ul class="l">
+<li><b>Inboard memory</b> = Register + Cache + Main memory · <b>Outboard storage</b> = disk/optical · <b>Off-line</b> = tape (big data center) · <b>Cache</b>: L1 ชิด CPU ก้อนเดียวกัน, L2/L3 อยู่นอก core · <b>บน</b> = เร็ว/แพง/จุน้อย · <b>ล่าง</b> = ช้า/ถูก/จุมาก · SRAM เร็วกว่า DRAM ~<b>100 เท่า</b> (transistor on-off ไม่กี่ตัว) แต่แพงกว่า · <b>DRAM</b> = ประจุใน capacitor ต้อง <b>refresh</b> ตลอด ช้ากว่า ถูกกว่า</li>
+<li><b>RAM</b> = ชั่วคราว (volatile) · <b>ROM</b> = ถาวร ปิดไฟข้อมูลยังอยู่ · <b>Flash</b> (nonvolatile; เร็วกว่า disk 100–1000×; $/GB ระหว่าง disk กับ DRAM; สึกหรอ → wear leveling): <b>NOR</b> random access ใช้เก็บคำสั่งใน embedded · <b>NAND</b> หนาแน่น/ถูก เขียนทีละ block (USB, media)</li>
+<li>Locality: <b>Temporal</b> = ของที่เพิ่งใช้ มักถูกใช้ซ้ำเร็ว ๆ (loop) · <b>Spatial</b> = ของใกล้ ๆ ที่เพิ่งใช้ มักถูกใช้ตาม (array, คำสั่งต่อเนื่อง)</li>
+</ul>
+</div></div>

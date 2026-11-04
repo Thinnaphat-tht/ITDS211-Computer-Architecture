@@ -1,0 +1,15 @@
+<div class="sec"><h3><i>Ch05</i>I/O<em>★ DMA เร็วสุด</em></h3><div class="bd">
+<ul class="l">
+<li><b>I/O module</b> 5 หน้าที่:</li>
+<li class="in">Control &amp; timing</li>
+<li class="in">สื่อสารกับ processor</li>
+<li class="in">สื่อสารกับ device</li>
+<li class="in">Data buffering (I/O ช้ากว่า memory จึงต้องมี buffer)</li>
+<li class="in">Error detection</li>
+<li>I/O command 4 แบบ: <b>Control · Test · Read · Write</b></li>
+</ul>
+<table class="t"><tr><th style="width:28%">เทคนิค</th><th>หลักการ</th></tr>
+<tr><td><b>Programmed I/O</b></td><td>ง่ายสุด CPU สั่งแล้ว <b>นั่งรอ</b> → เสียเวลา CPU</td></tr>
+<tr><td><b>Interrupt-driven</b></td><td>CPU สั่งแล้ว<b>ไปทำงานอื่น</b> I/O พร้อมค่อย interrupt<br>ต้องรอ <b>จบ instruction cycle</b> ก่อนถูกขัด</td></tr>
+<tr><td><b>DMA</b></td><td><b>I/O คุย Memory ตรง</b> CPU ไม่ยุ่ง<br><b>แทรกได้ทุก slot ของ cycle</b><br>→ <b class="s">★ เร็วที่สุด</b> ใช้เป็นหลักปัจจุบัน</td></tr></table>
+</div></div>

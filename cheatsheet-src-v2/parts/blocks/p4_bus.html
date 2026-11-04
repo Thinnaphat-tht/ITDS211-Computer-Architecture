@@ -1,0 +1,20 @@
+<div class="sec"><h3><i>Ch02</i>Bus · Arbitration<em>★ Daisy chain = priority</em></h3><div class="bd">
+<ul class="l">
+<li><b>Address bus</b> บอกตำแหน่งใน Memory</li>
+<li><b>Data bus</b> ส่งข้อมูล</li>
+<li><b>Control bus</b> สัญญาณเปิด/ปิด/เลือกอุปกรณ์</li>
+<li><b>Point-to-point</b>: แยกทุกหน้าที่ ง่ายสุดแต่ <b>เปลืองเส้น</b></li>
+<li><b>Multipoint</b>: ประหยัด (ไฮเวย์ + ซอย) แต่ต้องมี <b>โปรโตคอลควบคุม</b></li>
+</ul>
+<table class="t"><tr><th style="width:30%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>1 Daisy chain</b></td><td>ตาม <b>priority</b> (CPU &gt; Memory &gt; I/O)<br><b>นิยมสุด ใช้ถึงวันนี้</b><br>ข้อเสีย: priority ต่ำแทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>2 Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>ตัวควบคุมกลาง</b></td></tr>
+<tr><td><b>3 Distributed self-detection</b></td><td>ไม่มีตัวกลาง ตัดสินกันเอง เช็กเองว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>4 Distributed + collision detection</b></td><td>เหมือน 3 + ตรวจจับการชน ถ้าชน <b>ส่งซ้ำ</b></td></tr></table>
+<svg class="dg" viewBox="0 0 200 26" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="34" height="11" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="19.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">Arbiter</text><rect x="44" y="2" width="28" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="58.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">CPU</text><rect x="80" y="2" width="34" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="97.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">Memory</text><rect x="122" y="2" width="32" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="138.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">I/O 1</text><rect x="162" y="2" width="32" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="178.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">I/O 2</text><line x1="36" y1="7.5" x2="44" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="72" y1="7.5" x2="80" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="114" y1="7.5" x2="122" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="154" y1="7.5" x2="162" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="44" y1="18" x2="194" y2="18" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><text x="119" y="23.6" text-anchor="middle" font-size="4.7" fill="#52627f">priority สูง → ต่ำ · ท้ายแถวแทบไม่ได้ใช้ bus</text></svg><ul class="l">
+<li><b class="s">★</b> ตัวเลือกว่าอุปกรณ์ไหนได้ใช้ bus = <b>Bus Arbitrator</b></li>
+<li><b>⚠ ไม่ใช่</b> Control Unit และ <b>ไม่ใช่</b> control line</li>
+<li>การ์ดจอเสียบเมนบอร์ดผ่าน <b>PCIe</b></li>
+<li><b>InfiniBand</b> = I/O ความเร็วสูงสุด ใช้กับ GPU ↔ memory</li>
+</ul>
+</div></div>

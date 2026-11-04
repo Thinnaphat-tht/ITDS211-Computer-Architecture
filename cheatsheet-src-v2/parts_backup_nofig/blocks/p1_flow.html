@@ -1,0 +1,20 @@
+<div class="sec"><h3><i>Ch01–02</i>CPU ทำงานยังไง · Register<em>★ ดู flow ให้ออก</em></h3><div class="bd">
+<ul class="l">
+<li><b>CPU</b> = Control Unit + ALU + Registers + Bus</li>
+<li>วงจร: <b>Fetch → Decode → Execute → Store</b> (Write back)</li>
+<li><b>PC</b> เก็บ <b>ตำแหน่ง</b>คำสั่งถัดไป</li>
+<li><b>IR</b> เก็บ<b>คำสั่งที่ fetch มาแล้ว</b></li>
+<li><b>Status/Flag</b> เก็บ overflow, negative</li>
+<li><b>MAR</b> = address ใน Memory</li>
+<li><b>MBR</b> = data ที่เข้า/ออก Memory</li>
+<li><b>IOAR</b> = address ของ I/O</li>
+<li><b>IOBR</b> = data ที่รับจาก I/O</li>
+</ul>
+<div class="ex"><b>★ ตัวอย่างอาจารย์ (assignment)</b>
+<ul class="l">
+<li>PC = 300 → Mem[300] = <b>1940</b> → โหลดเข้า <b>IR</b></li>
+<li>1940: <b>4 บิตบน = opcode</b> (0001 = Load AC จาก Memory)</li>
+<li>ที่เหลือ <b>940 = address</b> ของข้อมูล</li>
+<li>Mem[940] = 0003 → <b>AC = 0003</b></li>
+</ul></div>
+</div></div>

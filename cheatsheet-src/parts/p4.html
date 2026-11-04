@@ -1,0 +1,78 @@
+<section class="page">
+<div class="ph"><b>ITDS211 · หน้า 4/4 · Ch07 Pipeline · Ch08 Parallel · เช็กข้อหลอก</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง</span></div>
+<div class="cols">
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch07</i>Pipeline<em>★ 3 Hazards: Structural · Data · Control</em></h3><div class="bd">
+<ul class="l">
+<li><b>แนวคิด</b> (ซักผ้า–อบ–รีด–เก็บ): แบ่งงานเป็น stage ย่อย <b>เหลื่อมกันทำ</b> ใช้ resource คนละตัวพร้อมกัน → <b>throughput ↑</b> แต่ <b>latency ต่อคำสั่งเท่าเดิม</b> · stage ต่างกันตามชนิด CPU (RISC-V / Arm / Intel)</li>
+<li>⚠ <b>Pipeline ใช้ได้ทั้ง RISC (เช่น ARM) และ CISC (เช่น Intel)</b> ไม่ใช่เฉพาะ RISC · ลำดับ: Fetch → Decode → Execute → Write back</li>
+</ul>
+<div class="bf" style="margin-top:.6mm"><b style="flex:0 0 11mm">5 stage</b><div style="flex:1" class="r">IF<br><span class="nt">Instruction fetch</span></div><div style="flex:1" class="r">ID<br><span class="nt">Decode+reg read</span></div><div style="flex:1" class="r">EX<br><span class="nt">Execute/addr</span></div><div style="flex:1" class="r">MEM<br><span class="nt">Data memory</span></div><div style="flex:1" class="o">WB<br><span class="nt">Write result</span></div></div>
+<table class="t"><tr><th>Instr</th><th class="c">Fetch</th><th class="c">Reg read</th><th class="c">ALU</th><th class="c">Mem</th><th class="c">Reg write</th><th class="c">รวม</th></tr>
+<tr><td><b>ld</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">200</td><td class="c">100</td><td class="c"><b>800 ps</b></td></tr>
+<tr><td><b>sd</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">200</td><td class="c">–</td><td class="c"><b>700 ps</b></td></tr>
+<tr><td><b>R-format</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">–</td><td class="c">100</td><td class="c"><b>600 ps</b></td></tr>
+<tr><td><b>beq</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">–</td><td class="c">–</td><td class="c"><b>500 ps</b></td></tr></table>
+<ul class="l">
+<li><b>Single-cycle</b> T<sub>c</sub> = <b>800 ps</b> (ตามคำสั่งช้าสุด) · <b>Pipelined</b> T<sub>c</sub> = <b>200 ps</b> (ตาม stage ช้าสุด) · speedup อุดมคติ ≈ <b>จำนวน stage</b> (ซักผ้า 4 โหลด = 8/3.5 = 2.3 · ไม่หยุด = 2n/(0.5n+1.5) ≈ 4)</li>
+<li>ISA เหมาะ pipeline: ทุกคำสั่ง <b>32 บิต</b> (x86 = 1–17 byte) · format น้อยและสม่ำเสมอ · load/store addressing</li>
+<li><b>Pipeline registers</b> (IF/ID · ID/EX · EX/MEM · MEM/WB) เก็บข้อมูลจาก stage ก่อนหน้า ไม่ให้<b>ถูกคำสั่งถัดไปทับ</b> (hardware เพิ่ม = ต้นทุน) · สรุป: pipeline เพิ่ม <b>throughput</b> ไม่ใช่ latency</li>
+</ul>
+<table class="t"><tr><th style="width:17%">Hazard</th><th style="width:27%">สาเหตุ</th><th>วิธีแก้</th></tr>
+<tr><td><b>Structural</b></td><td><b>ใช้ resource ชนกัน</b> (เช่น memory เดียว: fetch ชน load/store)</td><td><b>Stall</b> (หยุด เกิด bubble จน resource ว่าง) · หรือแยก instruction/data memory (cache)</td></tr>
+<tr><td><b>Data</b></td><td>ข้อมูลยังไม่พร้อม: <code>add x19,x0,x1</code> → <code>sub x2,x19,x3</code> (sub ต้องรอ add เขียน x19 ใน WB)</td><td>① <b>Stall</b> (ง่ายสุด แต่ช้า) ② <b>Forwarding/Bypassing</b>: ส่งผลลัพธ์จาก EX ย้อนเป็น input คำสั่งถัดไปเลย ไม่รอ WB (เพิ่ม datapath) ③ <b>Code scheduling</b>: compiler/assembler จัดลำดับ ย้ายคำสั่งไม่เกี่ยวข้องมาคั่น (ไม่เพิ่ม hardware)</td></tr>
+<tr><td><b>Control</b></td><td>คำสั่งก่อนหน้าเป็น <b>branch/jump</b> → คำสั่งที่ fetch ไว้ <b>ไม่ถูกใช้</b></td><td><b>Stall/bubble</b> จน pipeline กลับปกติ (ส่วนใหญ่นิยม เพราะ prediction ต้นทุนวงจรสูง) · <b>Branch prediction</b> (เดา: static = backward taken, forward not taken · dynamic = เก็บ history ต่อ branch; ผิด → flush) · ย้าย target adder+comparator ไป ID</td></tr></table>
+<ul class="l">
+<li><b>Load-use hazard</b>: ผลจาก <code>ld</code> ได้ที่ MEM — forward ย้อนเวลาไม่ได้ → <b>stall 1 cycle</b> · ตย. code scheduling (a=b+e; c=b+f): 13 cycles → จัดใหม่ (ย้าย load x4 ขึ้น) = <b>11 cycles</b></li>
+<li>Forwarding (†รายละเอียดสไลด์): EX hazard เมื่อ EX/MEM.Rd = ID/EX.Rs1/Rs2 · MEM hazard เมื่อ MEM/WB.Rd = Rs1/Rs2 · เฉพาะ RegWrite และ Rd ≠ x0 · mux ForwardA/B: <b>00</b> = register file · <b>10</b> = EX/MEM · <b>01</b> = MEM/WB</li>
+</ul></div></div>
+
+</div>
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch08</i>Parallel Processors<em>★ Flynn · SMP/Cluster · Vector · GPU</em></h3><div class="bd">
+<table class="t"><tr><th style="width:11%">Flynn</th><th>ความหมาย</th><th style="width:25%">ตัวอย่าง</th></tr>
+<tr><td><b>SISD</b></td><td><b>1 คำสั่ง 1 ข้อมูล</b> (CPU ปกติ) ⚠ ไม่ใช่ประมวลผลหลายคำสั่งพร้อมกัน</td><td>Pentium 4</td></tr>
+<tr><td><b>SIMD</b></td><td><b>1 คำสั่ง หลายข้อมูล</b>พร้อมกัน: vector/array processor, <b>GPU</b></td><td>SSE (x86), GPU</td></tr>
+<tr><td><b>MISD</b></td><td>หลายคำสั่ง 1 ข้อมูล — <b>แทบไม่มี/ไม่มีเลยแล้ว</b></td><td>–</td></tr>
+<tr><td><b>MIMD</b></td><td>หลายคำสั่ง หลายข้อมูล: <b>Shared memory (SMP)</b> หรือ <b>Distributed memory (cluster)</b></td><td>Xeon e5345</td></tr></table>
+<ul class="l">
+<li><b>Multi-core</b> = duplicate core จริง ๆ ทำงานขนาน (≠ แบ่ง task บน resource เดียว/VM) · <b>Multithreading</b> = replicate register+PC สลับ thread เร็ว: <b>Fine-grain</b> (สลับทุก cycle) · <b>Coarse-grain</b> (สลับเมื่อ stall ยาว เช่น L2 miss; ไม่ซ่อน stall สั้น) · <b>SMT</b> (คำสั่งจากหลาย thread รันพร้อมกันบน function unit ที่ว่าง; Intel Hyper-Threading 2 thread)</li>
+<li><b>Vector processor</b>: function unit pipelined ลึก · <b>vector register</b> (RISC-V: v0–v31, 32×64-element) · ลดการ fetch คำสั่ง · เหมาะ data-parallel: <b>multiply–accumulate</b> (digital filter, ภาพ, linear algebra — ตย. <b>DAXPY</b>: Y = a×X + Y) · vector = ความกว้างปรับได้ + stride ≠ multimedia SIMD (SSE/MMX 128 บิต กว้างคงที่)</li>
+<li><b>Shared memory</b> (SMP: hardware ให้ address space เดียว, sync ด้วย lock; UMA/NUMA): ✓ ไม่ต้อง duplicate/ไม่ต้อง sync ข้อมูล ✗ ทุก core <b>รุมเข้า memory ตัวเดียว</b> · <b>Distributed memory</b> (แต่ละตัวมี memory เอง = <b>cluster</b>, message passing): ✗ sync/update ยาก ✓ scalable/ถูก/availability สูง · cluster = คอมพิวเตอร์อิสระ+OS ของตัวเอง ต่อด้วย Ethernet (loosely coupled) · Grid computing เช่น SETI@home</li>
+<li>ปัญหา parallel programming: <b>Partitioning · Coordination · Communications overhead</b> · SPMD = Single Program Multiple Data · topology: Bus · Ring · 2D Mesh · N-cube · Fully connected · benchmark: Linpack · SPECrate · SPLASH · NAS · PARSEC · performance model: GFLOPs, arithmetic intensity = FLOPs/byte (Roofline)</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch08</i>GPU<em>★ อาจารย์ปิดคลาสด้วยหัวข้อนี้</em></h3><div class="bd"><ul class="l">
+<li><b>หลักการ = SIMD</b>: คำสั่งเดียว (บวก/ลบ) ทำกับข้อมูลจำนวนมากพร้อมกัน (ตย. ลบ <b>background</b> ภาพ — pixel = array/vector) · <b>highly multithreaded</b> (สลับ thread ซ่อน memory latency) · พึ่ง multi-level cache น้อยกว่า CPU · graphics memory กว้าง/bandwidth สูง · <b>heterogeneous</b>: CPU ทำ sequential, GPU ทำ parallel · API: CUDA, OpenGL, DirectX</li>
+<li><b>Nvidia Fermi</b>: vector-based · SIMD processor 16 lanes · SIMD instruction ทำกับ 32 element รันบน 16-wide ใน 2 cycle · <b>Tesla</b>: multiprocessor (หลาย compute unit ทำร่วมกัน) · <b>DGX</b> = train AI model (แพง) · <b>รันโมเดลแล้ว</b> ใช้การ์ดจอปกติเสียบ <b>PCIe</b> ใน PC ได้</li>
+<li>Multicore SIMD vs GPU: SIMD processor 4–8 vs 8–16 · SIMD lane/processor 2–4 vs 8–16 · SIMD thread/processor 2–4 vs 16–32 · cache ใหญ่สุด 8 MB vs 0.75 MB · main memory 8–256 GB vs 4–6 GB</li>
+</ul></div></div>
+
+</div>
+</div>
+
+<div class="sec full"><h3><i>เช็กก่อนส่ง</i>ข้อหลอก / โจทย์ที่อาจารย์ถามกลับในคลาส<em>★ “คำถามสไตล์ประมาณแบบเนี้ย ไปทบทวนเนาะ”</em></h3><div class="bd"><div class="cc">
+<div>① <b>SISD</b> = 1 คำสั่ง 1 ข้อมูล (ไม่ใช่หลายคำสั่งพร้อมกัน)</div>
+<div>② <b>Pipeline</b> ใช้ได้ทั้ง RISC และ CISC · ลำดับ F → D → E → WB</div>
+<div>③ <b>Exponent</b>: single = <b>8</b> บิต · double = <b>11</b> บิต</div>
+<div>④ จุมากสุดในพีระมิด = <b>Offline / Magnetic tape</b> (ถูกสุดด้วย)</div>
+<div>⑤ <b>RAM</b> = ชั่วคราว · <b>ROM</b> = ถาวร · <b>SRAM</b> เร็วกว่า · <b>DRAM</b> ถูกกว่า</div>
+<div>⑥ miss น้อยสุด = <b>Fully associative</b> · เขียน cache: Write-through / Write-back / Write-allocate</div>
+<div>⑦ <b>Daisy chain</b> = priority · ตัวเลือกว่าใครได้ใช้ bus = <b>Bus Arbitrator</b> (ไม่ใช่ Control Unit/control line)</div>
+<div>⑧ I/O เร็วสุด = <b>DMA</b> (แทรกได้ทุก cycle) · การ์ดจอเข้าเมนบอร์ดผ่าน <b>PCIe</b></div>
+<div>⑨ <b>Track</b> = วงแหวน · <b>Sector</b> = ส่วนย่อยของ track · <b>DVD</b> density &gt; CD</div>
+<div>⑩ <b>InfiniBand</b> = ความเร็วสูงสุด (GPU↔memory/server) · <b>SSD</b> เร็ว/ประหยัดไฟกว่า แต่แพงกว่า</div>
+<div>⑪ <b>Shift ซ้าย</b> = ×2 · <b>ขวา</b> = ÷2 · <code>ADD A,B,C</code> → A = B + C · <b>LOAD</b> Mem→Reg · <b>STORE</b> Reg→Mem</div>
+<div>⑫ <b>2's complement</b>: ลบ = invert + 1 · ช่วง 8 บิต −128…+127 · Sign-Mag มี 2 ศูนย์</div>
+<div>⑬ <b>Little-endian</b> = LSB ที่ address ต่ำสุด · <b>Big</b> = MSB ที่ address ต่ำสุด</div>
+<div>⑭ <b>Cache</b>: ดู Index → เทียบ Tag → เช็ก Valid · block ใหญ่ ≠ miss น้อยเสมอ</div>
+<div>⑮ <b>CPU time</b> = IC × CPI × Cycle time · “เร็วกว่า” = เวลาน้อยกว่า</div>
+</div>
+<div class="nt" style="margin-top:.6mm"><b>ตัวเลขที่ต้องจำ</b>: Arbitration <b>4</b> · I/O module <b>5</b> หน้าที่ · I/O command <b>4</b> · เทคนิค I/O <b>3</b> · Device ID <b>4</b> · RAID <b>0–6</b> · Pipeline <b>5</b> stage / <b>3</b> hazard · Flynn <b>4</b> · opcode <b>7</b> บิต · reg <b>5</b> บิต (32 ตัว) · instruction <b>32</b> บิต · Cache miss rate 1/2/4/8-way = <b>10.3 / 8.6 / 8.3 / 8.1 %</b> · IEEE bias <b>127</b></div>
+</div></div>
+</section>

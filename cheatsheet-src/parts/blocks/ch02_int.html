@@ -1,0 +1,15 @@
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ ขั้นตอน “จำไว้เลย”</em></h3><div class="bd">
+<ul class="l">
+<li>Interrupt = ขัดจังหวะการทำงานแบบ sequence ของ CPU · ชนิด: <b>Program</b> (overflow, หาร 0, illegal instr) · <b>Timer</b> · <b>I/O</b> (เสร็จ/ขอบริการ/error) · <b>Hardware failure</b> (ไฟดับ, parity) · Hardware vs Software interrupt (system call)</li>
+</ul>
+<ol class="n">
+<li><b>เซฟ</b> context (PC/PSW, register, ตัวแปร) ไว้ก่อน</li>
+<li>ดู <b>Interrupt Vector table</b> หา <b>ISR address</b> (ใครเป็นคนเรียก)</li>
+<li>ใส่ address นั้นใน <b>PC</b> → กระโดดไปทำ <b>ISR</b> (Interrupt Service Routine)</li>
+<li>เสร็จ → <b>Restore</b> ค่าที่เซฟ แล้วกลับไปทำงานเดิมต่อ</li>
+</ol>
+<ul class="l">
+<li><b>Sequential</b>: ทำทีละตัวตามลำดับ (เกิด→ทำ→กลับ→เกิดอีก) · <b>Nested</b>: ระหว่าง ISR ของ X มี Y ซ้อน → เซฟสถานะ X → ทำ Y → คืน X → ทำ X ต่อ → return · <b>ซ้อนได้กี่ชั้นขึ้นกับ CPU</b> (จำนวนชุด register ที่เก็บ context)</li>
+<li>มักปิด interrupt ระหว่างทำ ISR (<b>maskable</b> ปิดได้ · <b>nonmaskable</b> ต้องทำ) · interrupt ต้องรอ <b>instruction cycle จบ</b></li>
+</ul>
+</div></div>

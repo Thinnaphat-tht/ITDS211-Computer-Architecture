@@ -1,0 +1,10 @@
+<div class="sec"><h3><i>Ch07</i>Hazard 3 แบบ<em>★ ถามชนิด/วิธีแก้</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">Hazard</th><th style="width:30%">เกิดเมื่อ</th><th>วิธีแก้</th></tr>
+<tr><td><b>Structural</b></td><td><b>ใช้ resource ชนกัน</b> ในเวลาเดียวกัน</td><td><b>Stall</b> (bubble) จนกว่า resource ว่าง</td></tr>
+<tr><td><b>Data</b></td><td><b>ข้อมูลยังไม่พร้อม</b><br><code>add x19,x0,x1</code><br><code>sub x2,x19,x3</code><br>(add ยังไม่ write back)</td><td>① <b>Stall</b> ง่ายสุด แต่ช้า<br>② <b>Forwarding / Bypassing</b> ส่งผล Execute <b>กลับเป็น input</b> ไม่รอ write back (เพิ่ม hardware)<br>③ <b>Code scheduling</b> compiler เอาคำสั่งไม่เกี่ยวมา<b>คั่น</b> (ไม่เพิ่ม hardware)</td></tr>
+<tr><td><b>Control</b></td><td>คำสั่งก่อนหน้าเป็น <b>branch/jump</b> → คำสั่งที่ fetch มา <b>ไม่ถูกใช้</b></td><td>① <b>Stall / bubble</b> ง่ายสุด<br>② <b>Branch prediction</b> เดาด้วยสถิติ แต่ <b>hardware แพง</b> → ส่วนใหญ่ <b>นิยม stall</b></td></tr></table>
+<ul class="l">
+<li>ทุก stage ต้องมี <b>pipeline register</b> เก็บข้อมูลจาก stage ก่อนหน้า</li>
+<li>ไม่งั้นข้อมูลถูกคำสั่งถัดไป<b>ทับ</b> (เพิ่ม hardware = ต้นทุน)</li>
+</ul>
+</div></div>

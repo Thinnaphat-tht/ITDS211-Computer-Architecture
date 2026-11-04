@@ -1,0 +1,11 @@
+<div class="sec"><h3><i>Ch01</i>Performance · CPU time · CPI<em>★ ข้อคำนวณ</em></h3><div class="bd">
+<div class="f">Performance = 1 / Execution time<br>X เร็วกว่า Y n เท่า: Perf<sub>X</sub>/Perf<sub>Y</sub> = Time<sub>Y</sub>/Time<sub>X</sub> = n &nbsp;(ตย. A 10 s, B 15 s → 15/10 = <b>1.5</b>)</div>
+<div class="f">CPU time = Clock cycles × Cycle time = Clock cycles / Clock rate<br>Clock cycles = IC × CPI ⇒ <b>CPU time = IC × CPI × Cycle time = IC × CPI / Clock rate</b></div>
+<ul class="l">
+<li>Clock rate = 1/period (250 ps = 0.25 ns · 4 GHz = 4×10⁹ Hz) · Elapsed time (รวม I/O, OS, idle) ≠ CPU time (user + system)</li>
+<li>IC ← โปรแกรม/ISA/compiler · CPI ← hardware · CPI เฉลี่ย ← instruction mix († = Σ CPI<sub>i</sub> × IC<sub>i</sub>/IC)</li>
+</ul>
+<div class="ex"><b>ตย. CPI (สไลด์)</b> ISA เดียวกัน A: 250 ps, CPI 2.0 · B: 500 ps, CPI 1.2 → A = I×2.0×250 = <b>500I</b> ps · B = I×1.2×500 = <b>600I</b> ps → <b>A เร็วกว่า 1.2 เท่า</b> (IC ตัดทิ้ง ถ้าไม่รู้ค่าติดตัวแปรไว้)</div>
+<div class="ex"><b>ตย. Clock (สไลด์)</b> A: 2 GHz, 10 s · B ต้องเสร็จใน 6 s แต่ใช้ cycles มากกว่า 1.2 เท่า → Clock rate<sub>B</sub> = 1.2×(10×2×10⁹)/6 = <b>4 GHz</b></div>
+<div class="tr">⚠ “เร็วกว่า” = ใช้เวลา<b>น้อยกว่า</b> · อ่านโจทย์ดี ๆ ว่าใครหารใคร (บัญญัติไตรยางศ์)</div>
+</div></div>
