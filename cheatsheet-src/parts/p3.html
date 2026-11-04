@@ -1,0 +1,89 @@
+<section class="page">
+<div class="ph"><b>ITDS211 · หน้า 3/4 · Ch05 I/O · Ch06 Storage</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง</span></div>
+<div class="cols">
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch05</i>I/O Module · เทคนิค 3 แบบ<em>★ DMA เร็วสุด / นิยมใช้ปัจจุบัน</em></h3><div class="bd">
+<ul class="l">
+<li><b>External device</b> 3 กลุ่ม: Human readable (จอ/คีย์บอร์ด) · Machine readable (disk/sensor) · Communication · ประกอบด้วย Control logic + <b>Buffer</b> + <b>Transducer</b> (แปลง digital↔analog) · สัญญาณ Control / Status / Data</li>
+<li><b>I/O module 5 หน้าที่</b>: ① Control &amp; timing ② Processor communication (ถอดรหัส command, ส่งข้อมูล, รายงาน status, จำ address) ③ Device communication ④ <b>Data buffering</b> (memory เร็ว I/O ช้า → balance speed) ⑤ Error detection</li>
+<li><b>I/O command 4</b>: <b>Control</b> (สั่งให้ทำ) · <b>Test</b> (ดู status) · <b>Read</b> (ดึงข้อมูลจากอุปกรณ์เข้า buffer) · <b>Write</b> (เอาข้อมูลจาก data bus ส่งอุปกรณ์) · สายของ module: Address · Control · Data</li>
+<li><b>I/O addressing</b>: <b>Memory-mapped</b> = address space เดียวกับ memory ใช้คำสั่ง memory ได้หมด ไม่มีคำสั่ง I/O พิเศษ · <b>Isolated</b> = แยก space ต้องมี I/O/memory select line + คำสั่ง I/O เฉพาะ (จำกัด)</li>
+</ul>
+<table class="t"><tr><th style="width:15%"></th><th>1 Programmed I/O</th><th>2 Interrupt-driven</th><th>3 DMA ★</th></tr>
+<tr><td><b>CPU ทำ</b></td><td>สั่งแล้ว <b>รอ</b> (วนเช็ก status) ไม่มี interrupt · ง่ายสุด</td><td>สั่งแล้ว<b>ไปทำงานอื่น</b> · I/O <b>interrupt</b> เมื่อพร้อม</td><td>ตั้งค่า block command แล้วไปทำงานอื่น · DMA interrupt ตอนจบ</td></tr>
+<tr><td><b>ข้อมูลผ่าน</b></td><td>I/O → <b>CPU</b> → memory</td><td>I/O → <b>CPU</b> → memory</td><td>I/O ↔ memory <b>ตรง</b> (CPU ไม่ยุ่ง)</td></tr>
+<tr><td><b>ข้อเสีย</b></td><td>เสียเวลา CPU · rate จำกัดด้วย CPU</td><td>CPU ยังผูกกับการโอน · rate จำกัดด้วย CPU</td><td>ต้องมี DMA controller · flow ฝั่ง CPU ง่ายสุด</td></tr></table>
+<ul class="l">
+<li><b>ทำไม DMA เร็วสุด ★</b>: คุยกับ memory ได้<b>ทุก slot ของ processor cycle</b> (breakpoint ก่อน fetch / หลัง decode / fetch operand / execute / store) ผ่าน hardware bus ตรง · ส่วน <b>interrupt ต้องรอ instruction cycle จบ</b> (เช่น pipeline 4–5 stage ต้องรอครบ) · DMA module: Data count · Data register · Address register · Control logic</li>
+<li>DMA config 3 แบบ: single-bus <b>detached</b> DMA · single-bus <b>integrated DMA-I/O</b> · <b>I/O bus</b> · ตย. chip 8237 (HRQ/HLDA, DREQ/DACK) · Direct Cache Access (DCA/DDIO) ใช้กับ network 10–100 Gbps</li>
+<li>วิวัฒนาการ I/O 6 ขั้น: CPU คุมตรง → controller + programmed I/O → interrupt → DMA → <b>I/O channel</b> (module เป็น processor เฉพาะ) → <b>I/O processor</b> (มี local memory)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch05</i>Interrupt-driven · Device Identification<em>★ 4 แบบ</em></h3><div class="bd">
+<ul class="l">
+<li><b>เมื่อเกิด interrupt</b>: เก็บ <b>PC + status register (PSW)</b> ลง stack → PC ← จุดเริ่ม ISR → รัน ISR → <b>return</b>: คืน PC เดิม + คืนค่าใน stack ทั้งหมด แล้วทำงานเดิมต่อ · ปัญหาออกแบบ 2 ข้อ: ใครเป็นคน interrupt? · ถ้ามีหลายตัวทำตัวไหนก่อน?</li>
+</ul>
+<table class="t"><tr><th style="width:27%">Device identification</th><th>หลักการ</th></tr>
+<tr><td><b>1 Multiple interrupt lines</b></td><td>แยกเส้น interrupt คนละเส้น รู้ทันทีว่าใคร · ข้อเสีย: I/O เยอะ เส้นเยอะ</td></tr>
+<tr><td><b>2 Software poll</b></td><td>กระโดดไป routine ที่<b>ไล่ถามทีละ I/O module</b> ว่าใครเรียก · ช้า</td></tr>
+<tr><td><b>3 Daisy chain</b></td><td>(<b>hardware poll</b>, vectored) <b>priority</b> · interrupt acknowledge ส่งต่อเป็นลูกโซ่ · vector = address/ID ของ module</td></tr>
+<tr><td><b>4 Bus arbitration</b></td><td>(vectored) module ต้อง<b>ขอคุม bus ก่อน</b> จึงยก interrupt request · ได้รับตอบแล้วส่ง <b>vector</b> ผ่านสาย data/address</td></tr></table>
+<ul class="l"><li>ต่อ I/O เยอะ: ตัวเลือก <b>8-to-1</b> (mux) เลือกได้ทีละ 1 · I/O <b>64</b> ตัว = 8 ชุด 8-to-1 + อีก 1 ตัวเลือกจาก 8 กลุ่ม (<b>master/slave</b> interrupt controller, ตย. 82C59A)</li></ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch05</i>I/O Standards<em>★ assignment: USB vs SCSI · Thunderbolt · InfiniBand</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">มาตรฐาน</th><th>จุดสำคัญ (ตามสไลด์)</th></tr>
+<tr><td><b>USB</b></td><td>1.0: Low 1.5 / Full 12 Mbps · 2.0: <b>480 Mbps</b> · 3.0/3.1 Gen1: <b>5 Gbps</b> (SuperSpeed) · 3.1 Gen2: 10 Gbps · 3.2 Gen2×2: 20 Gbps · root host controller · tree (hierarchical) · hot-plug</td></tr>
+<tr><td><b>SCSI</b></td><td><b>shared bus</b> 16/32 อุปกรณ์ · ส่งแบบ <b>parallel</b> (bus 16 → 32 บิต) · 5 Mbps (SCSI-1) → 160 Mbps (Ultra3) · เสียความนิยมให้ USB/FireWire · ยังใช้กับ enterprise mass storage</td></tr>
+<tr><td><b>FireWire</b></td><td>IEEE 1394 · ทางเลือกแทน SCSI · <b>daisy chain</b> ≤ 63 อุปกรณ์/port · hot plug · auto config · ไม่ต้อง terminator</td></tr>
+<tr><td><b>Thunderbolt</b></td><td>Intel+Apple · ≤ <b>10 Gbps</b> ต่อทิศ · ≤ 10 W · รวม data+video+audio+power ในสายเดียว</td></tr>
+<tr><td><b>InfiniBand</b></td><td><b>high-end server</b> · switch-based fabric ต่อได้ราว <b>64,000</b> อุปกรณ์ · storage area network · ★ อาจารย์: ใช้กับ <b>GPU ↔ memory ที่ต้องการความเร็วสูงสุด</b></td></tr>
+<tr><td><b>PCI Express</b></td><td>high-speed bus หลายชนิดอุปกรณ์ · ★ <b>การ์ดจอ (GPU) ต่อเมนบอร์ดผ่าน PCIe</b> (ไม่ใช่ USB/FireWire/Thunderbolt)</td></tr>
+<tr><td><b>SATA / Eth / Wi-Fi</b></td><td>SATA = disk ≤ 6 Gbps · Ethernet ≤ 100 Gbps (switch-based) · Wi-Fi 802.11ac ≤ 3.2 Gbps</td></tr></table>
+</div></div>
+
+</div>
+
+<div class="col">
+
+<div class="sec"><h3><i>Ch06</i>Hard Disk<em>★ storage ออกไม่เยอะ เน้น “หลักการอ่าน/เขียน”</em></h3><div class="bd">
+<ul class="l">
+<li><b>เขียน</b>: จ่ายกระแสเข้าหัวเขียน (ขดลวด) → เกิด<b>สนามแม่เหล็ก</b> → จัดทิศอนุภาคบนผิว platter ซ้าย/ขวา = <b>0/1</b> · <b>อ่าน</b>: ขดลวดหัวอ่าน<b>เหนี่ยวนำ</b>ดูทิศ (inductive write / magnetoresistive read) · platter เคลือบวัสดุแม่เหล็ก · <b>1 head ต่อ 1 surface</b> · หัวแบบ Winchester ลอยด้วยแรงลม (aerodynamic)</li>
+<li><b>Platter</b> → <b>Track</b> (วงแหวนหนึ่งวง) → <b>Sector</b> (<b>ส่วนย่อยของ track</b> ⚠ ไม่ใช่กลุ่มของ track) · <b>Cylinder</b> = track ตำแหน่งเดียวกันทุก platter · มี gap ระหว่าง track/sector · sector ≈ 512 B (ใหม่ 4096) + ID + ECC</li>
+<li><b>Constant angular velocity</b> (หั่นเค้ก sector ขนาดไม่เท่ากัน) vs <b>Multiple-zone recording</b> (density/sector ใกล้เคียงกัน ดีกว่า · <b>ปัจจุบันใช้แบบนี้</b>)</li>
+<li>Seek time = เลื่อนหัวไปถึง track · Rotational delay = รอต้น sector มาถึงหัว · <b>Access time = seek + rotational delay</b> · transfer time = อ่านข้อมูลเมื่ออยู่ถูกตำแหน่ง</li>
+</ul>
+<div class="f">Disk access = queuing + seek + rotational latency + transfer + controller overhead<br>Rotational latency เฉลี่ย = ½ รอบ = 0.5 / (rpm/60)</div>
+<div class="ex"><b>ตย. สไลด์</b> sector 512 B, 15,000 rpm, seek เฉลี่ย 4 ms, transfer 100 MB/s, controller 0.2 ms, disk ว่าง → 4 + <b>2</b> + 0.005 + 0.2 = <b>6.2 ms</b> (rotational = 0.5/(15000/60) = 2 ms · ถ้า seek จริง 1 ms → <b>3.2 ms</b>)</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch06</i>RAID 0–6<em>★ Redundant Array of Independent Disks</em></h3><div class="bd">
+<div class="nt">3 ลักษณะ: ① OS เห็นเป็น logical drive เดียว ② data กระจายข้าม drive (<b>striping</b>) ③ มี capacity ส่วนเกินเก็บ <b>parity</b> กู้ข้อมูลได้ · N = จำนวน data disk</div>
+<table class="t"><tr><th class="c" style="width:4%">L</th><th style="width:28%">หลักการ · จำนวนดิสก์</th><th>ข้อดี / ข้อเสีย / ใช้กับ</th></tr>
+<tr><td class="c"><b>0</b></td><td><b>Striping</b> ไม่ redundant · N</td><td>I/O สูงมาก ง่าย ไม่มี parity · แต่ <b>ดิสก์เดียวเสีย = ข้อมูลทั้ง array หาย</b> · video/image editing</td></tr>
+<tr><td class="c"><b>1</b></td><td><b>Mirroring</b> (copy ซ้ำ) · 2N</td><td>redundant 100% ไม่ต้อง rebuild · read ได้จากดิสก์ใดก็ได้ · แต่ <b>overhead สูงสุด</b> · accounting/payroll</td></tr>
+<tr><td class="c"><b>2</b></td><td>Parallel access + <b>Hamming code</b> (ECC) · N+m (m∝log N)</td><td>transfer สูงมาก · แต่ ECC disk เยอะ ไม่คุ้ม · <b>ไม่มีใช้เชิงพาณิชย์</b></td></tr>
+<tr><td class="c"><b>3</b></td><td>Parallel access, parity <b>ระดับ bit/byte</b> · <b>ดิสก์ parity เดียว</b> · N+1</td><td>transfer สูงสุด · ดิสก์เสียแทบไม่กระทบ · แต่ transaction rate ≈ ดิสก์เดียว · video streaming</td></tr>
+<tr><td class="c"><b>4</b></td><td>Independent access, parity ระดับ <b>block</b> · <b>parity disk แยก</b> · N+1</td><td>read สูง · แต่ <b>write penalty</b> (อ่าน 2 เขียน 2) <b>parity disk = bottleneck</b> · ไม่มีใช้</td></tr>
+<tr><td class="c"><b>5</b></td><td>block parity <b>กระจาย (distributed) ทุกดิสก์</b> · N+1</td><td>read สูงสุด ไม่มี bottleneck · เขียนช้ากว่า rebuild ยาก · file/database/web server · <b>versatile สุด</b></td></tr>
+<tr><td class="c"><b>6</b></td><td>block parity <b>2 ชุด</b> (dual distributed) · N+2</td><td>ทน<b>ดิสก์เสีย 2 ตัวพร้อมกัน</b> availability สูงสุด · controller ซับซ้อน write penalty สูง · mission critical</td></tr></table>
+</div></div>
+
+<div class="sec"><h3><i>Ch06</i>SSD · Optical · Tape<em>★ SSD ดีกว่า HDD (แต่แพง) · tape ถูกสุด</em></h3><div class="bd">
+<ul class="l">
+<li><b>SSD vs HDD</b>: SSD <b>เร็วกว่า</b> (IOPS สูง, latency ต่ำ) · <b>ประหยัดไฟ</b> · ทน/เงียบ/เย็น · อายุยาว แต่ <b>แพงกว่า/GB</b> · ปัญหา: เขียนช้าลง (ต้องอ่านทั้ง block → ลบ → เขียนกลับ) · flash <b>สึกหรอ</b> ตามจำนวนเขียน → <b>wear leveling</b>, bad-block mgmt, cache รวมเขียน · สถาปัตยกรรม: Host → interface → <b>SSD controller</b> (addressing, buffer, ECC) → flash</li>
+<li>สไลด์ Table 6.5: copy/write <b>200–550</b> vs 50–120 Mbps · ไฟ 2–3 W vs 6–7 W · ≈ $0.50 vs $0.15 /GB</li>
+</ul>
+<table class="t"><tr><th style="width:15%">Optical</th><th>ข้อมูล</th></tr>
+<tr><td><b>CD</b></td><td>12 cm · CD-ROM ≈ 650–682 MB · laser <b>780 nm</b> · CD-ROM อ่านอย่างเดียว (pit บน polycarbonate) · CD-R เขียนครั้งเดียว (dye) · CD-RW เขียนซ้ำ (phase change: amorphous สะท้อนน้อย / crystalline สะท้อนดี)</td></tr>
+<tr><td><b>DVD</b></td><td>laser <b>650 nm</b> · 2 หน้า 2 ชั้น สูงสุด <b>17 GB</b> · มี DVD-R/RW/RAM</td></tr>
+<tr><td><b>Blu-ray</b></td><td>laser <b>405 nm</b> (blue-violet) · 1 ชั้น 1 หน้า <b>25 GB</b></td></tr></table>
+<div class="tr">⚠ <b>CD vs DVD ★</b>: ทางกายภาพแผ่นกลมเหมือนกัน ต่างที่ <b>sector/pit ของ DVD เล็กกว่า → density มากกว่า → เก็บได้มากกว่า</b> (sector CD ใหญ่/ห่างกว่า)</div>
+<ul class="l"><li><b>Magnetic tape ★</b>: <b>ถูกที่สุด · จุมากสุดในพีระมิด · offline</b> storage (big data center) · เข้าถึง<b>แบบ serial</b> · track ขนานตามความยาว · serpentine recording · LTO-1 (2000) 200 GB → LTO-8 32 TB (compressed)</li></ul>
+</div></div>
+
+</div>
+</div>
+</section>

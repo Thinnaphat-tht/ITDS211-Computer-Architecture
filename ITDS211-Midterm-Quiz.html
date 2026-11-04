@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ITDS211 ข้อสอบกลางภาค</title>
+<script>try{var t=localStorage.getItem('itds211.theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* พาเลตต์เดียวกับ ITDS211-Summary.html: navy header · ฟ้าอ่อน · ปุ่มน้ำเงิน */
+:root{
+  --bg:#f4f8fc; --surface:#ffffff; --surface2:#e9f0f8; --ink:#0f2540; --muted:#55677d;
+  --line:#dbe5f0; --accent:#1565a8; --accent-ink:#ffffff; --accent-soft:#e1edf9;
+  --navy:#0f2a4a; --navy-ink:#ffffff;
+  --key:#e4eefb; --key-b:#1565a8; --formula:#fdf0dc; --formula-b:#c27a12;
+  --ex:#e3f3ea; --ex-b:#2f8f5b; --warn:#fde8e4; --warn-b:#c2410c;
+  --code-bg:#0f2540; --code-ink:#e6eefb;
+  --skyc:#e9f1fa;
+  --shadow:0 1px 2px rgba(15,37,64,.06),0 8px 22px rgba(15,37,64,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#0c1726; --surface:#13233a; --surface2:#1a3050; --ink:#e7eef8; --muted:#9bb0c8;
+  --line:#25405f; --accent:#5aa9ea; --accent-ink:#06192e; --accent-soft:#183a5f;
+  --navy:#08111e; --navy-ink:#ffffff;
+  --key:#142f4f; --key-b:#5aa9ea; --formula:#3a2d12; --formula-b:#e0a82e;
+  --ex:#12362a; --ex-b:#4fc489; --warn:#3a1f19; --warn-b:#f08a5d;
+  --code-bg:#08111e; --code-ink:#d8e6f6;
+  --skyc:#10243d;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "IBM Plex Sans Thai",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+code,pre{font-family:"JetBrains Mono",ui-monospace,monospace}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+main.wrap{padding-bottom:80px}
+
+/* topbar navy เหมือน Summary */
+.topbar{position:sticky;top:0;z-index:20;background:var(--navy);color:var(--navy-ink);box-shadow:0 2px 10px rgba(15,37,64,.12)}
+.topbar .in{max-width:820px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.brand{font-weight:700;color:var(--navy-ink);text-decoration:none;white-space:nowrap;display:flex;align-items:center}
+.brand span{opacity:.75;font-weight:500;margin-left:.35em}
+.brand::before{content:"M";display:inline-grid;place-items:center;width:30px;height:30px;margin-right:10px;border-radius:8px;background:rgba(255,255,255,.14);font-weight:700}
+.topbar .sp{flex:1}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-height:42px;padding:0 14px;border-radius:10px;font-size:.92rem;text-decoration:none;display:inline-flex;align-items:center}
+.btn:hover{border-color:var(--accent)}
+.topbar .btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22);min-height:40px}
+.topbar .btn:hover{border-color:#fff}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.btn.danger.armed{background:var(--warn-b);color:#fff;border-color:var(--warn-b)}
+.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* hero พื้นฟ้าอ่อน */
+.hero{background:var(--skyc);padding:30px 0 24px;margin-bottom:18px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--navy);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+:root[data-theme="dark"] .eyebrow{color:var(--accent)}
+.hero h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.2;margin:.2em 0 .3em;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin:0;color:var(--muted);max-width:60ch;font-size:1rem}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.tab{border:1px solid transparent;background:var(--surface);box-shadow:var(--shadow);border-radius:14px;padding:12px 14px;text-align:left;min-height:68px}
+.tab b{display:block;font-size:.98rem}
+.tab span{display:block;font-size:.8rem;color:var(--muted)}
+.tab:hover{border-color:var(--accent)}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.tab[aria-selected="true"] span{color:rgba(255,255,255,.75)}
+:root[data-theme="dark"] .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+:root[data-theme="dark"] .tab[aria-selected="true"] span{color:var(--accent-ink);opacity:.8}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.tab[aria-selected="true"] .bar{background:rgba(255,255,255,.25)}
+.tab[aria-selected="true"] .bar i{background:#fff}
+:root[data-theme="dark"] .tab[aria-selected="true"] .bar{background:rgba(6,25,46,.25)}
+:root[data-theme="dark"] .tab[aria-selected="true"] .bar i{background:var(--accent-ink)}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px;align-items:center}
+.tools .sp{flex:1}
+details.sum{background:var(--surface);box-shadow:var(--shadow);border-radius:14px;padding:0 16px;margin-bottom:16px}
+details.sum summary{cursor:pointer;min-height:50px;display:flex;align-items:center;font-weight:600}
+.sumgrid{display:grid;gap:10px;padding:2px 0 16px}
+.sumgrid .note{color:var(--muted);font-size:.85rem;margin-top:4px}
+.srow{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:.9rem}
+.srow .bar{margin:0}
+.srow em{font-style:normal;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.card{background:var(--surface);box-shadow:var(--shadow);border:1px solid transparent;border-radius:14px;padding:18px;margin-bottom:14px}
+.card.ok{border-color:var(--ex-b)}
+.card.bad{border-color:var(--warn-b)}
+.qhead{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:.82rem;color:var(--muted)}
+.qnum{font-weight:700;color:var(--accent)}
+.chip{background:var(--key);color:var(--key-b);border-radius:99px;padding:0 10px;font-weight:600;font-size:.78rem}
+.qtext{margin:0 0 10px;font-weight:500}
+pre.code{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:12px 14px;overflow-x:auto;margin:0 0 12px;font-size:.88rem;line-height:1.55}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;min-height:46px}
+.opt .l{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:.82rem;font-weight:600;margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ex);border-color:var(--ex-b)}
+.opt.right .l{background:var(--ex-b);border-color:var(--ex-b);color:var(--surface)}
+.opt.wrong{background:var(--warn);border-color:var(--warn-b)}
+.opt.wrong .l{background:var(--warn-b);border-color:var(--warn-b);color:var(--surface)}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem;border-left:4px solid}
+.fb.ok{background:var(--ex);border-color:var(--ex-b)}
+.fb.bad{background:var(--warn);border-color:var(--warn-b)}
+.fb strong{display:block;margin-bottom:2px}
+.help{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.exp{margin-top:10px;background:var(--key);border-left:4px solid var(--key-b);border-radius:10px;padding:10px 14px;font-size:.95rem}
+.exp h4{margin:0 0 4px;font-size:.9rem;color:var(--accent)}
+.ask{margin-top:12px}
+.ask textarea{width:100%;min-height:72px;resize:vertical;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit}
+.ask .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.ask .ans{white-space:pre-wrap;margin-top:10px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:.95rem}
+.ask .note{color:var(--muted);font-size:.82rem}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+@media (max-width:560px){
+  .srow{grid-template-columns:1fr 80px}
+  .srow .bar{grid-column:1 / -1;order:3}
+  .brand span{display:none}
+  .tab span:nth-of-type(1){font-size:.74rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <a class="brand" href="ITDS211-Summary.html">ITDS-211 <span>Computer Architecture</span></a>
+  <span class="sp"></span>
+  <a class="btn" href="ITDS211-Summary.html">← สรุปบทเรียน</a>
+  <button class="btn" id="themeBtn" type="button" aria-label="สลับธีมสว่าง/มืด">🌙 ธีม</button>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">ITDS-211 · Midterm Practice</div>
+  <h1>ข้อสอบ<em>กลางภาค</em></h1>
+  <p>ข้อสอบจำลอง 3 ชุด ชุดละ 30 ข้อ (รวม 90 ข้อ) แต่ละชุดครอบคลุม Ch01–08 โดย Ch03 กับ Ch04 ออกมากสุด กดตอบแล้วรู้ผลทันที ข้อสอบนี้ Claude แต่งเองจากสไลด์และสรุป ไม่ใช่ข้อสอบจริงของอาจารย์</p>
+</div></div>
+
+<main class="wrap">
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <details class="sum" id="sum">
+    <summary>สรุปคะแนน (รายชุดและรายบท)</summary>
+    <div class="sumgrid" id="sumgrid"></div>
+  </details>
+
+  <div class="tools">
+    <button class="btn" id="fWrong" type="button" aria-pressed="false">เฉพาะข้อที่ผิด</button>
+    <button class="btn" id="fTodo" type="button" aria-pressed="false">เฉพาะข้อที่ยังไม่ทำ</button>
+    <span class="sp"></span>
+    <button class="btn danger" id="rPart" type="button">Reset ชุดนี้</button>
+    <button class="btn danger" id="rAll" type="button">Reset ทั้งหมด</button>
+  </div>
+
+  <div id="list"></div>
+</main>
+
+<script>
+const DATA = [{"id":"s1-1","part":1,"ch":"Ch01","q":"ข้อใดเป็นเรื่องของ Computer Organization (ไม่ใช่ Computer Architecture)?","c":["ชุดคำสั่ง (instruction set) ที่โปรแกรมเมอร์มองเห็น","Addressing modes ที่ ISA รองรับ","ความกว้างของ bus และการจัดโครงสร้าง cache ใน CPU","ชนิดของข้อมูล (data types) ที่คำสั่งทำงานด้วย"],"a":2,"e":"Organization คือ HOW ฮาร์ดแวร์ทำให้ architecture เกิดขึ้นจริง เช่น bus width, cache, pipeline, clock","d":"Architecture ตอบ WHAT คือสิ่งที่โปรแกรมเมอร์เห็น (instruction set, addressing modes, data types). Organization ตอบ HOW คือการสร้างจริงภายใน (cache, pipeline, bus width, control signals). ISA เดียวกันสร้างด้วย organization ต่างกันได้ เช่น Intel กับ AMD ใช้ x86 เหมือนกันแต่ภายในต่างกัน"},{"id":"s1-2","part":1,"ch":"Ch01","q":"ข้อใดอธิบายความต่างระหว่าง RISC และ CISC ได้ถูกต้อง?","c":["RISC คำสั่งซับซ้อนมาก ใช้ microprogram; CISC ใช้ hardwired","RISC คำสั่งน้อยและเรียบง่าย ใช้ hardwired decoder; CISC คำสั่งซับซ้อน ใช้ microprogram","ทั้งสองแบบใช้ microprogram เหมือนกัน","RISC มีจำนวนคำสั่งมากกว่า CISC"],"a":1,"e":"RISC: คำสั่งน้อย เรียบง่าย hardwired. CISC: คำสั่งซับซ้อน microprogrammed","d":"RISC (Reduced Instruction Set Computer) เช่น RISC-V, ARM เน้นคำสั่งสั้นเรียบง่าย decode เร็วด้วย hardwired. CISC (Complex Instruction Set Computer) เช่น x86 มีคำสั่งซับซ้อนหลายรูปแบบและใช้ microprogram ควบคุม"},{"id":"s1-3","part":1,"ch":"Ch01","q":"โปรแกรมมี 2×10^9 instructions, average CPI = 1.5, clock rate 3 GHz ใช้ CPU time เท่าใด?","c":["0.5 s","1 s","2 s","4.5 s"],"a":1,"e":"Clock cycles = 2×10^9 × 1.5 = 3×10^9; CPU time = 3×10^9 / 3×10^9 = 1 s","d":"CPU Time = (IC × CPI) / Clock Rate. แทนค่า (2×10^9 × 1.5) / (3×10^9) = 1 วินาที"},{"id":"s1-4","part":1,"ch":"Ch02","q":"จุดอ่อน (bottleneck) ของสถาปัตยกรรม Von Neumann คือข้อใด?","c":["ต้องมี memory แยกสองชุด","instruction และ data ใช้ memory/bus เดียวกัน ทำให้แย่งกัน","ไม่รองรับ stored program","ใช้กับ general-purpose computer ไม่ได้"],"a":1,"e":"Von Neumann ใช้ memory เดียวและ shared bus จึงเป็นคอขวด","d":"Von Neumann เป็น stored-program: เก็บทั้ง instruction และ data ใน memory เดียว ทำงานเรียงลำดับ ใช้ใน general-purpose computer. ข้อเสียคือ fetch คำสั่งและเข้าถึงข้อมูลต้องแย่ง bus เดียวกัน"},{"id":"s1-5","part":1,"ch":"Ch02","q":"โปรแกรม MARIE ต่อไปนี้ กำหนด M[104] = 0x0023 และ M[105] = 0xFFE9 เมื่อ Halt แล้ว M[106] มีค่าเท่าใด?","code":"100: Load 104\n101: Add 105\n102: Store 106\n103: Halt","c":["0x000C","0x010C","0xFFFF","0x1000C"],"a":0,"e":"0x0023 (35) + 0xFFE9 (−23) = 12 = 0x000C (ทิ้ง carry ที่ 16 bit)","d":"0xFFE9 ใน 2's complement 16 bit คือ −23. 35 + (−23) = 12 = 0x000C. ผลบวกจริงคือ 0x1000C แต่ AC เก็บได้ 16 bit จึงเหลือ 0x000C"},{"id":"s1-6","part":1,"ch":"Ch02","q":"การหารด้วยศูนย์ (divide by zero) ทำให้เกิด interrupt ประเภทใด?","c":["Program interrupt","Timer interrupt","I/O interrupt","Hardware failure interrupt"],"a":0,"e":"เกิดจากการทำงานของโปรแกรมเอง = Program interrupt","d":"Program: overflow, หารศูนย์, illegal instruction, อ้างนอกขอบเขต memory. Timer: จาก timer ใน processor. I/O: จาก I/O controller. Hardware failure: ไฟดับ, memory parity error"},{"id":"s1-7","part":1,"ch":"Ch03","q":"เลข 8 bit 1111 0110 ถ้าตีความเป็น 2's complement มีค่าเท่าใด?","c":["−10","−9","−118","246"],"a":0,"e":"−128 + 64 + 32 + 16 + 4 + 2 = −10","d":"bit บนสุดมีน้ำหนัก −128. −9 คือค่าถ้าตีความเป็น 1's complement. 246 คือค่าถ้าตีความเป็น unsigned. อีกวิธี: กลับ bit แล้ว +1 ได้ 0000 1010 = 10 จึงเป็น −10"},{"id":"s1-8","part":1,"ch":"Ch03","q":"5.8125 ใน IEEE 754 single precision เขียนเป็น hex ได้เท่าใด?","c":["0x40BA0000","0x40B50000","0x41BA0000","0x3FBA0000"],"a":0,"e":"5.8125 = 101.1101₂ = 1.011101 × 2² → E = 129 → 0 10000001 0111010... = 0x40BA0000","d":"ขั้นตอน: แปลงเป็นฐาน 2 (101.1101) → normalize (1.011101 × 2²) → E = e + 127 = 129 = 1000 0001 → mantissa คือ bit หลังจุด 011101 เติม 0 ให้ครบ 23 bit → จัดกลุ่มทีละ 4 bit เป็น hex"},{"id":"s1-9","part":1,"ch":"Ch03","q":"ใน 2's complement 4 bit คำนวณ 0111 + 0001 ได้ผลและความหมายตามข้อใด?","c":["0000 และไม่เกิด overflow","1000 = −8 ซึ่งผิดจากค่าจริง +8 เพราะเกิด overflow","1000 = +8 ถูกต้อง","1111 = −1"],"a":1,"e":"7 + 1 = 8 เกินช่วง +7 ของ 4 bit จึงเกิด overflow ผลตีความเป็น −8","d":"Overflow เกิดเมื่อบวกบวกกับบวกแล้วได้ลบ หรือลบกับลบแล้วได้บวก. 4 bit 2's complement เก็บได้ −8..+7"},{"id":"s1-10","part":1,"ch":"Ch03","q":"ทำ A[12] = h + A[8] โดย A เป็นอาร์เรย์ของ doubleword (8 byte) และ x22 เป็น base address คำสั่ง sd ที่เก็บผลลง A[12] ต้องใช้ offset ใด?","c":["12(x22)","48(x22)","96(x22)","32(x22)"],"a":2,"e":"offset = 12 × 8 = 96 byte (และ A[8] อยู่ที่ 64)","d":"Memory เป็น byte addressed ดังนั้น offset = index × ขนาด element. element 8 byte: A[8] → 64, A[12] → 96. ถ้าเป็นอาร์เรย์ของ word (4 byte) จะเป็น 32 และ 48"},{"id":"s1-11","part":1,"ch":"Ch03","q":"แปลง if (i == j) f = g + h; else f = g − h; โดย i=x22, j=x23 คำสั่ง branch แรกที่กระโดดไป Else ควรเป็นข้อใด?","c":["beq x22,x23,Else","bne x22,x23,Else","blt x22,x23,Else","bge x22,x23,Else"],"a":1,"e":"ถ้า i ≠ j ให้ข้ามไป Else จึงใช้ bne x22,x23,Else","d":"รูปแบบ: bne x22,x23,Else / add (ส่วน then) / beq x0,x0,Exit / Else: sub (ส่วน else) / Exit:. ใช้ branch สลับเงื่อนไขเพื่อให้ then อยู่ต่อจาก branch ได้เลย"},{"id":"s1-12","part":1,"ch":"Ch03","q":"ข้อใดคือคำสั่งที่ใช้ return จาก procedure (กลับไปที่ address ใน x1)?","c":["jal x1,x1","jalr x0,0(x1)","beq x1,x0,0","sd x1,0(sp)"],"a":1,"e":"jalr x0,0(x1): กระโดดไป address ใน x1 และใช้ x0 ทิ้งค่า return address","d":"เรียกใช้ด้วย jal x1,Label (เก็บ PC+4 ใน x1) และ return ด้วย jalr x0,0(x1). ถ้าเป็น non-leaf procedure ต้อง save x1 ลง stack ก่อนเรียกซ้อน"},{"id":"s1-13","part":1,"ch":"Ch04","q":"การวนอ่าน array ทีละ element เรียงกันไป เป็นตัวอย่างของอะไร?","c":["Temporal locality","Spatial locality","Compulsory miss","Write-back"],"a":1,"e":"element ที่อยู่ติดกันถูกใช้ต่อกัน = Spatial locality","d":"cache ดึงมาทีละ block (หลาย word) จึงได้ประโยชน์จาก spatial locality: อ่าน element แรกแล้ว element ถัด ๆ มาอยู่ใน block เดียวกัน เกิด hit"},{"id":"s1-14","part":1,"ch":"Ch04","q":"Direct mapped cache 64 blocks, block 16 byte. byte address 1200 ถูกจับคู่ไป block (index) ใด?","c":["11","75","12","0"],"a":0,"e":"Block address = ⌊1200/16⌋ = 75; Index = 75 mod 64 = 11","d":"75 คือ block address ของ memory (ไม่ใช่ index ใน cache). Index = (block address) mod (จำนวน block ใน cache)"},{"id":"s1-15","part":1,"ch":"Ch04","q":"Direct mapped cache 8 blocks (1 word ต่อ block) เริ่มจากว่าง ลำดับ word address: 22, 26, 22, 26, 16, 3, 16, 18 เกิด miss และ hit อย่างไร?","c":["3 miss, 5 hit","5 miss, 3 hit","6 miss, 2 hit","8 miss, 0 hit"],"a":1,"e":"index = addr mod 8: 22→6 M, 26→2 M, 22 H, 26 H, 16→0 M, 3→3 M, 16 H, 18→2 M (ชน 26 tag ต่าง) = 5 miss, 3 hit","d":"สังเกตว่า 18 กับ 26 ตกที่ index 2 เหมือนกันแต่ tag ต่างกัน (10 กับ 11) จึงแทนที่กันและเกิด miss. ตามที่ลำดับ 22, 26 ซ้ำเป็น hit เพราะ block ยังอยู่"},{"id":"s1-16","part":1,"ch":"Ch04","q":"Hit time 1 cycle, miss rate 5%, miss penalty 20 cycle ค่า AMAT เท่าใด?","c":["1 cycle","2 cycle","5 cycle","21 cycle"],"a":1,"e":"AMAT = Hit time + Miss rate × Miss penalty = 1 + 0.05 × 20 = 2 cycle","d":"AMAT (Average Memory Access Time) คือเวลาเข้าถึง memory เฉลี่ย รวมทั้งกรณี hit และ miss"},{"id":"s1-17","part":1,"ch":"Ch04","q":"Cache แบบ 2-way set associative มี 4 blocks (2 sets) ใช้ LRU ลำดับ block address 0, 8, 0, 6, 8 เริ่มจาก cache ว่าง เกิด miss กี่ครั้ง?","c":["3","4","5","2"],"a":1,"e":"set = block mod 2: ทั้ง 0, 8, 6 ตกที่ set 0 → 0 M, 8 M, 0 H, 6 M (ไล่ 8 ออก), 8 M (ไล่ 0 ออก) = 4 miss","d":"เทียบกับแบบอื่นในลำดับเดียวกัน: direct mapped miss ทั้ง 5 ครั้ง (0 กับ 8 ชน index 0), 2-way miss 4 ครั้ง, fully associative miss 3 ครั้ง (0 M, 8 M, 0 H, 6 M, 8 H). ยิ่ง associativity สูง conflict miss ยิ่งลด"},{"id":"s1-18","part":1,"ch":"Ch04","q":"ข้อใดถูกต้องเกี่ยวกับ SRAM และ DRAM?","c":["DRAM เร็วกว่า SRAM จึงใช้ทำ cache","SRAM ใช้ทำ cache ส่วน DRAM ใช้เป็น main memory และต้อง refresh เป็นระยะ","SRAM ต้อง refresh แต่ DRAM ไม่ต้อง","ทั้งสองมีราคาต่อ GB เท่ากัน"],"a":1,"e":"SRAM เร็วกว่าแต่แพงกว่า ใช้ทำ cache; DRAM เก็บประจุใน capacitor จึงต้อง refresh","d":"เวลาเข้าถึงโดยประมาณ: SRAM 0.5–2.5 ns ($2000–5000/GB), DRAM 50–70 ns ($20–75/GB), magnetic disk 5–20 ms ($0.20–2/GB). ยิ่งใกล้ CPU ยิ่งเร็ว เล็ก และแพง"},{"id":"s1-19","part":1,"ch":"Ch05","q":"เทคนิค I/O ที่ CPU วนตรวจสถานะ (polling) จนกว่าอุปกรณ์พร้อม คือเทคนิคใด?","c":["Programmed I/O","Interrupt-driven I/O","DMA","Memory-mapped I/O"],"a":0,"e":"CPU รอ (busy-wait) ตลอด = Programmed I/O","d":"สามเทคนิคหลัก: Programmed I/O (CPU รอ polling), Interrupt-driven (CPU สั่งแล้วทำงานอื่น อุปกรณ์ส่ง interrupt เมื่อเสร็จ), DMA (ถ่ายข้อมูลกับ memory โดยตรงไม่ผ่าน CPU). Memory-mapped เป็นวิธีกำหนด address ไม่ใช่เทคนิคถ่ายโอน"},{"id":"s1-20","part":1,"ch":"Ch05","q":"Memory-mapped I/O มีลักษณะใด?","c":["ใช้ address space แยกจาก memory และต้องมีคำสั่ง I/O พิเศษ","ใช้ address space ร่วมกับ memory จึงใช้คำสั่ง load/store ธรรมดาได้","ใช้ได้เฉพาะกับ DMA","ไม่ต้องมี address"],"a":1,"e":"Memory-mapped: address space ร่วมกัน ไม่ต้องมีคำสั่ง I/O พิเศษ","d":"Isolated I/O: address space แยก ต้องมีคำสั่ง I/O พิเศษ และ bus ต้องมีเส้น select แยก I/O กับ memory. Memory-mapped: bus ใช้ read line และ write line อย่างละเส้น"},{"id":"s1-21","part":1,"ch":"Ch05","q":"ก่อนเริ่ม ISR (Interrupt Service Routine) CPU ต้องทำอะไรกับสถานะปัจจุบัน?","c":["ลบ PC และ PSW ทิ้ง","เก็บ PC และ PSW ลง stack","ปิดเครื่อง","โหลดโปรแกรมจาก disk"],"a":1,"e":"เก็บ PC และ PSW ลง stack เพื่อกลับมาทำงานเดิมต่อได้หลัง ISR","d":"ลำดับ: I/O ส่ง interrupt → CPU ทำคำสั่งปัจจุบันให้เสร็จ → เก็บ PC และ PSW ลง stack → เริ่ม ISR → เสร็จแล้ว restore PC/PSW"},{"id":"s1-22","part":1,"ch":"Ch06","q":"Cylinder ของ hard disk คืออะไร?","c":["ชุด track ตำแหน่งเดียวกันบนทุก surface/platter","ส่วนของ track ที่เป็นหน่วยอ่าน/เขียน","หัวอ่านเขียนหนึ่งหัว","แผ่นจานแม่เหล็กหนึ่งแผ่น"],"a":0,"e":"Cylinder = track ที่ตำแหน่งรัศมีเดียวกันของทุก surface","d":"Platter คือจานแม่เหล็ก, Track คือวงแหวนบนผิวจาน, Sector คือส่วนของ track (หน่วยอ่าน/เขียน), Head คือหัวอ่านเขียน 1 หัวต่อ 1 surface"},{"id":"s1-23","part":1,"ch":"Ch06","q":"Sector 512 byte, 15,000 rpm, seek เฉลี่ย 4 ms, transfer rate 100 MB/s, controller overhead 0.2 ms, disk ว่าง เวลาอ่านเฉลี่ยต่อครั้งประมาณเท่าใด?","c":["2.2 ms","4.2 ms","6.2 ms","8.2 ms"],"a":2,"e":"Seek 4 + Rotational 2 + Transfer 0.005 + Controller 0.2 ≈ 6.2 ms","d":"Rotational = 0.5/(15000/60) = 2 ms. Transfer = 512 B / 100 MB/s = 0.005 ms (น้อยมาก). เวลารวม = Seek + Rotational + Transfer + Controller"},{"id":"s1-24","part":1,"ch":"Ch06","q":"RAID 5 ใช้ disk 4 ตัว ตัวละ 1 TB ได้ความจุใช้งานเท่าใด?","c":["2 TB","3 TB","4 TB","1 TB"],"a":1,"e":"RAID 5 ใช้ N+1 disk (parity กระจาย) ความจุใช้งาน = (4−1) × 1 TB = 3 TB","d":"ในกรณี 4 disk × 1 TB: RAID 0 = 4 TB, RAID 1 = 2 TB, RAID 5 = 3 TB, RAID 6 = 2 TB (parity 2 disk)"},{"id":"s1-25","part":1,"ch":"Ch07","q":"ใน RISC-V 5-stage pipeline คำสั่ง ld/sd คำนวณ address ของ memory operand ที่ stage ใด?","c":["IF","ID","EX","MEM"],"a":2,"e":"EX (Execute) ใช้ ALU คำนวณ address แล้วค่อยเข้าถึง memory ที่ stage MEM","d":"5 stage: IF ดึงคำสั่ง, ID ถอดรหัสและอ่าน register, EX ทำ operation หรือคำนวณ address, MEM เข้าถึง memory operand, WB เขียนผลกลับ register"},{"id":"s1-26","part":1,"ch":"Ch07","q":"สมมติ register read/write ใช้ 100 ps และ stage อื่นใช้ 200 ps ทำให้ ld ใช้ 800 ps ถ้ารันคำสั่ง ld ต่อกัน 3 คำสั่ง แบบ single-cycle (Tc = 800 ps) และแบบ pipelined (Tc = 200 ps) ใช้เวลารวมเท่าใด?","c":["2400 ps และ 1400 ps","2400 ps และ 600 ps","800 ps และ 200 ps","2400 ps และ 2000 ps"],"a":0,"e":"single-cycle = 3 × 800 = 2400 ps; pipelined = (5 + 3 − 1) × 200 = 1400 ps","d":"คำสั่งแรกใช้ครบ 5 stage (5 × 200 = 1000 ps) ที่เหลือเสร็จทุก 200 ps อีก 2 × 200 = 400 ps จึงรวม 1400 ps. ถ้ามีคำสั่งมาก ๆ speedup เข้าใกล้ 800/200 = 4 เท่า (ไม่ถึง 5 เท่าเพราะ stage ไม่สมดุล)"},{"id":"s1-27","part":1,"ch":"Ch07","q":"Pipelining ให้ประโยชน์ในข้อใด?","c":["เพิ่ม throughput ของคำสั่ง โดย latency ของแต่ละคำสั่งยังเท่าเดิม","ลด latency ของแต่ละคำสั่งลงเหลือหนึ่งใน 5","ลดจำนวนคำสั่งของโปรแกรม","กำจัด hazard ได้ทั้งหมด"],"a":0,"e":"Pipelining เพิ่ม throughput แต่ไม่ลด latency ของคำสั่งแต่ละตัว","d":"เปรียบเหมือนซักผ้าหลายชุดซ้อนกัน: ผ้าแต่ละชุดใช้เวลาเท่าเดิม แต่ทั้งหมดเสร็จเร็วขึ้น. ข้อจำกัดคือ hazards (structure, data, control) และการออกแบบ ISA มีผลต่อความซับซ้อนของ pipeline"},{"id":"s1-28","part":1,"ch":"Ch08","q":"SPMD (Single Program Multiple Data) คืออะไร?","c":["โปรแกรม parallel เดียวรันบนเครื่อง MIMD โดย processor ต่างตัวอาจทำโค้ดต่างกันตามเงื่อนไข","คำสั่งเดียวทำกับข้อมูลหลายตัวพร้อมกันแบบ lockstep","หลายคำสั่งทำกับข้อมูลชุดเดียว","คำสั่งเดียวทำกับข้อมูลเดียว"],"a":0,"e":"SPMD = โปรแกรมเดียว (conditional code ทำให้แต่ละ processor ทำคนละทาง) บนเครื่อง MIMD","d":"Flynn: SISD (Pentium 4), SIMD (SSE, vector, GPU), MISD (ไม่มีใช้จริง), MIMD (Xeon หลาย core). SPMD เป็นรูปแบบการเขียนโปรแกรมบน MIMD ส่วนคำตอบข้อสองคือ SIMD"},{"id":"s1-29","part":1,"ch":"Ch08","q":"ตามกฎของ Amdahl Speedup = 1 / ((1 − P) + P/N) โปรแกรมหนึ่งขนานได้ 90% (P = 0.9) รันบน 10 processor ได้ speedup ประมาณเท่าใด?","c":["10.0","9.0","5.26","1.9"],"a":2,"e":"1 / (0.1 + 0.9/10) = 1 / 0.19 ≈ 5.26","d":"ส่วนที่ขนานไม่ได้ (10%) จำกัด speedup: ต่อให้ N → ∞ ได้สูงสุด 1/(1 − P) = 10. ตัวเลือก 10.0 คือค่าสูงสุดนี้ ไม่ใช่ค่าที่ N = 10. Efficiency = speedup / N = 52.6%"},{"id":"s1-30","part":1,"ch":"Ch08","q":"ข้อใดเป็นจุดที่ vector processor ต่างจาก multimedia SIMD extension (เช่น SSE)?","c":["vector รองรับ strided access และความกว้างของ vector ปรับได้","vector มีความกว้างคงที่ตายตัว","vector ไม่มี register เฉพาะ","vector ใช้ได้เฉพาะงานที่มี control flow ซับซ้อน"],"a":0,"e":"Vector: ความกว้างปรับได้และรองรับ strided access; multimedia SIMD: ความกว้างคงที่ ไม่รองรับ strided","d":"ข้อดีของ vector: data-parallel ง่ายขึ้น, ระบุชัดว่าไม่มี loop-carried dependence, access pattern สม่ำเสมอได้ประโยชน์จาก interleaved/burst memory, เลี่ยง control hazard เพราะไม่มี loop และลด instruction-fetch bandwidth"},{"id":"s2-1","part":2,"ch":"Ch01","q":"บริษัทหนึ่งเช่า virtual machine จากผู้ให้บริการ แล้วติดตั้ง OS, runtime และฐานข้อมูลเอง บริการนี้คือโมเดลใด?","c":["SaaS","PaaS","IaaS","On-premise"],"a":2,"e":"IaaS: ผู้ให้บริการดูแล VM/server/storage/network ลูกค้าดูแล OS ขึ้นไป (เช่น AWS, Azure VM)","d":"SaaS คือใช้แอปสำเร็จรูป (Google Workspace). PaaS คือได้แพลตฟอร์มพร้อม OS/runtime/DB ลูกค้าดูแลแค่แอปและข้อมูล (Google App Engine). IaaS คือได้เพียงโครงสร้างพื้นฐาน ปรับแต่งได้มากสุดแต่ซับซ้อนสุด ยิ่งไปทาง SaaS ยิ่งใช้ง่ายแต่ปรับแต่งได้น้อย"},{"id":"s2-2","part":2,"ch":"Ch01","q":"Intel Hyper-Threading / AMD SMT จัดเป็นแบบใด?","c":["Multi-core: เพิ่มแกน CPU จริงอีกเท่าตัว","Multi-thread: แบ่งงานย่อยป้อนให้ core เดียวใช้ทรัพยากรได้เต็มขึ้น (แกนเสมือน)","เพิ่ม clock rate ของ core","เพิ่มขนาด L1 cache"],"a":1,"e":"Hyper-Threading/SMT คือ multi-thread แบบเสมือน ไม่ใช่การเพิ่ม core จริง","d":"Multi-core คือมีฮาร์ดแวร์หลายแกนจริง ทำงานขนานจริง (เปรียบเหมือนมีเชฟหลายคน). Multi-thread คือแบ่งงานย่อยป้อนให้ core ที่มีอยู่ (เปรียบเหมือนเชฟคนเดียวมีหลายแขน) เช่น Intel Hyper-Threading, AMD SMT"},{"id":"s2-3","part":2,"ch":"Ch01","q":"เครื่อง A: 2 GHz รันโปรแกรมใช้ 10 s. เครื่อง B ต้องรันโปรแกรมเดียวกันให้เสร็จใน 6 s แต่ใช้ cycles มากกว่า A 1.2 เท่า เครื่อง B ต้องมี clock rate เท่าใด?","c":["2.4 GHz","3 GHz","4 GHz","6 GHz"],"a":2,"e":"Cycles A = 10 × 2×10^9 = 20×10^9; Cycles B = 24×10^9; Rate B = 24×10^9 / 6 = 4 GHz","d":"หา cycles ของ A ก่อน = เวลา × clock rate = 10 × 2×10^9 = 20×10^9. B ใช้มากกว่า 1.2 เท่า = 24×10^9 cycles. ต้องเสร็จใน 6 s จึงต้องมี clock rate = 24×10^9 / 6 = 4×10^9 Hz = 4 GHz"},{"id":"s2-4","part":2,"ch":"Ch02","q":"CPU สมัยใหม่ส่วนใหญ่เป็นแบบ hybrid คือข้อใด?","c":["Von Neumann ที่ L1 cache และ Harvard ที่ main memory","Harvard ที่ L1 cache (แยก I-cache/D-cache) และ Von Neumann ที่ main memory","Harvard ทุกระดับ","Von Neumann ทุกระดับ"],"a":1,"e":"L1 แยก I-cache/D-cache (Harvard) ส่วน main memory รวม (Von Neumann)","d":"แบบ hybrid ได้ข้อดีของทั้งสองแบบ: ใกล้ CPU แยกเพื่อความเร็ว ไกล CPU รวมเพื่อความยืดหยุ่นและเรียบง่าย"},{"id":"s2-5","part":2,"ch":"Ch02","q":"คำสั่ง MARIE รหัส 0x1104 ทำอะไร?","c":["Store AC ลง address 0x104","Load ค่าจาก address 0x104 เข้า AC","Add ค่าจาก address 0x104 เข้า AC","Jump ไป address 0x104"],"a":1,"e":"opcode 1 = Load, operand 0x104 คือ address","d":"รูปแบบคำสั่ง: bit 15–12 = opcode, bit 11–0 = address. Opcode: 1=Load, 2=Store, 3=Add, 4=Subt, 5=Input, 6=Output, 7=Halt, 8=Skipcond, 9=Jump"},{"id":"s2-6","part":2,"ch":"Ch02","q":"Nonmaskable interrupt ต่างจาก maskable interrupt อย่างไร?","c":["ปิดกั้นได้ด้วย bit ใน flags register","ปิดกั้นไม่ได้ ต้องจัดการเสมอเพื่อให้ระบบเสถียร","เกิดจาก software เท่านั้น","ไม่ต้องใช้ ISR"],"a":1,"e":"Nonmaskable ปิดไม่ได้ ส่วน maskable ปิดได้ผ่าน flag","d":"Maskable interrupt ถูก mask (ปิดชั่วคราว) ได้ด้วย bit ใน flags register. Nonmaskable ใช้กับเหตุร้ายแรงที่ต้องจัดการเสมอ เช่น hardware failure"},{"id":"s2-7","part":2,"ch":"Ch03","q":"−25 ใน 2's complement ขนาด 8 bit คือข้อใด?","c":["1110 0110","1110 0111","1001 1001","0001 1001"],"a":1,"e":"25 = 0001 1001 → กลับ bit 1110 0110 → +1 = 1110 0111","d":"1110 0110 คือ 1's complement ของ −25. 1001 1001 คือ Sign & Magnitude ของ −25. 0001 1001 คือ +25 วิธีลัด: จาก LSB คง bit 1 ตัวแรกและ bit ทางขวา แล้วกลับ bit ทางซ้ายทั้งหมด"},{"id":"s2-8","part":2,"ch":"Ch03","q":"0x41200000 (single precision) แทนค่าเท่าใด?","c":["2.5","10.0","20.0","12.5"],"a":1,"e":"s=0, E=10000010=130, e=3, mantissa .01 → 1.01₂ × 2³ = 1010₂ = 10.0","d":"แยก bit: 0 | 10000010 | 01000000... ค่า e = E − 127 = 3. ค่า 1.01₂ = 1.25, คูณ 2³ = 10.0"},{"id":"s2-9","part":2,"ch":"Ch03","q":"ใน RISC-V byte ใน memory เท่ากับ 0x80 ถ้า load ด้วย lb ลง register 64 bit จะได้ค่าใด?","c":["0x0000000000000080","0xFFFFFFFFFFFFFF80","0x8000000000000000","0x00000000FFFFFF80"],"a":1,"e":"lb ทำ sign extension: bit บนสุดของ byte คือ 1 จึงเติม 1 ทั้งหมดทางซ้าย","d":"lb/lh/lw ขยายแบบ sign-extend (ทำซ้ำ sign bit). lbu/lhu/lwu ขยายแบบ zero-extend ถ้าใช้ lbu จะได้ 0x0000000000000080"},{"id":"s2-10","part":2,"ch":"Ch03","q":"add x9,x20,x21 เมื่อ encode เป็น machine code (hex) ได้ค่าใด?","c":["0x015A04B3","0x015A0493","0x0154A4B3","0x01AA04B3"],"a":0,"e":"R-format: 0000000 | 10101 (rs2=x21) | 10100 (rs1=x20) | 000 | 01001 (rd=x9) | 0110011 = 0x015A04B3","d":"R-format: funct7(7) rs2(5) rs1(5) funct3(3) rd(5) opcode(7). add มี funct7 = 0000000, funct3 = 000, opcode = 0110011. ลำดับ field สำคัญ: rs2 มาก่อน rs1"},{"id":"s2-11","part":2,"ch":"Ch03","q":"x22 = 0xFFFFFFFFFFFFFFFF และ x23 = 1 ข้อใดถูกต้อง?","c":["blt x22,x23,L จะ branch แต่ bltu x22,x23,L จะไม่ branch","ทั้ง blt และ bltu จะ branch","ทั้งสองจะไม่ branch","bltu จะ branch แต่ blt ไม่ branch"],"a":0,"e":"signed: x22 = −1 \u003c 1 → blt branch. unsigned: x22 เป็นค่ามหาศาล > 1 → bltu ไม่ branch","d":"blt/bge เปรียบเทียบแบบ signed ส่วน bltu/bgeu เปรียบเทียบแบบ unsigned. bit pattern เดียวกันตีความได้สองแบบ"},{"id":"s2-12","part":2,"ch":"Ch03","q":"ต้องการขอพื้นที่ stack 24 byte ที่ต้น procedure ใน RISC-V ใช้คำสั่งใด?","c":["addi sp,sp,24","addi sp,sp,-24","sd sp,24(x0)","jal sp,24"],"a":1,"e":"Stack โตลงทาง address ต่ำ จึงลบ sp: addi sp,sp,-24 (คืนด้วย addi sp,sp,24)","d":"Memory layout จากต่ำไปสูง: Text, Static data, Dynamic data (heap), Stack. Stack ขยายจาก address สูงลงมาต่ำ ดังนั้นขอพื้นที่ต้องลดค่า sp"},{"id":"s2-13","part":2,"ch":"Ch04","q":"ตัวแปร counter ในลูปถูกเข้าถึงซ้ำ ๆ เป็นตัวอย่างของ locality แบบใด?","c":["Temporal locality","Spatial locality","Sequential locality","Branch locality"],"a":0,"e":"ของที่เพิ่งใช้มักถูกใช้ซ้ำเร็ว ๆ = Temporal locality","d":"Temporal: instruction ใน loop และ induction variable. Spatial: ของที่อยู่ใกล้ของที่เพิ่งใช้มักถูกใช้ต่อ เช่น คำสั่งเรียงกันและ array"},{"id":"s2-14","part":2,"ch":"Ch04","q":"Direct mapped cache มี 64 blocks, block ละ 16 byte, address 32 bit แบ่ง Tag / Index / Offset เป็นกี่ bit?","c":["22 / 6 / 4","20 / 6 / 6","26 / 4 / 2","22 / 4 / 6"],"a":0,"e":"Offset = log2(16) = 4, Index = log2(64) = 6, Tag = 32 − 6 − 4 = 22","d":"Offset ระบุ byte ใน block, Index เลือก block ใน cache, Tag คือ bit ที่เหลือไว้ตรวจว่าเป็น block ที่ต้องการหรือไม่"},{"id":"s2-15","part":2,"ch":"Ch04","q":"Direct mapped cache 4 blocks ลำดับ block address 0, 4, 0, 4 เกิด miss กี่ครั้ง?","c":["2","3","4","0"],"a":2,"e":"0 mod 4 = 4 mod 4 = 0 ชน index เดียวกันตลอด จึง miss ทั้ง 4 ครั้ง (conflict miss)","d":"ปัญหาเฉพาะของ direct mapped คือ block หลายตัวแย่ง index เดียวกัน. แก้ได้ด้วยการเพิ่ม associativity (เช่น 2-way จะอยู่ร่วมกันได้ จะ miss แค่ 2 ครั้งแรก)"},{"id":"s2-16","part":2,"ch":"Ch04","q":"Base CPI = 2, I-cache miss 2%, D-cache miss 4%, miss penalty 100 cycle, load/store 36% ของคำสั่ง CPI จริงเท่าใด?","c":["4.00","5.44","6.44","8.00"],"a":1,"e":"I-stall = 0.02×100 = 2; D-stall = 0.36×0.04×100 = 1.44; CPI = 2 + 2 + 1.44 = 5.44","d":"ทุกคำสั่งต้อง fetch จึงนับ I-miss กับทุกคำสั่ง แต่ D-miss นับเฉพาะคำสั่ง load/store (36%). ช้ากว่า ideal cache 5.44/2 = 2.72 เท่า"},{"id":"s2-17","part":2,"ch":"Ch04","q":"การเข้าถึง block ครั้งแรกที่ยังไม่เคยอยู่ใน cache เรียกว่า miss ประเภทใด?","c":["Capacity miss","Conflict miss","Compulsory miss","Coherence miss"],"a":2,"e":"เข้าถึงครั้งแรกหลีกเลี่ยงไม่ได้ = Compulsory miss","d":"3Cs: Compulsory (ครั้งแรก), Capacity (cache เล็กเกินไป), Conflict (แย่ง set เดียวกัน ไม่เกิดใน fully associative)"},{"id":"s2-18","part":2,"ch":"Ch04","q":"DRAM กว้าง 1 word ดึง block ขนาด 4 word: ส่ง address 1 cycle, DRAM access 15 cycle ต่อ word, ส่งข้อมูล 1 cycle ต่อ word miss penalty เท่าใด?","c":["17 cycle","20 cycle","65 cycle","60 cycle"],"a":2,"e":"1 + 4×15 + 4×1 = 65 cycle","d":"memory กว้าง 1 word ต้องเข้าถึง DRAM ทีละ word 4 ครั้ง ถ้าใช้ memory กว้าง 4 word จะเหลือ 1 + 15 + 1 = 17 cycle และแบบ 4-bank interleaved ได้ 1 + 15 + 4×1 = 20 cycle"},{"id":"s2-19","part":2,"ch":"Ch05","q":"ในการถ่ายโอนด้วย DMA CPU เกี่ยวข้องในช่วงใด?","c":["ทุก word ที่ถ่ายโอน","เฉพาะตอนเริ่มสั่งงาน และตอน DMA ส่ง interrupt แจ้งเสร็จ","ไม่เกี่ยวข้องเลยแม้ตอนเริ่ม","เฉพาะตอนเกิด error"],"a":1,"e":"CPU สั่ง DMA controller ตอนเริ่ม แล้วทำงานอื่น ถ้า DMA เสร็จจะ interrupt แจ้ง","d":"CPU บอก DMA: read หรือ write, device address, memory address, จำนวน word. จากนั้น DMA ขอใช้ system bus ถ่ายข้อมูลระหว่าง I/O กับ memory โดยตรง"},{"id":"s2-20","part":2,"ch":"Ch05","q":"วิธีระบุอุปกรณ์ที่ส่ง interrupt แบบใดช้าที่สุด?","c":["Multiple interrupt lines","Software poll","Daisy chain (hardware poll)","Bus arbitration"],"a":1,"e":"Software poll ให้ CPU ไล่ถามอุปกรณ์ทีละตัวด้วยซอฟต์แวร์ จึงช้าที่สุด","d":"สี่เทคนิค: Multiple interrupt lines, Software poll (ช้า), Daisy chain (hardware poll, vectored), Bus arbitration (vectored). Vectored interrupt ใช้ vector เป็น pointer ไปยัง device-service routine โดยตรง"},{"id":"s2-21","part":2,"ch":"Ch05","q":"เทคนิคที่วางข้อมูลจาก network เข้าไปใน cache ของ CPU โดยตรง (cache injection) เพื่อรองรับ data rate สูงเรียกว่าอะไร?","c":["DMA","DCA (Direct Cache Access)","Polling","Isolated I/O"],"a":1,"e":"DCA ทำงานกับ incoming network traffic โดยวางข้อมูลลง cache (Intel เรียก DDIO)","d":"ปัญหาคือ DMA ไม่ scale พอเมื่อ data rate สูงมาก (Ethernet 10/100 Gbps, Wi-Fi หลาย Gbps). DCA ให้ memory controller ส่ง prefetch hint แล้ววางข้อมูลลง cache โดยตรง"},{"id":"s2-22","part":2,"ch":"Ch06","q":"ดิสก์ 7200 rpm มี rotational latency เฉลี่ยประมาณเท่าใด?","c":["2.08 ms","4.17 ms","8.33 ms","16.7 ms"],"a":1,"e":"1 รอบ = 60/7200 = 8.33 ms; latency เฉลี่ย = ครึ่งรอบ = 4.17 ms","d":"Rotational latency เฉลี่ย = 0.5 / (rpm/60). 8.33 ms คือเวลาหมุนหนึ่งรอบเต็ม ต้องหารสองเพราะเฉลี่ยแล้วต้องรอครึ่งรอบ"},{"id":"s2-23","part":2,"ch":"Ch06","q":"RAID 5 แก้ปัญหาของ RAID 4 อย่างไร?","c":["เพิ่ม parity disk อีกตัว","กระจาย parity ไปทุก disk ไม่ให้ parity disk เดียวเป็นคอขวด","ใช้ mirroring","เอา parity ออกทั้งหมด"],"a":1,"e":"RAID 4 มี parity disk เดียว ทุกการเขียนต้องแก้ parity จึงเป็นคอขวด; RAID 5 กระจาย parity","d":"RAID 4/5 มี write penalty: เขียน 1 strip ต้อง 2 read + 2 write. RAID 6 เพิ่ม parity ที่สอง (P, Q) ทนเสียได้ 2 disk"},{"id":"s2-24","part":2,"ch":"Ch06","q":"Wear leveling ใน SSD มีไว้เพื่ออะไร?","c":["เพิ่มความเร็วหมุนของจาน","กระจายการเขียนให้ทั่วทุก block เพราะ flash เขียนได้จำนวนครั้งจำกัด","ลดการกินไฟของ head","เพิ่มจำนวน sector ต่อ track"],"a":1,"e":"Flash เสื่อมหลังเขียนหลายพันครั้ง wear leveling กระจายการเขียนเพื่อยืดอายุ","d":"SSD ไม่มีชิ้นส่วนเคลื่อนไหว (ไม่มี head, platter). ปัญหาเฉพาะคือต้องอ่านทั้ง block เข้า RAM, erase ทั้ง block แล้วเขียนกลับ จึงช้าลงเมื่อใช้นาน ใช้ wear-leveling, write cache และ bad-block management ช่วย"},{"id":"s2-25","part":2,"ch":"Ch07","q":"ถ้า CPU มี memory เดียว แล้วคำสั่ง ld/sd ต้องเข้าถึงข้อมูลในจังหวะเดียวกับที่อีกคำสั่งกำลัง fetch เกิด hazard ชนิดใด และแก้อย่างไร?","c":["Structure hazard; แยก instruction memory/cache กับ data memory/cache","Data hazard; ใช้ forwarding","Control hazard; ใช้ branch prediction","Data hazard; เพิ่ม stall ทุกคำสั่ง"],"a":0,"e":"ทรัพยากรเดียวถูกใช้พร้อมกัน = Structure hazard แก้โดยแยก I-memory และ D-memory","d":"Hazard 3 แบบ: Structure (ทรัพยากรที่ต้องใช้ถูกใช้อยู่), Data (ต้องรอคำสั่งก่อนหน้าอ่าน/เขียนข้อมูลเสร็จ), Control (การตัดสินใจ branch ขึ้นกับคำสั่งก่อนหน้า). ถ้าไม่แก้ IF ต้อง stall 1 cycle และเกิด bubble"},{"id":"s2-26","part":2,"ch":"Ch07","q":"โค้ดต่อไปนี้เกิด data hazard เพราะ sub ต้องใช้ x19 ที่ add ยังไม่ได้เขียนกลับ วิธีแก้ที่ไม่ต้องรอเขียนลง register คือข้อใด?","code":"add x19, x0, x1\nsub x2,  x19, x3","c":["Forwarding (bypassing) นำผล ALU ส่งต่อให้คำสั่งถัดไปทันที","เพิ่ม clock rate","เพิ่มขนาด cache","ใช้ branch prediction"],"a":0,"e":"Forwarding ส่งผลที่คำนวณได้ใน pipeline register ไปเข้า ALU ของคำสั่งถัดไปโดยตรง","d":"ผลของ add พร้อมหลัง stage EX จึงส่งจาก EX/MEM ไปยัง input ของ ALU ได้ทันที ไม่ต้องรอ WB. เงื่อนไข: EX/MEM.RegisterRd = ID/EX.RegisterRs1 (หรือ Rs2), คำสั่งนั้นเขียน register จริง และ Rd ≠ x0"},{"id":"s2-27","part":2,"ch":"Ch07","q":"ld x1,0(x2) ตามด้วย add x3,x1,x4 ใน 5-stage pipeline ที่มี forwarding ต้องทำอย่างไร?","c":["stall 1 cycle แล้วจึง forward","ไม่ต้อง stall เพราะ forward จาก EX/MEM ได้ทันที","stall 3 cycle","flush pipeline ทั้งหมด"],"a":0,"e":"Load-use hazard: ข้อมูลจาก ld มีหลัง stage MEM ซึ่งช้าเกินไปสำหรับ EX ของคำสั่งถัดไป จึงต้อง stall 1 cycle","d":"Forwarding ส่งข้อมูลย้อนเวลาไม่ได้. การ stall ทำโดยสอด bubble (ตั้ง control ใน ID/EX เป็น 0) และห้ามอัปเดต PC กับ IF/ID. ตรวจ hazard ใน ID ด้วย ID/EX.MemRead และ ID/EX.RegisterRd ตรงกับ Rs1 หรือ Rs2 ของคำสั่งที่กำลัง decode"},{"id":"s2-28","part":2,"ch":"Ch08","q":"Fine-grain multithreading ต่างจาก coarse-grain multithreading อย่างไร?","c":["fine-grain สลับ thread ทุก cycle ซ่อน stall ได้ทั้งสั้นและยาว; coarse-grain สลับเฉพาะเมื่อ stall ยาว","fine-grain สลับเฉพาะเมื่อ L2 cache miss","coarse-grain สลับ thread ทุก cycle","ทั้งสองแบบไม่ต้องมี register ซ้ำ"],"a":0,"e":"Fine-grain interleave ทุก cycle; coarse-grain สลับเมื่อเจอ stall ยาว (เช่น L2 miss) hardware ง่ายกว่าแต่ซ่อน stall สั้นไม่ได้","d":"Hardware multithreading ต้อง replicate register และ PC ของแต่ละ thread และสลับเร็ว. SMT (Simultaneous Multithreading) เป็นแบบที่ออกคำสั่งจากหลาย thread พร้อมกันบน multiple-issue processor ตัวอย่าง Intel Hyper-Threading"},{"id":"s2-29","part":2,"ch":"Ch08","q":"ระบบ shared memory ที่เวลาเข้าถึง memory ขึ้นกับว่า memory อยู่ใกล้หรือไกล processor ตัวนั้น เรียกว่าอะไร?","c":["UMA","NUMA","SPMD","SMT"],"a":1,"e":"NUMA (Nonuniform Memory Access); ส่วน UMA เวลาเข้าถึงเท่ากันทุก processor","d":"SMP (Shared memory Multiprocessor) มี single physical address space ให้ทุก processor และ sync ตัวแปรร่วมด้วย locks. UMA เวลาเท่ากันหมด, NUMA ต่างกันตามระยะ"},{"id":"s2-30","part":2,"ch":"Ch08","q":"รวมตัวเลข 64,000 ตัวด้วย 64 processor (UMA) หลังแต่ละ processor รวมส่วนของตัวเองแล้ว ใช้ reduction แบบ divide and conquer ต้องทำกี่ขั้น (synchronize กี่ครั้ง)?","c":["64","32","6","1"],"a":2,"e":"64 → 32 → 16 → 8 → 4 → 2 → 1 รวม 6 ขั้น (= log2 64)","d":"ขั้นแรกแต่ละ processor บวก 1000 ตัวของตัวเองขนานกัน จากนั้นครึ่งหนึ่งของ processor บวกค่าของอีกครึ่ง (sum[Pn] += sum[Pn + half]) ต้อง synch() ทุกขั้น. เวลาประมาณ 1000 + 6 ต่อเทียบกับ 64,000 แบบลำดับ ได้ speedup ประมาณ 63.6 เท่า (ไม่คิดค่า communication)"},{"id":"s3-1","part":3,"ch":"Ch01","q":"ค่า CPI (cycles per instruction) ขึ้นอยู่กับอะไรเป็นหลัก?","c":["ภาษาและ compiler ที่ใช้เขียนโปรแกรม","hardware (organization) และสัดส่วนชนิดของคำสั่ง (instruction mix)","อัลกอริทึมของโปรแกรม","จำนวนคำสั่งทั้งหมดของโปรแกรม"],"a":1,"e":"IC ขึ้นกับ program/ISA/compiler ส่วน CPI ขึ้นกับ hardware และ instruction mix","d":"CPU Time = IC × CPI × T. IC (instruction count) ถูกกำหนดโดยอัลกอริทึม ภาษา compiler และ ISA. CPI ถูกกำหนดโดยการออกแบบฮาร์ดแวร์ และถ้าคำสั่งแต่ละชนิดใช้ cycle ไม่เท่ากันต้องใช้ average CPI ตามสัดส่วน instruction mix"},{"id":"s3-2","part":3,"ch":"Ch01","q":"ISA เดียวกัน เครื่อง A: cycle time 250 ps, CPI 2.0; เครื่อง B: cycle time 500 ps, CPI 1.2 เครื่องใดเร็วกว่า?","c":["B เร็วกว่า A 1.2 เท่า","A เร็วกว่า B 1.2 เท่า","A เร็วกว่า B 2 เท่า","เร็วเท่ากัน"],"a":1,"e":"A = 2.0×250 = 500 ps ต่อคำสั่ง; B = 1.2×500 = 600 ps; 600/500 = 1.2 A เร็วกว่า","d":"ISA เดียวกันแปลว่า IC เท่ากัน จึงเทียบ CPI × cycle time ต่อคำสั่งได้เลย. CPI ต่ำกว่า (B) ไม่ได้แปลว่าเร็วกว่าเสมอ ต้องดู clock ด้วย ในข้อนี้ clock ของ A เร็วกว่า 2 เท่าจึงชนะ"},{"id":"s3-3","part":3,"ch":"Ch01","q":"Branch prediction ใน CPU ตรงกับ Eight Great Ideas ข้อใด?","c":["Design for Moore's Law","Performance via prediction","Hierarchy of memories","Dependability via redundancy"],"a":1,"e":"Branch prediction เดาผลของ branch ล่วงหน้าเพื่อให้ pipeline ทำงานต่อได้ = Performance via prediction","d":"Eight Great Ideas: Moore's Law, Abstraction, Make the common case fast, Parallelism, Pipelining, Prediction, Hierarchy of memories, Dependability via redundancy. กลุ่มที่เพิ่ม performance คือ parallelism, pipelining และ prediction"},{"id":"s3-4","part":3,"ch":"Ch02","q":"Bus arbitration แบบ daisy chain ทำงานอย่างไร?","c":["อุปกรณ์ส่งข้อมูลทันที ชนแล้วค่อยส่งใหม่","ส่งสิทธิ์ใช้ bus ต่อกันเป็นสายจากอุปกรณ์ priority สูงไปต่ำ","ทุกอุปกรณ์ต่อเข้า arbiter กลางโดยตรงแบบขนาน","อุปกรณ์ตัดสินกันเองโดยไม่มีตัวกลาง"],"a":1,"e":"Daisy chain: สิทธิ์ส่งต่อเป็นลำดับจาก priority สูงไปต่ำ","d":"4 แบบ: Distributed self-detection (ตัดสินกันเอง), Distributed collision-detection (ส่งเลย ชนแล้วลองใหม่), Daisy chain (ส่งสิทธิ์ต่อกัน), Centralized parallel (ต่อตรงเข้า arbiter กลาง)"},{"id":"s3-5","part":3,"ch":"Ch02","q":"RTL ของขั้นตอน Fetch ใน MARIE คือข้อใด?","c":["MAR ← PC; IR ← M[MAR]; PC ← PC + 1","MAR ← IR[11-0]; MBR ← M[MAR]; AC ← MBR","PC ← MAR; M[MAR] ← IR","IR ← AC; PC ← PC − 1"],"a":0,"e":"Fetch: MAR←PC; IR←M[MAR]; PC←PC+1","d":"ใช้ PC ส่งไป MAR, อ่านคำสั่งจาก memory เข้า IR แล้วเพิ่ม PC. ตัวเลือกที่สองคือส่วนของ Load X (หลัง decode)"},{"id":"s3-6","part":3,"ch":"Ch02","q":"โดยปกติ processor ตรวจสอบว่ามี interrupt เมื่อใด?","c":["ระหว่างกำลัง fetch","หลังจาก execute คำสั่งปัจจุบันเสร็จ (ต่อท้าย instruction cycle)","ทันทีที่สัญญาณมา แม้คำสั่งปัจจุบันยังไม่เสร็จ","เฉพาะเมื่อโปรแกรมสิ้นสุด"],"a":1,"e":"ตรวจหลัง execute เสร็จ ถ้ามี interrupt ก็ไป ISR แล้วกลับมาทำต่อ","d":"Interrupt cycle ต่อท้าย fetch-decode-execute: ถ้าไม่มี interrupt ก็ fetch คำสั่งถัดไป ถ้ามีจะเก็บสถานะ ไปทำ ISR (Interrupt Service Routine) แล้วกลับมาทำโปรแกรมเดิมต่อ"},{"id":"s3-7","part":3,"ch":"Ch03","q":"1's complement ขนาด 4 bit คำนวณ 6 + (−3) ได้ผลเป็นข้อใด?","c":["0010","0011","0100","1010"],"a":1,"e":"0110 + 1100 = 1 0010; บวก carry วนกลับ (end-around carry) 0010 + 1 = 0011 = 3","d":"−3 ใน 1's complement 4 bit คือกลับ bit ของ 0011 ได้ 1100. ถ้าการบวกมี carry out ต้องนำ carry ไปบวกที่ LSB เสมอ ถ้าไม่ทำจะได้ 0010 ซึ่งผิด"},{"id":"s3-8","part":3,"ch":"Ch03","q":"−0.75 ใน single precision เป็น hex ใด?","c":["0xBF400000","0x3F400000","0xBF800000","0xBE400000"],"a":0,"e":"−0.75 = −1.1₂ × 2⁻¹ → E = 126 = 0111 1110 → 1 01111110 1000... = 0xBF400000","d":"0x3F400000 คือ +0.75 (sign ต่างกัน). 0xBF800000 คือ −1.0. 0.75 = 0.11₂ = 1.1₂ × 2⁻¹ จึง e = −1, E = 126"},{"id":"s3-9","part":3,"ch":"Ch03","q":"ระบบ Bias-127 (8 bit) เก็บค่า −5 ได้ bit pattern ใด?","c":["1000 0101","0111 1010","1111 1011","0000 0101"],"a":1,"e":"ค่าที่เก็บ = ค่าจริง + bias = −5 + 127 = 122 = 0111 1010","d":"1111 1011 คือ −5 แบบ 2's complement. 0000 0101 คือ +5 แบบ unsigned. ใน Bias-127 ค่า 0111 1111 แทน 0 และ 0111 1010 อยู่ต่ำกว่า 5 จึงเป็น −5"},{"id":"s3-10","part":3,"ch":"Ch03","q":"lui x19,976 ตามด้วย addi x19,x19,128 ทำให้ x19 มีค่า (hex) เท่าใด?","c":["0x003D0080","0x000003D0","0x00000080","0x3D000080"],"a":0,"e":"976 = 0x3D0; lui ใส่ที่ bit 31:12 = 0x003D0000; บวก 128 (0x80) ได้ 0x003D0080","d":"lui (load upper immediate) คัดลอก immediate 20 bit ไปที่ bit [31:12] และเคลียร์ [11:0]. ใช้คู่กับ addi เพื่อสร้างค่าคงที่ 32 bit. ระวัง: ถ้า bit 11 ของส่วนล่างเป็น 1 ต้องบวก 1 เข้า immediate ของ lui เพราะ addi ขยายแบบ sign-extend"},{"id":"s3-11","part":3,"ch":"Ch03","q":"คำสั่งใดต่อไปนี้ใช้ instruction format แบบ S?","c":["ld x9,64(x22)","sd x9,96(x22)","beq x1,x2,Label","add x9,x20,x21"],"a":1,"e":"sd (store) ใช้ S-format; ld เป็น I; beq เป็น SB; add เป็น R","d":"S-format แยก immediate เป็นสองท่อน (imm[11:5] และ imm[4:0]) เพื่อให้ rs1 และ rs2 อยู่ตำแหน่งเดิมเหมือน format อื่น"},{"id":"s3-12","part":3,"ch":"Ch03","q":"slli x10,x22,3 ทำอะไรกับค่าใน x22?","c":["หารด้วย 3","คูณด้วย 8","คูณด้วย 3","บวก 8"],"a":1,"e":"shift left 3 ตำแหน่ง = คูณ 2³ = 8","d":"slli i bit คือคูณ 2^i (เติม 0 ทางขวา) ใช้แปลง index ของอาร์เรย์ 8 byte เป็น byte offset. srli i bit คือหารด้วย 2^i เฉพาะ unsigned"},{"id":"s3-13","part":3,"ch":"Ch04","q":"Direct mapped cache ขนาด 16 KB, block ละ 16 byte, address 32 bit จะมี Tag กี่ bit?","c":["14","16","18","22"],"a":2,"e":"16 KB / 16 B = 1024 blocks → Index 10, Offset 4, Tag = 32 − 10 − 4 = 18","d":"จำนวน block = ขนาด cache / ขนาด block. 1024 = 2^10 จึง index 10 bit. ถ้านับ bit ทั้งหมดต่อ block จะเป็น 1 (valid) + 18 (tag) + 128 (data) = 147 bit"},{"id":"s3-14","part":3,"ch":"Ch04","q":"ถ้าเพิ่ม block size มากเกินไปโดยขนาด cache คงที่ จะเกิดอะไรขึ้น?","c":["miss rate ลดลงเสมอ","จำนวน block ลดลงจนแย่งกัน miss rate อาจเพิ่ม และ miss penalty สูงขึ้น","hit time เป็นศูนย์","ไม่มีผลใด ๆ"],"a":1,"e":"block ใหญ่ขึ้นลด miss ในช่วงแรกจาก spatial locality แต่ใหญ่เกินไปทำให้ miss rate กลับเพิ่มและ miss penalty สูงขึ้น","d":"ขนาด cache คงที่ → block ใหญ่ขึ้นแปลว่ามี block น้อยลง ข้อมูลเก่าถูกแทนที่บ่อย (pollution). การดึง block ใหญ่ใช้เวลานานขึ้น (miss penalty เพิ่ม) บรรเทาได้ด้วย early restart และ critical-word-first"},{"id":"s3-15","part":3,"ch":"Ch04","q":"นโยบายการเขียนแบบใดที่ใช้ dirty bit?","c":["Write-through","Write-back","Write-around","เขียน memory ทุกครั้งโดยไม่มี cache"],"a":1,"e":"Write-back เขียนแค่ cache และตั้ง dirty bit เขียนกลับ memory เมื่อ block ถูกแทนที่","d":"Write-through เขียนทั้ง cache และ memory ทุกครั้ง ข้อมูลตรงกันแต่ช้า จึงใช้ write buffer ช่วย. Write-back เร็วกว่าแต่ต้องมี dirty bit บอกว่า block ถูกแก้ไขแล้ว"},{"id":"s3-16","part":3,"ch":"Ch04","q":"CPU มี base CPI = 1, store คิดเป็น 10% ของคำสั่ง ใช้ write-through ไม่มี write buffer แต่ละ write ใช้ 100 cycle CPI รวมเท่าใด?","c":["1.1","10","11","101"],"a":2,"e":"CPI = 1 + 0.1 × 100 = 11","d":"stall cycles ต่อคำสั่ง = สัดส่วน store × cycle ต่อ write = 0.1 × 100 = 10 บวกกับ base CPI 1 ได้ 11. write buffer ช่วยลดผลนี้"},{"id":"s3-17","part":3,"ch":"Ch04","q":"การเพิ่ม associativity ของ cache (เช่น direct mapped เป็น 2-way) มีผลอย่างไร?","c":["ลด conflict miss แต่ access time อาจเพิ่ม","ลด compulsory miss ทั้งหมด","เพิ่ม conflict miss","ไม่มีผลต่อ miss rate"],"a":0,"e":"associativity มากขึ้น block มีที่วางได้หลายที่ จึงลด conflict miss แต่ต้องเทียบ tag หลายตัว access time เพิ่ม","d":"ผลลดลงเรื่อย ๆ (diminishing returns): ตัวอย่าง miss rate 64 KB D-cache: 1-way 10.3%, 2-way 8.6%, 4-way 8.3%, 8-way 8.1%. การเพิ่ม block size ลด compulsory miss ส่วนการเพิ่มขนาด cache ลด capacity miss"},{"id":"s3-18","part":3,"ch":"Ch04","q":"CPU 4 GHz มี base CPI = 1 และมี L1 cache อย่างเดียว miss 2% ต่อคำสั่ง การเข้าถึง main memory ใช้ 100 ns CPI จริงเท่าใด?","c":["3.0","9","3.4","2.0"],"a":1,"e":"1 cycle = 0.25 ns; miss penalty = 100/0.25 = 400 cycle; CPI = 1 + 0.02 × 400 = 9","d":"ถ้าเพิ่ม L2 (เข้าถึง 5 ns = 20 cycle และ miss ไป memory เหลือ 0.5%) CPI = 1 + 0.02×20 + 0.005×400 = 3.4 เร็วขึ้นประมาณ 2.6 เท่า. L1 เน้น hit time ต่ำ ส่วน L2 เน้น miss rate ต่ำ"},{"id":"s3-19","part":3,"ch":"Ch05","q":"ข้อใดเป็นข้อจำกัดของ Interrupt-driven I/O เมื่อเทียบกับ DMA?","c":["CPU ต้อง busy-wait ตลอด","ข้อมูลทุก word ยังต้องผ่าน CPU","ทำงานอื่นระหว่างรอ I/O ไม่ได้","ไม่ใช้ interrupt"],"a":1,"e":"Interrupt-driven ไม่ต้องรอ แต่การโอนข้อมูลแต่ละ word ยังผ่าน CPU จึงจำกัดอัตราถ่ายโอน","d":"ทั้ง Programmed และ Interrupt-driven มีอัตราถ่ายโอนถูกจำกัดด้วยความเร็วที่ CPU ให้บริการ และ CPU ถูกผูกกับการจัดการ I/O. DMA แก้ปัญหานี้ด้วยการไม่ผ่าน CPU"},{"id":"s3-20","part":3,"ch":"Ch05","q":"ขั้นพัฒนาของ I/O ที่ I/O module มี processor และ instruction set เฉพาะของตัวเอง เรียกว่าอะไร?","c":["I/O channel","Programmed I/O","Direct Cache Access","Isolated I/O"],"a":0,"e":"I/O channel: I/O module มี processor และ instruction set เฉพาะ","d":"วิวัฒนาการ 6 ขั้น: CPU ควบคุมอุปกรณ์โดยตรง → I/O module + programmed I/O → เพิ่ม interrupt → DMA → I/O channel → I/O processor (มี local memory กลายเป็นคอมพิวเตอร์ในตัว)"},{"id":"s3-21","part":3,"ch":"Ch05","q":"USB 3.0 มีความเร็วสูงสุดตามสรุปประมาณเท่าใด?","c":["12 Mbps","480 Mbps","5 Gbps","40 Gbps"],"a":2,"e":"USB 3.0 = 5 Gbps","d":"USB 1.0: 1.5 / 12 Mbps, USB 2.0: 480 Mbps, USB 3.0: 5 Gbps, USB 3.1 Gen2: 10 Gbps, USB 3.2 Gen2x2: 20 Gbps"},{"id":"s3-22","part":3,"ch":"Ch06","q":"Multiple Zone Recording ต่างจาก CAV อย่างไร?","c":["ทุก track มี sector เท่ากัน","zone ด้านนอกมี sector ต่อ track มากกว่า จึงใช้ความจุได้เต็มที่กว่า","ใช้ความเร็วรอบไม่คงที่เสมอ","ไม่มี track"],"a":1,"e":"CAV มี sector เท่ากันทุก track ทำให้ track ด้านในหนาแน่นเกินและเปลืองความจุ; MZR ให้ zone นอกมี sector มากกว่า","d":"MZR แบ่งจานเป็นหลาย zone, track ด้านนอกยาวกว่าจึงบรรจุ sector ได้มากกว่า ทำให้ใช้ความจุเต็มที่"},{"id":"s3-23","part":3,"ch":"Ch06","q":"ทำไม Blu-ray (laser 405 nm) จึงจุข้อมูลได้มากกว่า CD (780 nm)?","c":["ใช้แสงความยาวคลื่นสั้นกว่า beam spot เล็กกว่า pit/track ละเอียดกว่า","หมุนเร็วกว่ามาก","แผ่นหนากว่า","ใช้เทปแม่เหล็ก"],"a":0,"e":"ความยาวคลื่นสั้น → beam spot เล็ก → pit/track เล็ก → จุข้อมูลได้มากขึ้น","d":"CD 780 nm, DVD 650 nm, Blu-ray 405 nm. Blu-ray 1 layer 1 ด้านจุ 25 GB, DVD double-sided สูงสุด 17 GB, CD-ROM ประมาณ 650 MB"},{"id":"s3-24","part":3,"ch":"Ch06","q":"RAID level ใดต่อไปนี้ทนความเสียหายของ disk ได้พร้อมกัน 2 ตัว?","c":["RAID 0","RAID 1 (คู่ mirror เดียว)","RAID 5","RAID 6"],"a":3,"e":"RAID 6 ใช้ dual parity (P, Q) ใช้ N+2 disk ทนเสียได้ 2 ตัว","d":"RAID 0 ไม่มี fault tolerance. RAID 1 ทนเสียได้ 1 ตัวต่อคู่ mirror. RAID 5 มี parity เดียว ทนได้ 1 ตัว. RAID 6 มี write penalty สูงกว่า RAID 5 เพราะต้องแก้ parity 2 block"},{"id":"s3-25","part":3,"ch":"Ch07","q":"โปรแกรมมี 7 คำสั่งและไม่มี hazard ใด ๆ ใน 5-stage pipeline ต้องใช้กี่ cycle จนเสร็จทั้งหมด?","c":["7","11","13","35"],"a":1,"e":"(k + n − 1) = 5 + 7 − 1 = 11 cycle","d":"คำสั่งแรกใช้ 5 cycle ที่เหลืออีก 6 คำสั่งเสร็จทีละ 1 cycle. ถ้ามี load-use stall 2 ครั้งจะเป็น 13 cycle. การจัดลำดับคำสั่งใหม่ (code scheduling) โดยย้ายคำสั่งที่ไม่เกี่ยวข้องมาคั่นช่วยลด stall กลับเป็น 11 cycle ได้"},{"id":"s3-26","part":3,"ch":"Ch07","q":"ถ้า RISC-V pipeline รู้ผลของ branch ที่ stage MEM คำสั่งที่ fetch ผิดไปแล้วต้อง flush กี่คำสั่ง?","c":["1","2","3","4"],"a":2,"e":"ขณะ branch อยู่ที่ MEM จะมีอีก 3 คำสั่งอยู่ใน IF, ID, EX ต้อง flush ทั้ง 3","d":"วิธีลดค่าเสียหาย: ย้าย hardware ตัดสินมาที่ ID stage โดยเพิ่ม adder คำนวณ target และ comparator ของ register ทำให้เสียเพียง 1 cycle. นอกจากนี้ใช้ branch prediction และ stall เฉพาะเมื่อทำนายผิด"},{"id":"s3-27","part":3,"ch":"Ch07","q":"Static branch prediction ทั่วไปทำนายอย่างไร?","c":["backward branch → taken, forward branch → not taken","backward branch → not taken, forward branch → taken","ทำนาย taken ทุกครั้ง","ใช้ประวัติของ branch ที่ผ่านมาในการทำนาย"],"a":0,"e":"Backward branch มักเป็น loop ซึ่งวนซ้ำบ่อยจึงทำนาย taken; forward ทำนาย not taken","d":"Static ใช้พฤติกรรมทั่วไปของ loop และ if ส่วน Dynamic prediction ใช้ hardware บันทึกประวัติล่าสุดของแต่ละ branch แล้วสมมติว่าแนวโน้มจะต่อไป ถ้าทำนายผิดจะ stall ระหว่าง re-fetch และอัปเดตประวัติ"},{"id":"s3-28","part":3,"ch":"Ch08","q":"ข้อใดถูกต้องเมื่อเทียบ GPU กับ multicore ที่มี SIMD?","c":["GPU ใช้ hardware multithreading จำนวนมากเพื่อซ่อน memory latency จึงพึ่ง cache ขนาดใหญ่น้อยกว่า","GPU มี cache ใหญ่กว่า multicore มาก","GPU ไม่ใช้ multithreading","GPU รองรับ demand paging และ cache coherent เต็มรูปแบบ"],"a":0,"e":"GPU สลับ thread ซ่อน latency จึงมี cache เล็ก (ประมาณ 0.75 MB เทียบกับ 8 MB) และไม่มี demand paging/cache coherence","d":"GPU เป็น data-parallel สูง, highly multithreaded (16–32 SIMD threads) และมี graphics memory กว้าง bandwidth สูง. ระบบ heterogeneous: CPU ทำโค้ด sequential, GPU ทำโค้ด parallel. ภาษา/API เช่น CUDA, OpenGL, DirectX"},{"id":"s3-29","part":3,"ch":"Ch08","q":"ข้อใดอธิบาย message-passing cluster ได้ถูกต้องเมื่อเทียบกับ shared memory SMP?","c":["แต่ละ processor มี private address space และสื่อสารด้วยการส่ง/รับ message","ทุก processor ใช้ single physical address space และ sync ด้วย lock","ต้องมี hardware cache coherence ระหว่างทุกเครื่อง","ใช้ได้เฉพาะแบบ NUMA"],"a":0,"e":"Message passing: private address space ต่อ processor ติดต่อกันผ่าน send/receive","d":"Cluster คือคอมพิวเตอร์อิสระ (มี memory และ OS ของตัวเอง) เชื่อมกันผ่านระบบ I/O เช่น Ethernet เหมาะกับงานอิสระ เช่น web server, database, simulation ข้อดีคือ availability สูง scale ง่าย ราคาไม่แพง ข้อเสียคือ interconnect bandwidth ต่ำกว่า SMP. Grid computing เชื่อมเครื่องแยกกันผ่านเครือข่ายระยะไกล เช่น Internet"},{"id":"s3-30","part":3,"ch":"Ch08","q":"ตาม Roofline model: Attainable GFLOPs/s = min(Peak GFLOPs/s, Peak Memory BW × Arithmetic Intensity) เครื่องหนึ่งมี Peak 16 GFLOPs/s และ memory bandwidth 16 GB/s kernel ที่มี arithmetic intensity 0.5 FLOP/byte ทำได้สูงสุดเท่าใด?","c":["16 GFLOPs/s","8 GFLOPs/s","0.5 GFLOPs/s","32 GFLOPs/s"],"a":1,"e":"min(16, 16 × 0.5) = min(16, 8) = 8 GFLOPs/s (memory-bound)","d":"Arithmetic intensity = FLOPs ต่อ byte ของ memory ที่เข้าถึง. Ridge point = Peak GFLOPs / Peak BW = 1 FLOP/byte: ต่ำกว่านี้คอขวดอยู่ที่ memory (memory-bound) สูงกว่านี้อยู่ที่การคำนวณ (compute-bound). ถ้า AI = 4 จะได้ min(16, 64) = 16 GFLOPs/s"}];
+const KEY = 'itds211-midterm-quiz-v2';
+const THEME_KEY = 'itds211.theme';
+const LET = ['ก','ข','ค','ง'];
+const PARTS = [
+  {n:1, title:'ชุด 1', sub:'ผสม Ch01–08 · 30 ข้อ'},
+  {n:2, title:'ชุด 2', sub:'ผสม Ch01–08 · 30 ข้อ'},
+  {n:3, title:'ชุด 3', sub:'ผสม Ch01–08 · 30 ข้อ'}
+];
+const CH = ['Ch01','Ch02','Ch03','Ch04','Ch05','Ch06','Ch07','Ch08'];
+
+let S = load();
+let part = 1, onlyWrong = false, onlyTodo = false;
+const openHelp = new Set();
+let sample = null;
+
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if(s && s.perm && s.ans) return s;
+  }catch(e){}
+  return {perm:{}, ans:{}};
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function perm(q){
+  const p = S.perm[q.id];
+  if(!Array.isArray(p) || p.length!==4){ S.perm[q.id] = shuffle([0,1,2,3]); save(); }
+  return S.perm[q.id];
+}
+const $ = s => document.querySelector(s);
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+
+function stats(list){
+  let done=0, right=0;
+  for(const q of list){
+    const a = S.ans[q.id];
+    if(a!=null){ done++; if(perm(q)[a]===q.a) right++; }
+  }
+  return {done, right, total:list.length};
+}
+const inPart = n => DATA.filter(q=>q.part===n);
+
+function renderTabs(){
+  const box = $('#tabs'); box.textContent='';
+  for(const p of PARTS){
+    const st = stats(inPart(p.n));
+    const b = el('button','tab'); b.type='button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', String(p.n===part));
+    b.append(el('b',null,p.title), el('span',null,p.sub), el('span',null,`ทำแล้ว ${st.done}/${st.total} · ถูก ${st.right}`));
+    const bar = el('div','bar'); const i=el('i'); i.style.width=(st.done/st.total*100)+'%'; bar.append(i); b.append(bar);
+    b.addEventListener('click',()=>{ part=p.n; render(); window.scrollTo({top:0}); });
+    box.append(b);
+  }
+}
+
+function srow(label, st){
+  const r = el('div','srow');
+  const pct = st.done ? Math.round(st.right/st.done*100) : 0;
+  const bar = el('div','bar'); const i=el('i'); i.style.width=(st.total? st.right/st.total*100:0)+'%'; bar.append(i);
+  r.append(el('span',null,label), bar, el('em',null,`${st.right}/${st.done}${st.done?' ('+pct+'%)':''}`));
+  return r;
+}
+function renderSum(){
+  const g = $('#sumgrid'); g.textContent='';
+  g.append(srow('รวม 90 ข้อ', stats(DATA)));
+  for(const p of PARTS) g.append(srow(p.title, stats(inPart(p.n))));
+  g.append(el('div','note','รายบท (ถูก/ทำแล้ว):'));
+  for(const c of CH) g.append(srow(c, stats(DATA.filter(q=>q.ch===c))));
+}
+
+function renderCard(q, idx){
+  const p = perm(q);
+  const a = S.ans[q.id];
+  const answered = a!=null;
+  const correctPos = p.indexOf(q.a);
+  const isRight = answered && a===correctPos;
+  const card = el('article','card'+(answered?(isRight?' ok':' bad'):''));
+  card.id = 'q-'+q.id;
+
+  const head = el('div','qhead');
+  head.append(el('span','qnum','ข้อ '+idx), el('span','chip',q.ch));
+  card.append(head, el('p','qtext',q.q));
+  if(q.code){ const pre = el('pre','code'); pre.textContent=q.code; card.append(pre); }
+
+  const opts = el('div','opts');
+  p.forEach((orig, pos)=>{
+    const b = el('button','opt'); b.type='button';
+    b.append(el('span','l',LET[pos]), el('span',null,q.c[orig]));
+    if(answered){
+      b.disabled = true;
+      if(pos===correctPos) b.classList.add('right');
+      else if(pos===a) b.classList.add('wrong');
+    }
+    b.addEventListener('click',()=>{ S.ans[q.id]=pos; save(); refreshCard(q, idx); renderTabs(); renderSum(); });
+    opts.append(b);
+  });
+  card.append(opts);
+
+  if(answered){
+    const fb = el('div','fb '+(isRight?'ok':'bad'));
+    fb.setAttribute('role','status');
+    fb.append(el('strong',null, isRight ? 'ถูกต้อง' : `ผิด — คำตอบที่ถูกคือ ${LET[correctPos]}`), document.createTextNode(q.e));
+    card.append(fb);
+
+    const help = el('div','help');
+    const hb = el('button','btn','ไม่เข้าใจ? อธิบายเพิ่ม'); hb.type='button';
+    hb.setAttribute('aria-expanded', String(openHelp.has(q.id)));
+    hb.addEventListener('click',()=>{ openHelp.has(q.id)?openHelp.delete(q.id):openHelp.add(q.id); refreshCard(q, idx); });
+    help.append(hb); card.append(help);
+
+    if(openHelp.has(q.id)){
+      const ex = el('div','exp'); ex.append(el('h4',null,'อธิบายละเอียด'), document.createTextNode(q.d));
+      card.append(ex);
+      if(sample) card.append(askBox(q, a, correctPos));
+    }
+  }
+  return card;
+}
+function refreshCard(q, idx){
+  const old = document.getElementById('q-'+q.id);
+  const fresh = renderCard(q, idx);
+  if(old) old.replaceWith(fresh);
+  if(onlyWrong || onlyTodo) renderList();
+}
+
+function askBox(q, a, correctPos){
+  const box = el('div','ask');
+  const ta = el('textarea'); ta.placeholder='พิมพ์ส่วนที่ยังไม่เข้าใจ เช่น ทำไมข้อ ก ถึงผิด หรือขอตัวอย่างเพิ่ม'; ta.setAttribute('aria-label','คำถามถึง Claude');
+  const row = el('div','row');
+  const go = el('button','btn primary','ถาม Claude'); go.type='button';
+  const note = el('span','note','Claude จะเห็นโจทย์ ตัวเลือก และเฉลยของข้อนี้');
+  row.append(go, note);
+  const out = el('div','ans'); out.hidden = true; out.setAttribute('aria-live','polite');
+  go.addEventListener('click', async ()=>{
+    const ask = ta.value.trim(); if(!ask) return;
+    const p = perm(q);
+    const choices = p.map((o,i)=>`${LET[i]}. ${q.c[o]}`).join('\n');
+    const prompt = `คุณเป็นติวเตอร์วิชา Computer Architecture (ITDS211) ระดับมหาวิทยาลัย ตอบเป็นภาษาไทย แทรกศัพท์เทคนิคภาษาอังกฤษได้ อธิบายสั้น ตรงประเด็น ไม่เกิน 10 บรรทัด\n\nโจทย์: ${q.q}\n${q.code?q.code+'\n':''}ตัวเลือก:\n${choices}\nเฉลย: ${LET[correctPos]}\nนักศึกษาตอบ: ${LET[a]}\nเฉลยย่อ: ${q.e}\n\nคำถามของนักศึกษา: ${ask}`;
+    go.disabled = true; out.hidden=false; out.textContent='กำลังคิด...';
+    try{
+      const r = await sample(prompt, {cache:false, onText:({text})=>{ out.textContent = text; }});
+      out.textContent = r.text;
+    }catch(err){
+      out.textContent = err && err.code==='rate_limited' ? 'ถามถี่เกินไป รอสักครู่แล้วลองใหม่' : 'ถามไม่สำเร็จ ลองอ่านคำอธิบายด้านบนก่อน';
+    }finally{ go.disabled=false; }
+  });
+  box.append(ta,row,out);
+  return box;
+}
+
+function renderList(){
+  const box = $('#list'); box.textContent='';
+  const items = inPart(part).map((q,i)=>({q, idx:i+1}));
+  let shown = 0;
+  for(const {q,idx} of items){
+    const a = S.ans[q.id];
+    if(onlyWrong && !(a!=null && perm(q)[a]!==q.a)) continue;
+    if(onlyTodo && a!=null) continue;
+    box.append(renderCard(q, idx)); shown++;
+  }
+  if(!shown) box.append(el('p','empty', onlyWrong ? 'ยังไม่มีข้อที่ผิดในชุดนี้' : onlyTodo ? 'ทำครบทุกข้อในชุดนี้แล้ว' : 'ไม่มีข้อสอบ'));
+}
+function render(){ renderTabs(); renderSum(); renderList(); }
+
+function arm(btn, label, action){
+  let t = null;
+  btn.addEventListener('click',()=>{
+    if(btn.classList.contains('armed')){ clearTimeout(t); btn.classList.remove('armed'); btn.textContent=label; action(); return; }
+    btn.classList.add('armed'); btn.textContent='กดอีกครั้งเพื่อยืนยัน';
+    t = setTimeout(()=>{ btn.classList.remove('armed'); btn.textContent=label; }, 3000);
+  });
+}
+function resetIds(ids){
+  for(const id of ids){ delete S.ans[id]; delete S.perm[id]; openHelp.delete(id); }
+  save(); render(); window.scrollTo({top:0});
+}
+arm($('#rPart'),'Reset ชุดนี้',()=>resetIds(inPart(part).map(q=>q.id)));
+arm($('#rAll'),'Reset ทั้งหมด',()=>resetIds(DATA.map(q=>q.id)));
+$('#fWrong').addEventListener('click',e=>{ onlyWrong=!onlyWrong; if(onlyWrong) onlyTodo=false; syncFilters(); renderList(); });
+$('#fTodo').addEventListener('click',e=>{ onlyTodo=!onlyTodo; if(onlyTodo) onlyWrong=false; syncFilters(); renderList(); });
+function syncFilters(){ $('#fWrong').setAttribute('aria-pressed',String(onlyWrong)); $('#fTodo').setAttribute('aria-pressed',String(onlyTodo)); }
+
+/* ธีม: ใช้ key เดียวกับหน้า Summary เพื่อให้สองหน้าตามกัน */
+const root = document.documentElement;
+function applyTheme(t){ root.setAttribute('data-theme',t); $('#themeBtn').textContent = t==='dark' ? '☀️ ธีม' : '🌙 ธีม'; }
+applyTheme(root.getAttribute('data-theme')==='dark' ? 'dark' : 'light');
+$('#themeBtn').addEventListener('click',()=>{
+  const t = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  applyTheme(t);
+  try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+});
+
+render();
+
+/* ช่องถาม Claude: ใช้ได้เฉพาะเมื่อเปิดผ่าน Artifact */
+(async ()=>{
+  try{
+    if(window.claude && typeof window.claude.use==='function'){
+      const s = await window.claude.use('sample');
+      if(s){ sample = s; renderList(); }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<div class="sec"><h3><i>Ch01</i>Performance · CPU time · CPI<em>★ ข้อคำนวณ</em></h3><div class="bd">
+<div class="f">X เร็วกว่า Y กี่เท่า = <b>Time<sub>Y</sub> / Time<sub>X</sub></b></div>
+<div class="f">CPU time = <b>IC × CPI × Cycle time</b><br>= IC × CPI / Clock rate</div>
+<div class="f">Clock rate = 1 / Clock period</div>
+<ul class="l">
+<li>เทียบ 2 เครื่อง ISA เดียวกัน → <b>ตัด IC ทิ้ง</b></li>
+<li>ไม่รู้ค่า IC ให้ติดตัวแปร I ไว้</li>
+<li>⚠ "เร็วกว่า" = ใช้เวลา<b>น้อยกว่า</b></li>
+<li>อ่านโจทย์ดีๆ ว่าใครหารใคร</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> A: cycle 250 ps, CPI 2.0 · B: cycle 500 ps, CPI 1.2
+<ul class="l">
+<li>A = I × 2.0 × 250 = <b>500I</b> ps</li>
+<li>B = I × 1.2 × 500 = <b>600I</b> ps</li>
+<li>→ <b>A เร็วกว่า 1.2 เท่า</b></li>
+</ul></div>
+<div class="ex x"><b>ตย. Clock</b> A: 2 GHz, 10 s · B ต้อง 6 s และใช้ cycles มากกว่า 1.2 เท่า
+<ul class="l"><li>Clock<sub>B</sub> = 1.2 × (10 × 2×10⁹) / 6 = <b>4 GHz</b></li></ul></div>
+</div></div>

@@ -1,0 +1,28 @@
+<div class="sec"><h3><i>Ch03</i>Data Representation<em>★ “จะมีข้อนี้แน่ๆ” ต้องทำได้เต็ม</em></h3><div class="bd">
+<table class="t"><tr><th style="width:16%"></th><th>Sign-Magnitude</th><th>2's Complement</th></tr>
+<tr><td><b>ค่าลบ</b></td><td>กลับ <b>sign bit</b> (0 = +, 1 = −) ที่เหลือคือ magnitude</td><td><b>กลับทุกบิต แล้ว +1</b></td></tr>
+<tr><td><b>8 บิต</b></td><td class="c">−127 … +127</td><td class="c"><b>−128 … +127</b></td></tr>
+<tr><td><b>ศูนย์</b></td><td>มี 2 ตัว<br>0000 0000 / 1000 0000</td><td><b>ตัวเดียว</b></td></tr>
+<tr><td><b>บวก/ลบ</b></td><td>sign เหมือน → บวก magnitude<br>sign ต่าง → ลบตัวเล็กจากตัวใหญ่ ใช้ sign ตัวใหญ่</td><td>A−B = A + (2's ของ B)<br>แล้ว <b>ทิ้ง carry-out</b></td></tr></table>
+<div class="f2" style="margin:.8mm 0"><b>Shortcut 2's</b>: จาก LSB เจอ <b>1 ตัวแรก</b> คงไว้ แล้วกลับบิตทางซ้ายทั้งหมด<br>ตย. 0101011 → 1010101</div>
+<div class="ex"><b>ตย. สไลด์</b> 6 + (−5) แบบ 4 บิต
+<ul class="l"><li>0110 + 1011 = 1|<b>0001</b></li><li>ทิ้ง carry → ได้ <b>1</b></li><li class="x">Overflow: (+)+(+) ได้ลบ หรือ (−)+(−) ได้บวก</li></ul></div>
+<div class="ex x"><b>ตย. 16 บิต (แนว assignment)</b>
+<ul class="l">
+<li>+100 = 0000 0000 0110 0100</li>
+<li>+37 = 0000 0000 0010 0101</li>
+<li>−100 SM = 1000 0000 0110 0100</li>
+<li>−100 2's = 1111 1111 1001 1100</li>
+<li>−37 2's = 1111 1111 1101 1011</li>
+<li>100−37 = 1|0000 0000 0011 1111 → <b>63</b></li>
+<li>37−100 = 1111 1111 1100 0001 → <b>−63</b></li>
+</ul></div>
+<div class="sec2"><b>IEEE 754</b> &nbsp;<span class="f2">N = (−1)<sup>S</sup> × 1.m × 2<sup>E−127</sup></span>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:8;background:#e4edff">Exponent 8</div><div style="flex:23;background:#fff0d6">Mantissa 23</div></div>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:11;background:#e4edff">Exponent 11</div><div style="flex:52;background:#fff0d6">Mantissa 52</div></div>
+<ul class="l">
+<li><b class="s">★</b> <b>Single 32 บิต: exponent 8</b></li>
+<li><b class="s">★</b> <b>Double 64 บิต: exponent 11</b> (อาจารย์ถาม)</li>
+<li class="x">bias single 127 · double 1023</li>
+</ul></div>
+</div></div>

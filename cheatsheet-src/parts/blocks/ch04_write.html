@@ -1,0 +1,6 @@
+<div class="sec"><h3><i>Ch04</i>Write Policy<em>★ ควรรู้นิยามสามคำ</em></h3><div class="bd"><ul class="l">
+<li><b>Write-through</b>: เขียนทั้ง cache <b>และ memory</b> ทุกครั้ง (consistent แต่ช้า: CPI = 1 + 0.1×100 = 11) → ใช้ <b>write buffer</b> (CPU ไปต่อ · stall เมื่อ buffer เต็ม)</li>
+<li><b>Write-back</b>: เขียน<b>เฉพาะ cache</b> + ตั้ง <b>dirty bit</b> · เขียนกลับ memory เมื่อ block ถูกแทนที่</li>
+<li><b>Write allocation</b> (เมื่อ write miss): <b>allocate</b> = ดึง block มาก่อนเขียน · <b>write around</b> = ไม่ดึง เขียนลง memory ตรง ๆ · write-back มัก fetch block</li>
+<li>อาจารย์: เมื่อก่อนมีงานวิจัยแข่งกลไกเขียน แต่ปัจจุบัน transistor เล็ก (2–4 nm) เร็วขึ้น ความต่างน้อย → เน้นให้โค้ดที่ใช้บ่อยอยู่ <b>L1</b> ให้มากที่สุด</li>
+</ul></div></div>

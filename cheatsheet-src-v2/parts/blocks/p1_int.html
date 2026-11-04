@@ -1,0 +1,14 @@
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ flow “จำไว้เลย”</em></h3><div class="bd">
+<div class="sec2"><b class="s">★ Interrupt flow</b>
+<ol class="n"><li><b>Save</b> register / PC / status ปัจจุบัน</li><li>เปิด <b>Interrupt Vector table</b> หา <b>ISR address</b> (เช่น เบอร์ 003 = คีย์บอร์ด)</li><li>ใส่ address นั้นใน <b>PC</b> → รัน <b>ISR</b></li><li><b>Restore</b> ค่าที่ save ไว้ → กลับไปทำงานเดิม</li></ol></div>
+<svg class="dg" viewBox="0 0 200 28" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="38" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="21.0" y="12.32" text-anchor="middle" font-size="5.2" font-weight="700" fill="#0b2a6f">โปรแกรมหลัก</text><line x1="40" y1="10.5" x2="54" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><text x="47" y="8" text-anchor="middle" font-size="4.2" fill="#b91c1c" font-weight=700>IRQ</text><rect x="54" y="4" width="30" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="69.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">1 Save</text><rect x="88" y="4" width="36" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="106.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">2 Vector</text><rect x="128" y="4" width="30" height="13" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="143.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">3 ISR</text><rect x="162" y="4" width="36" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="180.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">4 Restore</text><line x1="84" y1="10.5" x2="88" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="124" y1="10.5" x2="128" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="158" y1="10.5" x2="162" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><path d="M180 17 V25 H21 V17" fill="none" stroke="#1d4ed8" stroke-width=".7" stroke-dasharray="2 1.4" marker-end="url(#ar)"/><text x="100" y="23.2" text-anchor="middle" font-size="4.6" fill="#52627f">กลับไปทำงานเดิมต่อ</text></svg><ul class="l">
+<li><b>Sequential</b>: เกิด → ทำ → กลับ → เกิดอีก → ทำ → กลับ</li>
+<li><b>Nested</b>: Y ซ้อนเข้ามาระหว่าง X → save X, ทำ Y, คืนค่า X, ทำ X ต่อ</li>
+<li>ซ้อนได้กี่ชั้น = จำนวน register ที่เก็บค่าได้</li>
+</ul>
+<table class="t"><tr><th style="width:30%">ระบุว่าใครส่ง interrupt</th><th>ลักษณะ</th></tr>
+<tr><td>Multiple lines</td><td>1 เส้น/อุปกรณ์ แต่ I/O เยอะ เส้นก็เยอะ</td></tr>
+<tr><td>Software poll</td><td>ไล่ถามทีละ module (ช้า)</td></tr>
+<tr><td>Daisy chain</td><td>ส่ง acknowledge ต่อกันเป็นลูกโซ่ ตาม priority</td></tr>
+<tr><td>Bus arbitration</td><td>ขอสิทธิ์คุม bus ก่อน แล้วส่ง vector ของ device</td></tr></table>
+</div></div>

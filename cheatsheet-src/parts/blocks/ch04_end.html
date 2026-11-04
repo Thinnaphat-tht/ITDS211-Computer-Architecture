@@ -1,0 +1,6 @@
+<div class="sec"><h3><i>Ch04</i>ท้ายบท: Dependability · Virtual Memory<em>อยู่ในสไลด์ (ติวยังไม่ได้พูด)</em></h3><div class="bd"><ul class="l">
+<li><b>Dependability</b>: Reliability = <b>MTTF</b> · ซ่อม = <b>MTTR</b> · MTBF = MTTF + MTTR · <b>Availability = MTTF/(MTTF+MTTR)</b> (เพิ่มโดย ↑MTTF หรือ ↓MTTR)</li>
+<li><b>Hamming distance</b> (จำนวนบิตที่ต่าง): 2 = <b>ตรวจ</b> error 1 บิต (parity) · 3 = <b>แก้</b> 1 บิต + ตรวจ 2 บิต · parity bit อยู่ตำแหน่งกำลังของ 2 · <b>SEC/DEC</b> (distance 4) · <b>ECC DRAM</b> = 8 บิต ต่อทุก 64 บิต</li>
+<li><b>Virtual memory</b>: main memory = “cache” ของ disk · virtual → physical · block = <b>page</b> (≈4 KB) · miss = <b>page fault</b> (ช้ามาก, OS จัดการ) · <b>page table</b> (index ด้วย virtual page no.; มี physical page no. + referenced/dirty bit) · <b>fully associative</b> · <b>write-back</b> เท่านั้น · <b>TLB</b> = cache ของ page table (16–512 PTE, hit 0.5–1 cycle, miss rate 0.01–1%)</li>
+<li><b>Cache coherence</b> (หลาย core): <b>snooping</b> (ดัก bus; invalidate ก่อนเขียน) vs <b>directory-based</b> · <b>Virtual machine</b>: host/VMM จำลอง guest OS</li>
+</ul></div></div>

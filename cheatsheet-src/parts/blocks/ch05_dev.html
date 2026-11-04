@@ -1,0 +1,11 @@
+<div class="sec"><h3><i>Ch05</i>Interrupt-driven · Device Identification<em>★ 4 แบบ</em></h3><div class="bd">
+<ul class="l">
+<li><b>เมื่อเกิด interrupt</b>: เก็บ <b>PC + status register (PSW)</b> ลง stack → PC ← จุดเริ่ม ISR → รัน ISR → <b>return</b>: คืน PC เดิม + คืนค่าใน stack ทั้งหมด แล้วทำงานเดิมต่อ · ปัญหาออกแบบ 2 ข้อ: ใครเป็นคน interrupt? · ถ้ามีหลายตัวทำตัวไหนก่อน?</li>
+</ul>
+<table class="t"><tr><th style="width:27%">Device identification</th><th>หลักการ</th></tr>
+<tr><td><b>1 Multiple interrupt lines</b></td><td>แยกเส้น interrupt คนละเส้น รู้ทันทีว่าใคร · ข้อเสีย: I/O เยอะ เส้นเยอะ</td></tr>
+<tr><td><b>2 Software poll</b></td><td>กระโดดไป routine ที่<b>ไล่ถามทีละ I/O module</b> ว่าใครเรียก · ช้า</td></tr>
+<tr><td><b>3 Daisy chain</b></td><td>(<b>hardware poll</b>, vectored) <b>priority</b> · interrupt acknowledge ส่งต่อเป็นลูกโซ่ · vector = address/ID ของ module</td></tr>
+<tr><td><b>4 Bus arbitration</b></td><td>(vectored) module ต้อง<b>ขอคุม bus ก่อน</b> จึงยก interrupt request · ได้รับตอบแล้วส่ง <b>vector</b> ผ่านสาย data/address</td></tr></table>
+<ul class="l"><li>ต่อ I/O เยอะ: ตัวเลือก <b>8-to-1</b> (mux) เลือกได้ทีละ 1 · I/O <b>64</b> ตัว = 8 ชุด 8-to-1 + อีก 1 ตัวเลือกจาก 8 กลุ่ม (<b>master/slave</b> interrupt controller, ตย. 82C59A)</li></ul>
+</div></div>

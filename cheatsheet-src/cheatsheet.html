@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ITDS211 Cheat Sheet</title>
+<style>
+@page{size:A4;margin:0}
+:root{--fs:7.4pt;--navy:#0b2a6f;--blue:#1d4ed8;--sky:#e6efff;--sky2:#f4f8ff;--line:#b4c6ee;--ink:#14213d;--mute:#52627f;--amber:#b45309;--amberbg:#fff3de;--red:#b91c1c;--redbg:#ffecec}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:"Segoe UI","Leelawadee UI",Tahoma,sans-serif;font-size:var(--fs);line-height:1.27;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{line-height:var(--lh,1.27);width:210mm;height:297mm;padding:5mm 6mm 5mm;overflow:hidden;display:flex;flex-direction:column;break-after:page}
+.page:last-child{break-after:auto}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;border-bottom:1.4pt solid var(--blue);margin-bottom:1.8mm;padding-bottom:.8mm}
+.ph b{font-size:11pt;color:var(--navy)}.ph span{font-size:7pt;color:var(--mute)}
+.cols{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:3.2mm}
+.col{min-height:0;display:flex;flex-direction:column;justify-content:space-between;gap:1.4mm;overflow:hidden}
+.col>*{flex:0 0 auto}
+.sec{border:.6pt solid var(--line);border-radius:1.2mm;overflow:hidden}
+.sec>h3{margin:0;background:var(--navy);color:#fff;font-size:1.075em;font-weight:700;padding:.6mm 1.8mm;display:flex;align-items:baseline;gap:1.6mm}
+.sec>h3 i{font-style:normal;font-size:.85em;background:#fff;color:var(--navy);border-radius:.8mm;padding:0 1mm;font-weight:700}
+.sec>h3 em{font-style:normal;font-weight:400;font-size:.88em;margin-left:auto;opacity:.9}
+.bd{padding:.9mm 1.8mm 1.1mm}
+.s{color:var(--amber);font-weight:700}
+b{font-weight:700}
+code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.94em;background:#edf2ff;padding:0 .6mm;border-radius:.5mm}
+ul.l{margin:0;padding:0;list-style:none}
+ul.l li{position:relative;padding-left:2.4mm;margin:.15mm 0}
+ul.l li::before{content:"▪";position:absolute;left:0;color:var(--blue);font-size:7pt;top:-.1mm}
+.f{background:#e8f0ff;border-left:1mm solid var(--blue);padding:.5mm 1.6mm;margin:.7mm 0;font-weight:600}
+.ex{background:var(--sky2);border:.5pt dashed #8aa6e6;padding:.5mm 1.6mm;margin:.7mm 0}
+.tr{background:var(--redbg);border-left:1mm solid var(--red);padding:.4mm 1.6mm;margin:.7mm 0}
+.nt{color:var(--mute);font-size:.88em}
+table.t{border-collapse:collapse;width:100%;font-size:.95em;margin:.5mm 0}
+table.t th{background:#d9e6ff;font-weight:700;text-align:left}
+table.t th,table.t td{border:.4pt solid var(--line);padding:.25mm 1mm;vertical-align:top}
+table.t td.c,table.t th.c{text-align:center}
+.bits{display:flex;margin:.6mm 0;font-size:6.4pt;text-align:center}
+.bits div{border:.5pt solid var(--blue);border-right:none;background:#f4f8ff;padding:.2mm 0;white-space:nowrap}
+.bits div:last-child{border-right:.5pt solid var(--blue)}
+ol.n{margin:.3mm 0;padding:0 0 0 4.4mm}ol.n li{margin:.1mm 0;padding-left:.4mm}
+.sec2{background:#f4f8ff;border:.5pt solid var(--line);border-radius:.8mm;padding:.6mm 1.6mm;margin:.8mm 0}
+.f2{font-weight:600;color:var(--navy)}
+.bf{display:flex;align-items:stretch;margin:.5mm 0;font-size:.85em;text-align:center}
+.bf>b{flex:0 0 7.5mm;text-align:left;font-size:.88em;color:var(--navy);align-self:center}
+.bf>div{border:.5pt solid var(--blue);border-right:none;background:#f4f8ff;padding:.2mm 0;white-space:nowrap;overflow:hidden}
+.bf>div:last-child{border-right:.5pt solid var(--blue)}
+.bf .o{background:#fff0d6}.bf .r{background:#e4edff}
+.pyr{margin:.3mm 0 .8mm}
+.pr{display:flex;align-items:center;height:5.6mm;gap:1.6mm}
+.sh{flex:0 0 44mm;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.83em;font-weight:700;text-align:center;line-height:1.05;clip-path:polygon(calc(50% - var(--t)*.5%) 0,calc(50% + var(--t)*.5%) 0,calc(50% + var(--b)*.5%) 100%,calc(50% - var(--b)*.5%) 100%)}
+.ds{flex:1;font-size:.91em;line-height:1.2}
+.full{margin-top:1.4mm}
+.cc{columns:3;column-gap:3mm}.cc>div{break-inside:avoid;margin:.2mm 0}
+code{white-space:nowrap}
+#fit{display:none}
+</style>
+</head>
+<body><section class="page"><div class="ph"><b>ITDS211 · หน้า 1/4 · Ch01–03 Basic · Bus · Interrupt · Data Rep</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง (ไม่มีในสไลด์/ซับ)</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch01</i>พื้นฐาน<em>Basic Computer Components</em></h3><div class="bd"><ul class="l">
+<li><b>Architecture</b> = สิ่งที่ programmer เห็น (ISA, addressing mode, data type) “อะไร” · <b>Organization</b> = ตัว implement (cache, pipeline, bus width, clock) “อย่างไร”</li>
+<li>องค์ประกอบ: CPU (<b>Control Unit</b> · <b>ALU</b> · <b>Registers</b> · interconnect), Memory, Storage, I/O, Motherboard, PSU, GPU</li>
+<li><b class="s">★</b> <b>Machine cycle</b>: Fetch → Decode → Execute → Store (Write back) — อาจารย์ย้ำเรื่อง <b>ลำดับ</b></li>
+<li><b>PC</b> = address ของคำสั่งถัดไป (+ หลัง fetch) · <b>IR</b> = คำสั่งที่ fetch มา · <b>Status/Flag</b> = Overflow, Negative</li>
+<li><b>Multi-core</b> = hardware จริง ทำงานขนาน · <b>Multi-thread</b> = แบ่งงานเสมือนบน core (Hyper-Threading / SMT)</li>
+<li><b>RISC</b> = Reduced Instruction Set (Decoder ถอดตรง) · <b>CISC</b> = Complex (microprogram mPC/mPM) · pipeline ใช้ได้ทั้งคู่</li>
+<li>Cloud: <b>SaaS</b> ให้ซอฟต์แวร์ · <b>PaaS</b> ให้แพลตฟอร์มรัน app · <b>IaaS</b> ให้ VM/ฮาร์ดแวร์ผ่าน API</li>
+<li>8 Great Ideas: Moore's Law · Abstraction · Common case fast · Parallelism · Pipelining · Prediction · Hierarchy of memories · Dependability via redundancy</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch01</i>อื่น ๆ ในสไลด์<em>Below your program · Classes · Patterns</em></h3><div class="bd"><ul class="l">
+<li><b>Below your program</b>: Application software (เขียนด้วย high-level) → <b>System software</b> (<b>Compiler</b> แปล HLL → machine code · <b>OS</b> จัดการ I/O, memory/storage, scheduling) → Hardware (processor, memory, I/O controller) · High-level → Compiler → <b>Assembly</b> → Assembler → <b>Binary</b></li>
+<li><b>Supercomputer</b> = คำนวณวิทย์/วิศวกรรมระดับสูงสุด ส่วนแบ่งตลาดเล็ก · <b>Embedded</b> = ซ่อนเป็นส่วนประกอบในระบบ (หลายพันล้านชิ้น/ปี) ผูกกับสภาพแวดล้อม มี <b>real-time</b> ทำหลายกิจกรรมพร้อมกัน ข้อจำกัด power/performance/cost เข้ม · <b>ARM Cortex-M</b> = ตอบ interrupt เร็วและ deterministic กินไฟต่ำ</li>
+<li>Parallelism ในแอป: <b>DLP</b> (data-level) · <b>TLP</b> (task-level) · ในสถาปัตยกรรม: ILP · Vector/GPU · Thread-level · Request-level</li>
+<li>System pattern: <b>Monolithic</b> (ระบบเดียว) · <b>Client-server</b> (แยกฝั่งขอ/ฝั่งให้บริการ) · <b>Distributed</b> (กระจายหลายเครื่อง) · <b>Microservices</b> (บริการย่อย deploy แยกได้)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch01</i>Performance · CPU time · CPI<em>★ ข้อคำนวณ</em></h3><div class="bd">
+<div class="f">Performance = 1 / Execution time<br>X เร็วกว่า Y n เท่า: Perf<sub>X</sub>/Perf<sub>Y</sub> = Time<sub>Y</sub>/Time<sub>X</sub> = n &nbsp;(ตย. A 10 s, B 15 s → 15/10 = <b>1.5</b>)</div>
+<div class="f">CPU time = Clock cycles × Cycle time = Clock cycles / Clock rate<br>Clock cycles = IC × CPI ⇒ <b>CPU time = IC × CPI × Cycle time = IC × CPI / Clock rate</b></div>
+<ul class="l">
+<li>Clock rate = 1/period (250 ps = 0.25 ns · 4 GHz = 4×10⁹ Hz) · Elapsed time (รวม I/O, OS, idle) ≠ CPU time (user + system)</li>
+<li>IC ← โปรแกรม/ISA/compiler · CPI ← hardware · CPI เฉลี่ย ← instruction mix († = Σ CPI<sub>i</sub> × IC<sub>i</sub>/IC)</li>
+</ul>
+<div class="ex"><b>ตย. CPI (สไลด์)</b> ISA เดียวกัน A: 250 ps, CPI 2.0 · B: 500 ps, CPI 1.2 → A = I×2.0×250 = <b>500I</b> ps · B = I×1.2×500 = <b>600I</b> ps → <b>A เร็วกว่า 1.2 เท่า</b> (IC ตัดทิ้ง ถ้าไม่รู้ค่าติดตัวแปรไว้)</div>
+<div class="ex"><b>ตย. Clock (สไลด์)</b> A: 2 GHz, 10 s · B ต้องเสร็จใน 6 s แต่ใช้ cycles มากกว่า 1.2 เท่า → Clock rate<sub>B</sub> = 1.2×(10×2×10⁹)/6 = <b>4 GHz</b></div>
+<div class="tr">⚠ “เร็วกว่า” = ใช้เวลา<b>น้อยกว่า</b> · อ่านโจทย์ดี ๆ ว่าใครหารใคร (บัญญัติไตรยางศ์)</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Model · Bus · Arbitration<em>★ Bus Arbitration 4 แบบ</em></h3><div class="bd">
+<table class="t"><tr><th style="width:50%">Von Neumann</th><th>Harvard</th></tr>
+<tr><td>Memory <b>เดียว</b> เก็บคำสั่ง+ข้อมูล (stored program) · เข้าถึงแบบ sequential</td><td>Instruction memory <b>แยก</b> Data memory (+bus แยก) ตัดคอขวด แต่ซับซ้อน · DSP/Microcontroller · Hybrid = Harvard ที่ L1, Von Neumann ที่ main memory</td></tr></table>
+<ul class="l">
+<li>Bus: <b>Address</b> (ตำแหน่ง Memory/I/O) · <b>Data</b> (ข้อมูล) · <b>Control</b> (ทิศทาง/ใครใช้ bus ได้เมื่อไร, เปิด-ปิด)</li>
+<li><b>Point-to-point</b> = แยกทุกเส้น ง่ายแต่<b>เปลืองสาย</b> · <b>Multipoint</b> = shared ประหยัด (ไฮเวย์+ซอย) แต่ต้องมี <b>protocol</b></li>
+</ul>
+<table class="t"><tr><th style="width:27%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>Daisy chain</b></td><td>ส่งสิทธิ์ตาม <b>priority</b> สูง→ต่ำ (CPU สูงสุด) นิยมสุด · ข้อเสีย: priority ต่ำ (I/O) แทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>arbitration circuit กลาง</b></td></tr>
+<tr><td><b>Distributed self-detection</b></td><td>ไม่มีตัวกลาง อุปกรณ์<b>ตัดสินกันเอง</b> เช็กว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>Distributed collision-detection</b></td><td>ส่งได้เลย ถ้าข้อมูล<b>ชน</b>เสียหาย → <b>ส่งซ้ำ</b> (retransmit)</td></tr></table>
+<div class="tr">⚠ ตัวที่เลือกว่าใครได้ใช้ bus = <b>Bus Arbitrator / arbitration circuit</b> (ไม่ใช่ Control Unit · ไม่ใช่ control line)</div>
+<ul class="l"><li><b>Hardware</b> (วงจรเฉพาะงาน เร็ว แต่ตายตัว) vs <b>Software</b> (instruction codes + interpreter ยืดหยุ่น = ร้านตามสั่ง)</li></ul>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch02</i>Register · Instruction cycle<em>Program Execution</em></h3><div class="bd">
+<ul class="l">
+<li><b>MAR</b> = address ใน memory ที่จะอ่าน/เขียน · <b>MBR</b> = data ที่อ่านมา/จะเขียน · <b>IOAR</b> = address อุปกรณ์ I/O · <b>IOBR</b> = data แลกกับ I/O · <b>AC</b> = accumulator</li>
+<li><b>State diagram</b>: Instruction address calc → <b>Instruction fetch</b> → Instruction operation <b>decoding</b> → Operand address calc → <b>Operand fetch</b> (หลาย operand วนได้) → <b>Data operation</b> → Operand address calc → <b>Operand store</b> (หลาย result วนได้) → <b>Interrupt check</b> (ไม่มี → คำสั่งถัดไป · มี → ทำ ISR)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> คำสั่ง 16 บิต = <b>opcode 4 บิต + address 12 บิต</b> · <code>0001</code> Load AC←M · <code>0010</code> Store AC→M · <code>0101</code> Add M ใส่ AC<br>Mem: 300:<code>1940</code> 301:<code>5941</code> 302:<code>2941</code> · 940:<code>0003</code> 941:<code>0002</code><br>PC=300 → IR=1940 (Load, addr 940) → AC=0003 → PC=301, IR=5941 → AC=3+2=<b>0005</b> → PC=302, IR=2941 → M[941]=0005</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ ขั้นตอน “จำไว้เลย”</em></h3><div class="bd">
+<ul class="l">
+<li>Interrupt = ขัดจังหวะการทำงานแบบ sequence ของ CPU · ชนิด: <b>Program</b> (overflow, หาร 0, illegal instr) · <b>Timer</b> · <b>I/O</b> (เสร็จ/ขอบริการ/error) · <b>Hardware failure</b> (ไฟดับ, parity) · Hardware vs Software interrupt (system call)</li>
+</ul>
+<ol class="n">
+<li><b>เซฟ</b> context (PC/PSW, register, ตัวแปร) ไว้ก่อน</li>
+<li>ดู <b>Interrupt Vector table</b> หา <b>ISR address</b> (ใครเป็นคนเรียก)</li>
+<li>ใส่ address นั้นใน <b>PC</b> → กระโดดไปทำ <b>ISR</b> (Interrupt Service Routine)</li>
+<li>เสร็จ → <b>Restore</b> ค่าที่เซฟ แล้วกลับไปทำงานเดิมต่อ</li>
+</ol>
+<ul class="l">
+<li><b>Sequential</b>: ทำทีละตัวตามลำดับ (เกิด→ทำ→กลับ→เกิดอีก) · <b>Nested</b>: ระหว่าง ISR ของ X มี Y ซ้อน → เซฟสถานะ X → ทำ Y → คืน X → ทำ X ต่อ → return · <b>ซ้อนได้กี่ชั้นขึ้นกับ CPU</b> (จำนวนชุด register ที่เก็บ context)</li>
+<li>มักปิด interrupt ระหว่างทำ ISR (<b>maskable</b> ปิดได้ · <b>nonmaskable</b> ต้องทำ) · interrupt ต้องรอ <b>instruction cycle จบ</b></li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch03</i>Data Representation<em>★ “จะมีข้อนี้แน่ๆ” ต้องทำได้เต็ม</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%"></th><th>Sign-Magnitude</th><th>1's complement</th><th>2's complement</th></tr>
+<tr><td><b>ค่าลบ</b></td><td>กลับ <b>sign bit</b> (0=+, 1=−) ที่เหลือ = magnitude</td><td>กลับ<b>ทุกบิต</b> = (2ⁿ−1)−m</td><td>กลับทุกบิต <b>+1</b> = 2ⁿ−m</td></tr>
+<tr><td><b>ช่วง 8 บิต</b></td><td class="c">−127…+127</td><td class="c">−127…+127</td><td class="c"><b>−128…+127</b></td></tr>
+<tr><td><b>ศูนย์</b></td><td>2 ตัว 0000 0000 / 1000 0000</td><td>2 ตัว 0000 0000 / 1111 1111</td><td><b>ตัวเดียว</b> (ช่วงไม่สมมาตร)</td></tr>
+<tr><td><b>บวก/ลบ</b></td><td>บวกเลขลบ ≠ ลบ ต้องวงจรต่างหาก</td><td>มี carry-out → <b>บวกกลับ LSB</b></td><td>ไม่ต้อง end-around · ลบ = บวก 2's แล้ว<b>ทิ้ง carry-out</b> · ไม่ต้องวงจรลบ</td></tr></table>
+<ul class="l">
+<li>n บิต: unsigned 0…2ⁿ−1 · 2's: <b>−2ⁿ⁻¹…2ⁿ⁻¹−1</b> · sign extension: ขยายด้วยบิต sign (lb) / zero-extend (lbu) · สูตร r's comp = rⁿ−m ; (r−1)'s = (rⁿ−1)−m (ตย. m=382, n=3: 9's = <b>617</b>, 10's = <b>618</b>)</li>
+<li><b>Shortcut 2's</b>: จาก LSB หา <b>1 ตัวแรก</b> คงไว้ แล้วกลับบิตทางซ้ายทั้งหมด · ตย. 0101011 → 1010101</li>
+<li>Sign-Magnitude บวก/ลบ †: sign เหมือนกัน → บวก magnitude (carry-out = overflow) · sign ต่าง → ลบตัวเล็กจากตัวใหญ่ ใช้ sign ตัวใหญ่ · A−B = A+(−B) กลับ sign B</li>
+<li>Overflow (2's) †: (+)+(+) ได้ลบ หรือ (−)+(−) ได้บวก · ตย. 0111 1111 + 1 = 1000 0000</li>
+<li><b>Bias (excess-B)</b>: ค่า = unsigned − B · bias 127: 0000 0000 = −127 · 0111 1111 = <b>0</b> · 1111 1111 = +128</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> 2's: 6 + (−5) 4 บิต = 0110 + 1011 = 1|<b>0001</b> (ทิ้ง carry) · 1's: 6 + (−3) 3 บิต = 110 + 100 = 1|010 → +1 = <b>011</b></div>
+<div class="ex"><b>ตย. 16 บิต (แนว Assignment 2) †</b> &nbsp;<code>+100 = 0000 0000 0110 0100</code> · <code>+37 = 0000 0000 0010 0101</code><br>
+<b>−100</b> SM <code>1000 0000 0110 0100</code> · 2's <code>1111 1111 1001 1100</code><br>
+<b>−37</b> SM <code>1000 0000 0010 0101</code> · 2's <code>1111 1111 1101 1011</code><br>
+<b>2's</b> 100−37 = <code>0000 0000 0110 0100</code> + <code>1111 1111 1101 1011</code> = 1|<code>0000 0000 0011 1111</code> → ทิ้ง carry = <b>63</b><br>
+<b>2's</b> 37−100 = <code>0000 0000 0010 0101</code> + <code>1111 1111 1001 1100</code> = <code>1111 1111 1100 0001</code> → ลบ (กลับ+1 = 63) = <b>−63</b><br>
+<b>SM</b> 37−100: sign ต่าง → |100|−|37| = 63 ใช้ sign ของ 100 (ลบ) = <code>1000 0000 0011 1111</code> · 100+37 = <code>0000 0000 1000 1001</code> (137)</div>
+<div class="sec2"><b>IEEE 754 ★</b> &nbsp;<span class="f2">N = (−1)<sup>S</sup> × [1.m] × 2<sup>E−127</sup> &nbsp; E = e + 127 (เก็บค่า E)</span>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:8;background:#e4edff">Exponent 8</div><div style="flex:23;background:#fff0d6">Mantissa 23 (bit 22–0)</div></div>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:11;background:#e4edff">Exponent 11</div><div style="flex:52;background:#fff0d6">Mantissa 52 (bit 51–0)</div></div></div>
+<ul class="l">
+<li><b>Single 32 บิต: exponent 8 · mantissa 23 · Double 64 บิต: exponent 11 · mantissa 52</b> (อาจารย์ถาม) · double bias = 1023 † · E เก็บ 1–254 (0 และ 255 สงวน: ±∞, NaN) → e = −126…+127 · max ≈ 2×2¹²⁷ = 2¹²⁸</li>
+<li>ตย. <b>17.15</b> = 10001.0010011₂ = 1.00010010011×2⁴ → E = 4+127 = <b>131 = 1000 0011</b> · S = 0 · m = 0001 0010 011…</li>
+<li>เศษส่วน: 101.1101₂ = 4+1+0.5+0.25+0.0625 = <b>5.8125</b> · 5.8125 → 101 และ 0.8125×2 ซ้ำ (1.625→1.25→0.5→1.0) = .1101</li>
+<li><b>Endian ★</b>: <b>Little</b> (RISC-V) = byte <b>LSB</b> อยู่ address ต่ำสุดของ word · <b>Big</b> = <b>MSB</b> อยู่ address ต่ำสุด · memory เรียกทีละ <b>byte (8 บิต)</b> · ASCII 128 ตัว · Unicode 32 บิต</li>
+</ul>
+</div></div>
+</div>
+</div></section>
+<section class="page"><div class="ph"><b>ITDS211 · หน้า 2/4 · Ch03 Assembly · Ch04 Memory &amp; Cache</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง (ไม่มีในสไลด์/ซับ)</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch03</i>Assembly (RISC-V)<em>★ ช้อยส์: รู้ว่าคำสั่ง “ทำอะไร” · self-study ไม่ออก</em></h3><div class="bd">
+<table class="t"><tr><th style="width:30%">คำสั่ง</th><th>ทำอะไร</th></tr>
+<tr><td><code>add rd,rs1,rs2</code></td><td>rd = rs1 + rs2 (<code>sub</code> = ลบ) · รูปทั่วไป <code>ADD A,B,C</code> = A ← B + C (2 source + 1 dest)</td></tr>
+<tr><td><code>addi rd,rs1,imm</code></td><td>rd = rs1 + <b>ค่าคงที่</b> · <code>addi x22,x22,4</code> → x22 ← x22 + 4</td></tr>
+<tr><td><code>ld/lw rd,off(rs1)</code></td><td><b>LOAD Memory → Register</b> (ld 64 บิต · lw 32 · lb/lh sign-ext · lbu/lhu/lwu zero-ext)</td></tr>
+<tr><td><code>sd/sw rs2,off(rs1)</code></td><td><b>STORE Register → Memory</b> (sd 64 · sw 32 · sh 16 · sb 8 เก็บบิตขวาสุด)</td></tr>
+<tr><td><code>and or xor</code> (+i)</td><td>bitwise · <b>and</b> = mask (เก็บบางบิต ที่เหลือ 0) · <b>or</b> = บังคับบิตเป็น 1 · <b>xor</b> กับ 1…1 = NOT</td></tr>
+<tr><td><code>slli / srli rd,rs1,i</code></td><td>shift ซ้าย i บิต = <b>×2<sup>i</sup></b> (เติม 0) · shift ขวา = <b>÷2<sup>i</sup></b> (unsigned)</td></tr>
+<tr><td><code>beq / bne rs1,rs2,L</code></td><td>กระโดดไป L ถ้า rs1 <b>=</b> rs2 / <b>≠</b> rs2 (ไม่ใช่ → ทำคำสั่งถัดไป)</td></tr>
+<tr><td><code>blt / bge rs1,rs2,L</code></td><td>ถ้า rs1 <b>&lt;</b> rs2 / rs1 <b>≥</b> rs2 (signed) · <code>bltu bgeu</code> = unsigned (−1 &lt; +1 แต่ unsigned 4,294,967,295 &gt; 1)</td></tr>
+<tr><td><code>jal rd,L</code> · <code>jalr</code></td><td>กระโดด + เก็บ address ถัดไปใน rd (เรียก procedure: <code>jal x1,L</code>) · <b>return</b> = <code>jalr x0,0(x1)</code></td></tr>
+<tr><td><code>lui rd,imm20</code></td><td>ใส่ imm 20 บิตที่ rd[31:12] เคลียร์ [11:0] → สร้างค่าคงที่ 32 บิตคู่ <code>addi</code></td></tr></table>
+<ul class="l">
+<li><b>Regs</b> 32×64 บิต (ข้อมูล 64 บิต = doubleword · 32 บิต = word): <b>x0 = 0 เสมอ</b> · x1 return addr · x2 stack ptr · x3 global ptr · x4 thread ptr · x5–7, x28–31 temporaries · x8 frame ptr · x9, x18–27 saved · x10–11 args/ผลลัพธ์ · x12–17 args</li>
+<li>Memory <b>byte-addressed</b> · RISC-V = Little-endian · ไม่บังคับ word-aligned · offset = index × 8 (doubleword)</li>
+</ul>
+<div class="bf"><b>R</b><div style="flex:7">funct7</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>I</b><div style="flex:12">immediate[11:0]</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>S</b><div style="flex:7">imm[11:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:0]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>SB</b><div style="flex:7">imm[12|10:5]</div><div style="flex:5">rs2</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">imm[4:1|11]</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>UJ</b><div style="flex:20">imm[20|10:1|11|19:12]</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<div class="bf"><b>Shift</b><div style="flex:6">funct6</div><div style="flex:6">immed</div><div style="flex:5">rs1</div><div style="flex:3">f3</div><div style="flex:5">rd</div><div style="flex:7" class="o">opcode</div></div>
+<ul class="l">
+<li>ทุกคำสั่ง <b>32 บิต</b> · opcode <b>7 บิต</b> (2⁷ = 128 แบบ) · rs1/rs2/rd <b>5 บิต</b> (2⁵ = 32 reg) · funct3/funct7 = opcode เสริม · <b>I</b>: imm 12 บิต (2's, sign-ext) ใช้กับ addi/load · <b>S</b>: store แยก imm เพื่อให้ rs1/rs2 อยู่ที่เดิม · <b>SB</b>: PC-relative, <b>target = PC + imm × 2</b></li>
+</ul>
+<div class="ex"><b>ตย. R-format</b> <code>add x9,x20,x21</code> → funct7 <b>0</b> · rs2 <b>21</b> · rs1 <b>20</b> · f3 <b>0</b> · rd <b>9</b> · opcode <b>51</b><br><code>0000000 10101 10100 000 01001 0110011</code> = <b>015A04B3</b><sub>16</sub> (ข้อสอบ: จะมี chart ให้ว่า opcode คืออะไร)</div>
+<div class="ex"><b>ตย. C → RISC-V</b> (f…j = x19…x23) &nbsp;<code>f=(g+h)−(i+j)</code>: <code>add x5,x20,x21</code> ; <code>add x6,x22,x23</code> ; <code>sub x19,x5,x6</code><br>
+<code>A[12]=h+A[8]</code> (h=x21, A=x22): <code>ld x9,64(x22)</code> ; <code>add x9,x21,x9</code> ; <code>sd x9,96(x22)</code> (8×8=64, 12×8=96)<br>
+<code>if(i==j) f=g+h; else f=g−h</code> (i=x22, j=x23): <code>bne x22,x23,Else</code> ; <code>add x19,x20,x21</code> ; <code>beq x0,x0,Exit</code> ; <code>Else: sub x19,x20,x21</code> ; <code>Exit:</code> (beq x0,x0 = กระโดดเสมอ)</div>
+<ul class="l">
+<li><b>Procedure ★</b> = ฟังก์ชัน (เหมือน software interrupt): ① วาง arg ที่ x10–x17 ② <code>jal x1,L</code> ③ จองที่ + <b>save ค่าลง stack</b> (<code>addi sp,sp,−n</code>; <code>sd</code>) ④ ทำงาน ⑤ ผลลัพธ์ใส่ x10 ⑥ <b>restore</b> จาก stack (<code>ld</code>; <code>addi sp,sp,n</code>) ⑦ <code>jalr x0,0(x1)</code> กลับ · non-leaf ต้อง save x1 + arg/temp ที่ใช้ต่อ</li>
+<li><b>Addressing 4 แบบ</b>: Immediate · Register · Base (reg + offset) · PC-relative · Memory layout: <b>Text</b> (โค้ด) · <b>Static data</b> (global, x3) · <b>Heap</b> (dynamic) · <b>Stack</b> · Design: ① Simplicity favours regularity ② Smaller is faster ③ Good design demands good compromises ④ Make the common case fast</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>Memory Hierarchy<em>★ “ให้จำรูปพีระมิดเอาไว้”</em></h3><div class="bd">
+<div class="pyr">
+<div class="pr" style="--t:30;--b:44"><div class="sh" style="background:#0b2a6f">Registers</div><div class="ds"><b>เร็วสุด · แพงสุด · จุน้อยสุด</b> (ใน CPU)</div></div>
+<div class="pr" style="--t:44;--b:58"><div class="sh" style="background:#1e40af">Cache</div><div class="ds"><b>SRAM</b> 0.5–2.5 ns · $2000–5000/GB</div></div>
+<div class="pr" style="--t:58;--b:72"><div class="sh" style="background:#2563eb">Main memory</div><div class="ds"><b>DRAM</b> 50–70 ns · $20–75/GB</div></div>
+<div class="pr" style="--t:72;--b:86"><div class="sh" style="background:#5b8def;color:#06214f">Disk · CD · DVD · Blu-ray</div><div class="ds"><b>Magnetic disk</b> 5–20 ms · $0.20–2/GB</div></div>
+<div class="pr" style="--t:86;--b:100"><div class="sh" style="background:#9dbcf5;color:#06214f">Magnetic tape</div><div class="ds"><b>ช้าสุด · ถูกสุด · จุมากสุด</b> (off-line)</div></div>
+</div>
+<ul class="l">
+<li><b>Inboard memory</b> = Register + Cache + Main memory · <b>Outboard storage</b> = disk/optical · <b>Off-line</b> = tape (big data center) · <b>Cache</b>: L1 ชิด CPU ก้อนเดียวกัน, L2/L3 อยู่นอก core · <b>บน</b> = เร็ว/แพง/จุน้อย · <b>ล่าง</b> = ช้า/ถูก/จุมาก · SRAM เร็วกว่า DRAM ~<b>100 เท่า</b> (transistor on-off ไม่กี่ตัว) แต่แพงกว่า · <b>DRAM</b> = ประจุใน capacitor ต้อง <b>refresh</b> ตลอด ช้ากว่า ถูกกว่า</li>
+<li><b>RAM</b> = ชั่วคราว (volatile) · <b>ROM</b> = ถาวร ปิดไฟข้อมูลยังอยู่ · <b>Flash</b> (nonvolatile; เร็วกว่า disk 100–1000×; $/GB ระหว่าง disk กับ DRAM; สึกหรอ → wear leveling): <b>NOR</b> random access ใช้เก็บคำสั่งใน embedded · <b>NAND</b> หนาแน่น/ถูก เขียนทีละ block (USB, media)</li>
+<li>Locality: <b>Temporal</b> = ของที่เพิ่งใช้ มักถูกใช้ซ้ำเร็ว ๆ (loop) · <b>Spatial</b> = ของใกล้ ๆ ที่เพิ่งใช้ มักถูกใช้ตาม (array, คำสั่งต่อเนื่อง)</li>
+</ul>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch04</i>Cache: Hit/Miss · Direct-Mapped<em>★ อาจารย์ “เน้นเรื่อง Cache”</em></h3><div class="bd">
+<ul class="l">
+<li><b>Cache</b> = หน่วยความจำเร็วคั่นกลาง CPU↔Main memory เก็บข้อมูลที่<b>ใช้บ่อย/ซ้ำ</b> · <b>Block (line)</b> = หน่วยที่ copy · <b>Hit</b> = เจอใน cache · <b>Miss</b> = ไม่เจอ → ดึง block จาก main memory มาใส่ cache แล้วส่ง CPU (เวลา = <b>miss penalty</b>) · Hit ratio = hits/accesses · Miss ratio = 1 − hit ratio</li>
+</ul>
+<div class="f">Direct-mapped: Cache index = (Block address) modulo (#Blocks in cache) → ใช้ <b>บิตล่าง</b> เป็น index<br>Address = <b>[ Tag | Index | Block offset ]</b> &nbsp; offset = log₂(bytes/block) · index = log₂(#blocks) · tag = ที่เหลือ</div>
+<ul class="l">
+<li>เช็ก hit/miss: ดู <b>Index</b> → เทียบ <b>Tag</b> → ดู <b>Valid bit (V)</b> = 1 (เริ่มต้น cache ว่าง V=0) · ข้อเสีย: หลาย address ชิงช่องเดียวกัน (แย่งกัน/conflict)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> cache 8 blocks, 1 word/block (Tag = 2 บิตบน · Index = 3 บิตล่าง)
+<table class="t" style="margin-top:.6mm"><tr><th>ขอ</th><th class="c">22</th><th class="c">26</th><th class="c">22</th><th class="c">26</th><th class="c">16</th><th class="c">3</th><th class="c">16</th><th class="c">18</th></tr>
+<tr><td>Tag Idx</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 000</td><td class="c">00 011</td><td class="c">10 000</td><td class="c">10 010</td></tr>
+<tr><td><b>ผล</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c"><b>Hit</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c">Miss*</td></tr></table>
+<span class="nt">*18: index 010 มี tag 11 แต่ขอ tag 10 → tag ไม่ตรง → Miss แล้ว <b>เขียนทับ</b> · ครั้งแรกของทุกตัว = Miss แน่นอน (cache ว่าง)</span></div>
+<div class="ex"><b>ตย. ★ บล็อกใหญ่</b> 64 blocks × 16 B/block, address <b>1200</b>: Block address = floor(1200/16) = <b>75</b> → Block number = 75 mod 64 = <b>11</b> · fields: offset 4 บิต [3:0] · index 6 บิต [9:4] · tag 22 บิต [31:10]<br>
+16 KB, 4 word (16 B)/block, address 32 บิต: 1024 blocks → offset 4 · index 10 · tag <b>18</b> (+ valid + dirty) · bits ทั้งหมด † = #blocks × (8×bytes/block + tag + 1)<br><b>ตย. †</b> 4 KB direct-mapped, 16 B/block, address 32 บิต → 4096/16 = <b>256 blocks</b> → index 8 · offset 4 · tag 32−8−4 = <b>20</b> · ถ้า <b>2-way</b>: sets = 128 → index 7 · tag 21</div>
+<ul class="l">
+<li><b>Block ใหญ่ขึ้น</b>: miss rate ลด (spatial locality) แต่ cache ขนาดคงที่ → blocks น้อยลง แย่งกัน miss rate กลับเพิ่ม · miss penalty สูงขึ้น · ใหญ่ ≠ ดีเสมอ ⚠</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>Write Policy<em>★ ควรรู้นิยามสามคำ</em></h3><div class="bd"><ul class="l">
+<li><b>Write-through</b>: เขียนทั้ง cache <b>และ memory</b> ทุกครั้ง (consistent แต่ช้า: CPI = 1 + 0.1×100 = 11) → ใช้ <b>write buffer</b> (CPU ไปต่อ · stall เมื่อ buffer เต็ม)</li>
+<li><b>Write-back</b>: เขียน<b>เฉพาะ cache</b> + ตั้ง <b>dirty bit</b> · เขียนกลับ memory เมื่อ block ถูกแทนที่</li>
+<li><b>Write allocation</b> (เมื่อ write miss): <b>allocate</b> = ดึง block มาก่อนเขียน · <b>write around</b> = ไม่ดึง เขียนลง memory ตรง ๆ · write-back มัก fetch block</li>
+<li>อาจารย์: เมื่อก่อนมีงานวิจัยแข่งกลไกเขียน แต่ปัจจุบัน transistor เล็ก (2–4 nm) เร็วขึ้น ความต่างน้อย → เน้นให้โค้ดที่ใช้บ่อยอยู่ <b>L1</b> ให้มากที่สุด</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch04</i>Associativity · Replacement · Miss<em>★ Fully assoc = miss น้อยสุด</em></h3><div class="bd">
+<table class="t"><tr><th>ชนิด</th><th>วางได้ที่ไหน</th><th class="c">เทียบ tag</th></tr>
+<tr><td><b>Direct-mapped</b></td><td>ที่เดียว (index) — 1 ทางเลือก</td><td class="c">1</td></tr>
+<tr><td><b>n-way set associative</b></td><td>set = (block no.) mod (#sets) · วางได้ <b>n ช่อง</b>ใน set (2-way เก็บ 2 · 4-way เก็บ 4 …)</td><td class="c">n</td></tr>
+<tr><td><b>Fully associative</b></td><td>ช่องไหนก็ได้ · เทียบทุก entry</td><td class="c">#entries</td></tr></table>
+<ul class="l">
+<li>Set-associative = “ไม่ได้ฉลาดขึ้น” แค่<b>ขยายที่เก็บใน index เดียวกัน</b> → hit มากขึ้น · miss rate (64 KB, SPEC2000): <b>1-way 10.3% · 2-way 8.6% · 4-way 8.3% · 8-way 8.1%</b> → ดีขึ้นแต่ได้น้อยลงเรื่อย ๆ (diminishing returns)</li>
+<li>ตย. 4-block cache ขอ 0, 8, 0, 6, 8: Direct = M M M M M · 2-way = M M <b>H</b> M M · Fully = M M <b>H</b> M <b>H</b></li>
+<li>Replacement: ถ้ามีช่อง non-valid ใช้ก่อน ไม่งั้น <b>LRU</b> (ไม่ถูกใช้นานสุด) / FIFO / LFU / <b>Random</b> (direct ไม่มีตัวเลือก)</li>
+<li>Miss 3 แบบ: <b>Compulsory</b> (ครั้งแรก) · <b>Capacity</b> (cache เล็ก) · <b>Conflict</b> (ชนช่อง; fully assoc ไม่มี) · ↑ขนาด cache → ลด capacity miss · ↑associativity → ลด conflict miss · ↑block size → ลด compulsory miss แต่ penalty ↑</li>
+<li>Cache design: addresses (logical/physical) · size · mapping · replacement · write policy · line size · จำนวน cache (1–2 level; unified/split)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch04</i>AMAT · CPU time กับ memory stall</h3><div class="bd">
+<div class="f">AMAT = Hit time + Miss rate × Miss penalty<br>CPU time = (execution cycles + <b>memory stall cycles</b>) × cycle time<br>Stall cycles = (Mem accesses/Program) × Miss rate × Penalty = (Instr/Program) × (Misses/Instr) × Penalty</div>
+<div class="ex"><b>ตย. AMAT</b> clock 1 ns, hit 1 cycle, penalty 20 cycles, miss 5% → 1 + 0.05×20 = <b>2 ns</b> &nbsp;·&nbsp; <b>ตย. CPI</b> base CPI 2, I-miss 2%, D-miss 4%, load/store 36%, penalty 100 → 2 + 0.02×100 + 0.36×0.04×100 = 2 + 2 + 1.44 = <b>5.44</b> → ideal เร็วกว่า 5.44/2 = <b>2.72 เท่า</b></div>
+<ul class="l"><li>Multilevel: L1 เน้น <b>hit time ต่ำ</b> · L2 เน้น <b>miss rate ต่ำ</b> · block L1 &lt; block L2 · ตย. CPI = 1 + 0.02×20 + 0.005×400 = 3.4 (เทียบ 9 ถ้ามี L1 อย่างเดียว → 2.6 เท่า)</li></ul>
+</div></div>
+</div>
+</div></section>
+<section class="page"><div class="ph"><b>ITDS211 · หน้า 3/4 · Ch05 I/O · Ch06 Storage</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง (ไม่มีในสไลด์/ซับ)</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch05</i>I/O Module · เทคนิค 3 แบบ<em>★ DMA เร็วสุด / นิยมใช้ปัจจุบัน</em></h3><div class="bd">
+<ul class="l">
+<li><b>External device</b> 3 กลุ่ม: Human readable (จอ/คีย์บอร์ด) · Machine readable (disk/sensor) · Communication · ประกอบด้วย Control logic + <b>Buffer</b> + <b>Transducer</b> (แปลง digital↔analog) · สัญญาณ Control / Status / Data</li>
+<li><b>I/O module 5 หน้าที่</b>: ① Control &amp; timing ② Processor communication (ถอดรหัส command, ส่งข้อมูล, รายงาน status, จำ address) ③ Device communication ④ <b>Data buffering</b> (memory เร็ว I/O ช้า → balance speed) ⑤ Error detection</li>
+<li><b>I/O command 4</b>: <b>Control</b> (สั่งให้ทำ) · <b>Test</b> (ดู status) · <b>Read</b> (ดึงข้อมูลจากอุปกรณ์เข้า buffer) · <b>Write</b> (เอาข้อมูลจาก data bus ส่งอุปกรณ์) · สายของ module: Address · Control · Data</li>
+<li><b>I/O addressing</b>: <b>Memory-mapped</b> = address space เดียวกับ memory ใช้คำสั่ง memory ได้หมด ไม่มีคำสั่ง I/O พิเศษ · <b>Isolated</b> = แยก space ต้องมี I/O/memory select line + คำสั่ง I/O เฉพาะ (จำกัด)</li>
+</ul>
+<div class="ex"><b>Flow (สไลด์)</b> <b>Programmed</b>: Issue Read → Read status → Check (ไม่พร้อม = <b>วนกลับ</b>) → Read word → Write ลง memory → Done? (ยัง = วนอีก) · <b>Interrupt-driven</b>: Issue Read → <b>ทำงานอื่น</b> → รอ interrupt จึง Read status/word · <b>DMA</b>: Issue Read-block ให้ DMA → <b>ทำงานอื่นทั้งหมด</b> → DMA interrupt เมื่อเสร็จ</div>
+<table class="t"><tr><th style="width:15%"></th><th>1 Programmed I/O</th><th>2 Interrupt-driven</th><th>3 DMA ★</th></tr>
+<tr><td><b>CPU ทำ</b></td><td>สั่งแล้ว <b>รอ</b> (วนเช็ก status) ไม่มี interrupt · ง่ายสุด</td><td>สั่งแล้ว<b>ไปทำงานอื่น</b> · I/O <b>interrupt</b> เมื่อพร้อม</td><td>ตั้งค่า block command แล้วไปทำงานอื่น · DMA interrupt ตอนจบ</td></tr>
+<tr><td><b>ข้อมูลผ่าน</b></td><td>I/O → <b>CPU</b> → memory</td><td>I/O → <b>CPU</b> → memory</td><td>I/O ↔ memory <b>ตรง</b> (CPU ไม่ยุ่ง)</td></tr>
+<tr><td><b>ข้อเสีย</b></td><td>เสียเวลา CPU · rate จำกัดด้วย CPU</td><td>CPU ยังผูกกับการโอน · rate จำกัดด้วย CPU</td><td>ต้องมี DMA controller · flow ฝั่ง CPU ง่ายสุด</td></tr></table>
+<ul class="l">
+<li><b>ทำไม DMA เร็วสุด ★</b>: คุยกับ memory ได้<b>ทุก slot ของ processor cycle</b> (breakpoint ก่อน fetch / หลัง decode / fetch operand / execute / store) ผ่าน hardware bus ตรง · ส่วน <b>interrupt ต้องรอ instruction cycle จบ</b> (เช่น pipeline 4–5 stage ต้องรอครบ) · DMA module: Data count · Data register · Address register · Control logic</li>
+<li>DMA config 3 แบบ: single-bus <b>detached</b> DMA · single-bus <b>integrated DMA-I/O</b> · <b>I/O bus</b> · ตย. chip 8237 (HRQ/HLDA, DREQ/DACK) · Direct Cache Access (DCA/DDIO) ใช้กับ network 10–100 Gbps</li>
+<li>วิวัฒนาการ I/O 6 ขั้น: CPU คุมตรง → controller + programmed I/O → interrupt → DMA → <b>I/O channel</b> (module เป็น processor เฉพาะ) → <b>I/O processor</b> (มี local memory)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch05</i>Interrupt-driven · Device Identification<em>★ 4 แบบ</em></h3><div class="bd">
+<ul class="l">
+<li><b>เมื่อเกิด interrupt</b>: เก็บ <b>PC + status register (PSW)</b> ลง stack → PC ← จุดเริ่ม ISR → รัน ISR → <b>return</b>: คืน PC เดิม + คืนค่าใน stack ทั้งหมด แล้วทำงานเดิมต่อ · ปัญหาออกแบบ 2 ข้อ: ใครเป็นคน interrupt? · ถ้ามีหลายตัวทำตัวไหนก่อน?</li>
+</ul>
+<table class="t"><tr><th style="width:27%">Device identification</th><th>หลักการ</th></tr>
+<tr><td><b>1 Multiple interrupt lines</b></td><td>แยกเส้น interrupt คนละเส้น รู้ทันทีว่าใคร · ข้อเสีย: I/O เยอะ เส้นเยอะ</td></tr>
+<tr><td><b>2 Software poll</b></td><td>กระโดดไป routine ที่<b>ไล่ถามทีละ I/O module</b> ว่าใครเรียก · ช้า</td></tr>
+<tr><td><b>3 Daisy chain</b></td><td>(<b>hardware poll</b>, vectored) <b>priority</b> · interrupt acknowledge ส่งต่อเป็นลูกโซ่ · vector = address/ID ของ module</td></tr>
+<tr><td><b>4 Bus arbitration</b></td><td>(vectored) module ต้อง<b>ขอคุม bus ก่อน</b> จึงยก interrupt request · ได้รับตอบแล้วส่ง <b>vector</b> ผ่านสาย data/address</td></tr></table>
+<ul class="l"><li>ต่อ I/O เยอะ: ตัวเลือก <b>8-to-1</b> (mux) เลือกได้ทีละ 1 · I/O <b>64</b> ตัว = 8 ชุด 8-to-1 + อีก 1 ตัวเลือกจาก 8 กลุ่ม (<b>master/slave</b> interrupt controller, ตย. 82C59A)</li></ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch05</i>I/O Standards<em>★ assignment: USB vs SCSI · Thunderbolt · InfiniBand</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">มาตรฐาน</th><th>จุดสำคัญ (ตามสไลด์)</th></tr>
+<tr><td><b>USB</b></td><td>1.0: Low 1.5 / Full 12 Mbps · 2.0: <b>480 Mbps</b> · 3.0/3.1 Gen1: <b>5 Gbps</b> (SuperSpeed) · 3.1 Gen2: 10 Gbps · 3.2 Gen2×2: 20 Gbps · root host controller · tree (hierarchical) · hot-plug</td></tr>
+<tr><td><b>SCSI</b></td><td><b>shared bus</b> 16/32 อุปกรณ์ · ส่งแบบ <b>parallel</b> (bus 16 → 32 บิต) · 5 Mbps (SCSI-1) → 160 Mbps (Ultra3) · เสียความนิยมให้ USB/FireWire · ยังใช้กับ enterprise mass storage</td></tr>
+<tr><td><b>FireWire</b></td><td>IEEE 1394 · ทางเลือกแทน SCSI · <b>daisy chain</b> ≤ 63 อุปกรณ์/port · hot plug · auto config · ไม่ต้อง terminator</td></tr>
+<tr><td><b>Thunderbolt</b></td><td>Intel+Apple · ≤ <b>10 Gbps</b> ต่อทิศ · ≤ 10 W · รวม data+video+audio+power ในสายเดียว</td></tr>
+<tr><td><b>InfiniBand</b></td><td><b>high-end server</b> · switch-based fabric ต่อได้ราว <b>64,000</b> อุปกรณ์ · storage area network · ★ อาจารย์: ใช้กับ <b>GPU ↔ memory ที่ต้องการความเร็วสูงสุด</b></td></tr>
+<tr><td><b>PCI Express</b></td><td>high-speed bus หลายชนิดอุปกรณ์ · ★ <b>การ์ดจอ (GPU) ต่อเมนบอร์ดผ่าน PCIe</b> (ไม่ใช่ USB/FireWire/Thunderbolt)</td></tr>
+<tr><td><b>SATA / Eth / Wi-Fi</b></td><td>SATA = disk ≤ 6 Gbps · Ethernet ≤ 100 Gbps (switch-based) · Wi-Fi 802.11ac ≤ 3.2 Gbps</td></tr></table>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch06</i>Hard Disk<em>★ storage ออกไม่เยอะ เน้น “หลักการอ่าน/เขียน”</em></h3><div class="bd">
+<ul class="l">
+<li><b>เขียน</b>: จ่ายกระแสเข้าหัวเขียน (ขดลวด) → เกิด<b>สนามแม่เหล็ก</b> → จัดทิศอนุภาคบนผิว platter ซ้าย/ขวา = <b>0/1</b> · <b>อ่าน</b>: ขดลวดหัวอ่าน<b>เหนี่ยวนำ</b>ดูทิศ (inductive write / magnetoresistive read) · platter เคลือบวัสดุแม่เหล็ก · <b>1 head ต่อ 1 surface</b> · หัวแบบ Winchester ลอยด้วยแรงลม (aerodynamic)</li>
+<li><b>Platter</b> → <b>Track</b> (วงแหวนหนึ่งวง) → <b>Sector</b> (<b>ส่วนย่อยของ track</b> ⚠ ไม่ใช่กลุ่มของ track) · <b>Cylinder</b> = track ตำแหน่งเดียวกันทุก platter · มี gap ระหว่าง track/sector · sector ≈ 512 B (ใหม่ 4096) + ID + ECC</li>
+<li><b>Constant angular velocity</b> (หั่นเค้ก sector ขนาดไม่เท่ากัน) vs <b>Multiple-zone recording</b> (density/sector ใกล้เคียงกัน ดีกว่า · <b>ปัจจุบันใช้แบบนี้</b>)</li>
+<li>Seek time = เลื่อนหัวไปถึง track · Rotational delay = รอต้น sector มาถึงหัว · <b>Access time = seek + rotational delay</b> · transfer time = อ่านข้อมูลเมื่ออยู่ถูกตำแหน่ง</li>
+</ul>
+<div class="f">Disk access = queuing + seek + rotational latency + transfer + controller overhead<br>Rotational latency เฉลี่ย = ½ รอบ = 0.5 / (rpm/60)</div>
+<div class="ex"><b>ตย. สไลด์</b> sector 512 B, 15,000 rpm, seek เฉลี่ย 4 ms, transfer 100 MB/s, controller 0.2 ms, disk ว่าง → 4 + <b>2</b> + 0.005 + 0.2 = <b>6.2 ms</b> (rotational = 0.5/(15000/60) = 2 ms · ถ้า seek จริง 1 ms → <b>3.2 ms</b>)</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch06</i>ชนิดดิสก์ · ตัวอย่างค่า HDD<em>สไลด์ Table 6.2</em></h3><div class="bd"><ul class="l">
+<li><b>ชนิดดิสก์</b>: <b>fixed-head</b> (1 หัว/track) vs <b>movable-head</b> (1 หัว/surface) · removable vs non-removable · single/double-sided · single/multiple platter · กลไกหัว: <b>Contact</b> (floppy) · <b>Fixed gap</b> · <b>Aerodynamic gap</b> (Winchester)</li>
+<li>Timing ของ disk I/O: Wait for device → Wait for channel → <b>Seek</b> → <b>Rotational delay</b> → <b>Data transfer</b></li>
+<li>ตัวอย่างค่า: Seagate Enterprise 6 TB 7200 rpm seek 4.16 ms 216 MB/s · Laptop 2 TB 5400 rpm seek 13 ms · <b>latency = ½ รอบ = 30000/rpm ms</b> (7200 → 4.17 · 5400 → 5.56 · 10,075 → 2.98)</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch06</i>RAID 0–6<em>★ Redundant Array of Independent Disks</em></h3><div class="bd">
+<div class="nt">3 ลักษณะ: ① OS เห็นเป็น logical drive เดียว ② data กระจายข้าม drive (<b>striping</b>) ③ มี capacity ส่วนเกินเก็บ <b>parity</b> กู้ข้อมูลได้ · N = จำนวน data disk</div>
+<table class="t"><tr><th class="c" style="width:4%">L</th><th style="width:28%">หลักการ · จำนวนดิสก์</th><th>ข้อดี / ข้อเสีย / ใช้กับ</th></tr>
+<tr><td class="c"><b>0</b></td><td><b>Striping</b> ไม่ redundant · N</td><td>I/O สูงมาก ง่าย ไม่มี parity · แต่ <b>ดิสก์เดียวเสีย = ข้อมูลทั้ง array หาย</b> · video/image editing</td></tr>
+<tr><td class="c"><b>1</b></td><td><b>Mirroring</b> (copy ซ้ำ) · 2N</td><td>redundant 100% ไม่ต้อง rebuild · read ได้จากดิสก์ใดก็ได้ · แต่ <b>overhead สูงสุด</b> · accounting/payroll</td></tr>
+<tr><td class="c"><b>2</b></td><td>Parallel access + <b>Hamming code</b> (ECC) · N+m (m∝log N)</td><td>transfer สูงมาก · แต่ ECC disk เยอะ ไม่คุ้ม · <b>ไม่มีใช้เชิงพาณิชย์</b></td></tr>
+<tr><td class="c"><b>3</b></td><td>Parallel access, parity <b>ระดับ bit/byte</b> · <b>ดิสก์ parity เดียว</b> · N+1</td><td>transfer สูงสุด · ดิสก์เสียแทบไม่กระทบ · แต่ transaction rate ≈ ดิสก์เดียว · video streaming</td></tr>
+<tr><td class="c"><b>4</b></td><td>Independent access, parity ระดับ <b>block</b> · <b>parity disk แยก</b> · N+1</td><td>read สูง · แต่ <b>write penalty</b> (อ่าน 2 เขียน 2) <b>parity disk = bottleneck</b> · ไม่มีใช้</td></tr>
+<tr><td class="c"><b>5</b></td><td>block parity <b>กระจาย (distributed) ทุกดิสก์</b> · N+1</td><td>read สูงสุด ไม่มี bottleneck · เขียนช้ากว่า rebuild ยาก · file/database/web server · <b>versatile สุด</b></td></tr>
+<tr><td class="c"><b>6</b></td><td>block parity <b>2 ชุด</b> (dual distributed) · N+2</td><td>ทน<b>ดิสก์เสีย 2 ตัวพร้อมกัน</b> availability สูงสุด · controller ซับซ้อน write penalty สูง · mission critical</td></tr></table>
+<div class="nt" style="margin-top:.5mm"><b>ตย. †</b> ดิสก์ 1 TB × 4 ตัว: RAID 0 = 4 TB · RAID 1 = 2 TB (mirror) · RAID 5 = 3 TB (เสีย 1 ดิสก์ใช้ทำ parity) · RAID 6 = 2 TB</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch06</i>SSD · Optical · Tape<em>★ SSD ดีกว่า HDD (แต่แพง) · tape ถูกสุด</em></h3><div class="bd">
+<ul class="l">
+<li><b>SSD vs HDD</b>: SSD <b>เร็วกว่า</b> (IOPS สูง, latency ต่ำ) · <b>ประหยัดไฟ</b> · ทน/เงียบ/เย็น · อายุยาว แต่ <b>แพงกว่า/GB</b> · ปัญหา: เขียนช้าลง (ต้องอ่านทั้ง block → ลบ → เขียนกลับ) · flash <b>สึกหรอ</b> ตามจำนวนเขียน → <b>wear leveling</b>, bad-block mgmt, cache รวมเขียน · ภายในมี <b>SSD controller</b> (addressing, buffer, ECC)</li>
+<li>สไลด์ Table 6.5: copy/write <b>200–550</b> vs 50–120 Mbps · ไฟ 2–3 W vs 6–7 W · ≈ $0.50 vs $0.15 /GB</li>
+</ul>
+<table class="t"><tr><th style="width:15%">Optical</th><th>ข้อมูล</th></tr>
+<tr><td><b>CD</b></td><td>12 cm · CD-ROM ≈ 650–682 MB · laser <b>780 nm</b> · CD-ROM อ่านอย่างเดียว (pit บน polycarbonate) · CD-R เขียนครั้งเดียว (dye) · CD-RW เขียนซ้ำ (phase change: amorphous สะท้อนน้อย / crystalline สะท้อนดี)</td></tr>
+<tr><td><b>DVD</b></td><td>laser <b>650 nm</b> · 2 หน้า 2 ชั้น สูงสุด <b>17 GB</b> · มี DVD-R/RW/RAM</td></tr>
+<tr><td><b>Blu-ray</b></td><td>laser <b>405 nm</b> (blue-violet) · 1 ชั้น 1 หน้า <b>25 GB</b></td></tr></table>
+<div class="tr">⚠ <b>CD vs DVD ★</b>: ทางกายภาพแผ่นกลมเหมือนกัน ต่างที่ <b>sector/pit ของ DVD เล็กกว่า → density มากกว่า → เก็บได้มากกว่า</b> (sector CD ใหญ่/ห่างกว่า)</div>
+<ul class="l"><li><b>Magnetic tape ★</b>: <b>ถูกที่สุด · จุมากสุดในพีระมิด · offline</b> storage (big data center) · เข้าถึง<b>แบบ serial</b> · track ขนานตามความยาว · serpentine recording · LTO-1 (2000) 200 GB → LTO-8 32 TB (compressed)</li></ul>
+</div></div>
+</div>
+</div></section>
+<section class="page"><div class="ph"><b>ITDS211 · หน้า 4/4 · Ch07 Pipeline · Ch08 Parallel · สูตร · เช็กข้อหลอก</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <b>†</b> ผมเสริมเอง (ไม่มีในสไลด์/ซับ)</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch07</i>Pipeline<em>★ 3 Hazards: Structural · Data · Control</em></h3><div class="bd">
+<ul class="l">
+<li><b>แนวคิด</b> (ซักผ้า–อบ–รีด–เก็บ): แบ่งงานเป็น stage ย่อย <b>เหลื่อมกันทำ</b> ใช้ resource คนละตัวพร้อมกัน → <b>throughput ↑</b> แต่ <b>latency ต่อคำสั่งเท่าเดิม</b> · stage ต่างกันตามชนิด CPU (RISC-V / Arm / Intel)</li>
+<li>⚠ <b>Pipeline ใช้ได้ทั้ง RISC (เช่น ARM) และ CISC (เช่น Intel)</b> ไม่ใช่เฉพาะ RISC · ลำดับ: Fetch → Decode → Execute → Write back</li>
+</ul>
+<div class="bf" style="margin-top:.6mm"><b style="flex:0 0 11mm">5 stage</b><div style="flex:1;white-space:normal" class="r"><b>IF</b><br><span class="nt">Fetch คำสั่ง</span></div><div style="flex:1;white-space:normal" class="r"><b>ID</b><br><span class="nt">Decode + อ่าน reg</span></div><div style="flex:1;white-space:normal" class="r"><b>EX</b><br><span class="nt">Execute / คำนวณ addr</span></div><div style="flex:1;white-space:normal" class="r"><b>MEM</b><br><span class="nt">เข้าถึง memory</span></div><div style="flex:1;white-space:normal" class="o"><b>WB</b><br><span class="nt">เขียนผลลง reg</span></div></div>
+<table class="t"><tr><th>Instr</th><th class="c">Fetch</th><th class="c">Reg read</th><th class="c">ALU</th><th class="c">Mem</th><th class="c">Reg write</th><th class="c">รวม</th></tr>
+<tr><td><b>ld</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">200</td><td class="c">100</td><td class="c"><b>800 ps</b></td></tr>
+<tr><td><b>sd</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">200</td><td class="c">–</td><td class="c"><b>700 ps</b></td></tr>
+<tr><td><b>R-format</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">–</td><td class="c">100</td><td class="c"><b>600 ps</b></td></tr>
+<tr><td><b>beq</b></td><td class="c">200</td><td class="c">100</td><td class="c">200</td><td class="c">–</td><td class="c">–</td><td class="c"><b>500 ps</b></td></tr></table>
+<ul class="l">
+<li><b>Single-cycle</b> T<sub>c</sub> = <b>800 ps</b> (ตามคำสั่งช้าสุด) · <b>Pipelined</b> T<sub>c</sub> = <b>200 ps</b> (ตาม stage ช้าสุด) · speedup อุดมคติ ≈ <b>จำนวน stage</b> (ซักผ้า 4 โหลด = 8/3.5 = 2.3 · ไม่หยุด = 2n/(0.5n+1.5) ≈ 4)</li>
+<li><b>ตย. †</b> ld 3 คำสั่งติดกัน: single-cycle = 3×800 = <b>2400 ps</b> · pipelined = (5 stage + 3 − 1) × 200 = <b>1400 ps</b> (n คำสั่ง k stage = (n + k − 1) × T<sub>c</sub>)</li>
+<li>ISA เหมาะ pipeline: ทุกคำสั่ง <b>32 บิต</b> (x86 = 1–17 byte) · format น้อยและสม่ำเสมอ · load/store addressing</li>
+<li><b>Pipeline registers</b> (IF/ID · ID/EX · EX/MEM · MEM/WB) เก็บข้อมูลจาก stage ก่อนหน้า ไม่ให้<b>ถูกคำสั่งถัดไปทับ</b> (hardware เพิ่ม = ต้นทุน) · สรุป: pipeline เพิ่ม <b>throughput</b> ไม่ใช่ latency</li>
+</ul>
+<table class="t"><tr><th style="width:17%">Hazard</th><th style="width:27%">สาเหตุ</th><th>วิธีแก้</th></tr>
+<tr><td><b>Structural</b></td><td><b>ใช้ resource ชนกัน</b> (เช่น memory เดียว: fetch ชน load/store)</td><td><b>Stall</b> (หยุด เกิด bubble จน resource ว่าง) · หรือแยก instruction/data memory (cache)</td></tr>
+<tr><td><b>Data</b></td><td>ข้อมูลยังไม่พร้อม: <code>add x19,x0,x1</code> → <code>sub x2,x19,x3</code> (sub ต้องรอ add เขียน x19 ใน WB)</td><td>① <b>Stall</b> (ง่ายสุด แต่ช้า) ② <b>Forwarding/Bypassing</b>: ส่งผลลัพธ์จาก EX ย้อนเป็น input คำสั่งถัดไปเลย ไม่รอ WB (เพิ่ม datapath) ③ <b>Code scheduling</b>: compiler/assembler จัดลำดับ ย้ายคำสั่งไม่เกี่ยวข้องมาคั่น (ไม่เพิ่ม hardware)</td></tr>
+<tr><td><b>Control</b></td><td>คำสั่งก่อนหน้าเป็น <b>branch/jump</b> → คำสั่งที่ fetch ไว้ <b>ไม่ถูกใช้</b></td><td><b>Stall/bubble</b> จน pipeline กลับปกติ (ส่วนใหญ่นิยม เพราะ prediction ต้นทุนวงจรสูง) · <b>Branch prediction</b> (เดา: static = backward taken, forward not taken · dynamic = เก็บ history ต่อ branch; ผิด → flush) · ย้าย target adder+comparator ไป ID</td></tr></table>
+<ul class="l">
+<li><b>Load-use hazard</b>: ผลจาก <code>ld</code> ได้ที่ MEM — forward ย้อนเวลาไม่ได้ → <b>stall 1 cycle</b> · ตย. code scheduling (a=b+e; c=b+f): 13 cycles → จัดใหม่ (ย้าย load x4 ขึ้น) = <b>11 cycles</b></li>
+<li>Forwarding (รายละเอียดจากสไลด์): EX hazard เมื่อ EX/MEM.Rd = ID/EX.Rs1/Rs2 · MEM hazard เมื่อ MEM/WB.Rd = Rs1/Rs2 · เฉพาะ RegWrite และ Rd ≠ x0 · mux ForwardA/B: <b>00</b> = register file · <b>10</b> = EX/MEM · <b>01</b> = MEM/WB</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>สูตร</i>รวมสูตรที่ใช้คำนวณ<em>Quick reference</em></h3><div class="bd"><table class="t">
+<tr><td><b>Perf / CPU time</b></td><td>Perf<sub>X</sub>/Perf<sub>Y</sub> = Time<sub>Y</sub>/Time<sub>X</sub> · <b>CPU time = IC × CPI × Cycle time</b> · CPI เฉลี่ย = Σ CPI<sub>i</sub>×IC<sub>i</sub>/IC</td></tr>
+<tr><td><b>Cache</b></td><td>Block addr = floor(addr/B) · index = Block addr mod #blocks · offset = log₂B · index = log₂#blocks · <b>AMAT = hit + miss rate × penalty</b></td></tr>
+<tr><td><b>Disk / Pipeline</b></td><td>Access = seek + <b>0.5/(rpm/60)</b> + size/rate + controller · T<sub>c</sub> = stage ช้าสุด · เวลา = (n+k−1)×T<sub>c</sub></td></tr>
+<tr><td><b>Data rep</b></td><td>2's: −x = ~x+1 · ช่วง −2<sup>n−1</sup>…2<sup>n−1</sup>−1 · SM/1's: ±(2<sup>n−1</sup>−1) · IEEE: (−1)<sup>S</sup>×1.m×2<sup>E−127</sup></td></tr>
+<tr><td><b>RISC-V / อื่น ๆ</b></td><td>shift i บิต = ×/÷2<sup>i</sup> · branch target = PC + imm×2 · array offset = index×8 · Availability = MTTF/(MTTF+MTTR)</td></tr></table></div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch08</i>Parallel Processors<em>★ Flynn · SMP/Cluster · Vector · GPU</em></h3><div class="bd">
+<table class="t"><tr><th style="width:11%">Flynn</th><th>ความหมาย</th><th style="width:25%">ตัวอย่าง</th></tr>
+<tr><td><b>SISD</b></td><td><b>1 คำสั่ง 1 ข้อมูล</b> (CPU ปกติ) ⚠ ไม่ใช่ประมวลผลหลายคำสั่งพร้อมกัน</td><td>Pentium 4</td></tr>
+<tr><td><b>SIMD</b></td><td><b>1 คำสั่ง หลายข้อมูล</b>พร้อมกัน: vector/array processor, <b>GPU</b></td><td>SSE (x86), GPU</td></tr>
+<tr><td><b>MISD</b></td><td>หลายคำสั่ง 1 ข้อมูล — <b>แทบไม่มี/ไม่มีเลยแล้ว</b></td><td>–</td></tr>
+<tr><td><b>MIMD</b></td><td>หลายคำสั่ง หลายข้อมูล: <b>Shared memory (SMP)</b> หรือ <b>Distributed memory (cluster)</b></td><td>Xeon e5345</td></tr></table>
+<ul class="l">
+<li><b>Multi-core</b> = duplicate core จริง ๆ ทำงานขนาน (≠ แบ่ง task บน resource เดียว/VM) · <b>Multithreading</b> = replicate register+PC สลับ thread เร็ว: <b>Fine-grain</b> (สลับทุก cycle) · <b>Coarse-grain</b> (สลับเมื่อ stall ยาว เช่น L2 miss; ไม่ซ่อน stall สั้น) · <b>SMT</b> (คำสั่งจากหลาย thread รันพร้อมกันบน function unit ที่ว่าง; Intel Hyper-Threading 2 thread)</li>
+<li><b>Vector processor</b>: function unit pipelined ลึก · <b>vector register</b> (RISC-V: v0–v31, 32×64-element) · ลดการ fetch คำสั่ง · เหมาะ data-parallel: <b>multiply–accumulate</b> (digital filter, ภาพ, linear algebra — ตย. <b>DAXPY</b>: Y = a×X + Y) · vector = ความกว้างปรับได้ + stride ≠ multimedia SIMD (SSE/MMX 128 บิต กว้างคงที่)</li>
+<li><b>Shared memory</b> (SMP: hardware ให้ address space เดียว, sync ด้วย lock; UMA/NUMA): ✓ ไม่ต้อง duplicate/ไม่ต้อง sync ข้อมูล ✗ ทุก core <b>รุมเข้า memory ตัวเดียว</b> · <b>Distributed memory</b> (แต่ละตัวมี memory เอง = <b>cluster</b>, message passing): ✗ sync/update ยาก ✓ scalable/ถูก/availability สูง · cluster = คอมพิวเตอร์อิสระ+OS ของตัวเอง ต่อด้วย Ethernet (loosely coupled) · Grid computing เช่น SETI@home</li>
+<li>ปัญหา parallel programming: <b>Partitioning · Coordination · Communications overhead</b> · SPMD = Single Program Multiple Data · topology: Bus · Ring · 2D Mesh · N-cube · Fully connected · benchmark: Linpack · SPECrate · SPLASH · NAS · PARSEC · performance model: GFLOPs, arithmetic intensity = FLOPs/byte (Roofline)</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch08</i>GPU<em>★ อาจารย์ปิดคลาสด้วยหัวข้อนี้</em></h3><div class="bd"><ul class="l">
+<li><b>หลักการ = SIMD</b>: คำสั่งเดียว (บวก/ลบ) ทำกับข้อมูลจำนวนมากพร้อมกัน (ตย. ลบ <b>background</b> ภาพ — pixel = array/vector) · <b>highly multithreaded</b> (สลับ thread ซ่อน memory latency) · พึ่ง multi-level cache น้อยกว่า CPU · graphics memory กว้าง/bandwidth สูง · <b>heterogeneous</b>: CPU ทำ sequential, GPU ทำ parallel · API: CUDA, OpenGL, DirectX</li>
+<li><b>Nvidia Fermi</b>: vector-based · SIMD processor 16 lanes · SIMD instruction ทำกับ 32 element รันบน 16-wide ใน 2 cycle · <b>Tesla</b>: multiprocessor (หลาย compute unit ทำร่วมกัน) · <b>DGX</b> = train AI model (แพง) · <b>รันโมเดลแล้ว</b> ใช้การ์ดจอปกติเสียบ <b>PCIe</b> ใน PC ได้</li>
+<li>Multicore SIMD vs GPU: SIMD processor 4–8 vs 8–16 · SIMD lane/processor 2–4 vs 8–16 · SIMD thread/processor 2–4 vs 16–32 · cache ใหญ่สุด 8 MB vs 0.75 MB · main memory 8–256 GB vs 4–6 GB</li>
+</ul></div></div>
+
+<div class="sec"><h3><i>Ch04</i>ท้ายบท: Dependability · Virtual Memory<em>อยู่ในสไลด์ (ติวยังไม่ได้พูด)</em></h3><div class="bd"><ul class="l">
+<li><b>Dependability</b>: Reliability = <b>MTTF</b> · ซ่อม = <b>MTTR</b> · MTBF = MTTF + MTTR · <b>Availability = MTTF/(MTTF+MTTR)</b> (เพิ่มโดย ↑MTTF หรือ ↓MTTR)</li>
+<li><b>Hamming distance</b> (จำนวนบิตที่ต่าง): 2 = <b>ตรวจ</b> error 1 บิต (parity) · 3 = <b>แก้</b> 1 บิต + ตรวจ 2 บิต · parity bit อยู่ตำแหน่งกำลังของ 2 · <b>SEC/DEC</b> (distance 4) · <b>ECC DRAM</b> = 8 บิต ต่อทุก 64 บิต</li>
+<li><b>Virtual memory</b>: main memory = “cache” ของ disk · virtual → physical · block = <b>page</b> (≈4 KB) · miss = <b>page fault</b> (ช้ามาก, OS จัดการ) · <b>page table</b> (index ด้วย virtual page no.; มี physical page no. + referenced/dirty bit) · <b>fully associative</b> · <b>write-back</b> เท่านั้น · <b>TLB</b> = cache ของ page table (16–512 PTE, hit 0.5–1 cycle, miss rate 0.01–1%)</li>
+<li><b>Cache coherence</b> (หลาย core): <b>snooping</b> (ดัก bus; invalidate ก่อนเขียน) vs <b>directory-based</b> · <b>Virtual machine</b>: host/VMM จำลอง guest OS</li>
+</ul></div></div>
+</div>
+</div><div class="sec full"><h3><i>ทบทวนด่วน</i>ข้อหลอก / โจทย์ที่อาจารย์ถามกลับในคลาส<em>★ “คำถามสไตล์ประมาณแบบเนี้ย ไปทบทวนเนาะ”</em></h3><div class="bd"><div class="cc">
+<div>① <b>SISD</b> = 1 คำสั่ง 1 ข้อมูล (ไม่ใช่หลายคำสั่งพร้อมกัน)</div>
+<div>② <b>Pipeline</b> ใช้ได้ทั้ง RISC และ CISC · ลำดับ F → D → E → WB</div>
+<div>③ <b>Exponent</b>: single = <b>8</b> บิต · double = <b>11</b> บิต</div>
+<div>④ จุมากสุดในพีระมิด = <b>Offline / Magnetic tape</b> (ถูกสุดด้วย)</div>
+<div>⑤ <b>RAM</b> = ชั่วคราว · <b>ROM</b> = ถาวร · <b>SRAM</b> เร็วกว่า · <b>DRAM</b> ถูกกว่า</div>
+<div>⑥ miss น้อยสุด = <b>Fully associative</b> · เขียน cache: Write-through / Write-back / Write-allocate</div>
+<div>⑦ <b>Daisy chain</b> = priority · ตัวเลือกว่าใครได้ใช้ bus = <b>Bus Arbitrator</b> (ไม่ใช่ Control Unit/control line)</div>
+<div>⑧ I/O เร็วสุด = <b>DMA</b> (แทรกได้ทุก cycle) · การ์ดจอเข้าเมนบอร์ดผ่าน <b>PCIe</b></div>
+<div>⑨ <b>Track</b> = วงแหวน · <b>Sector</b> = ส่วนย่อยของ track · <b>DVD</b> density &gt; CD</div>
+<div>⑩ <b>InfiniBand</b> = ความเร็วสูงสุด (GPU↔memory/server) · <b>SSD</b> เร็ว/ประหยัดไฟกว่า แต่แพงกว่า</div>
+<div>⑪ <b>Shift ซ้าย</b> = ×2 · <b>ขวา</b> = ÷2 · <code>ADD A,B,C</code> → A = B + C · <b>LOAD</b> Mem→Reg · <b>STORE</b> Reg→Mem</div>
+<div>⑫ <b>2's complement</b>: ลบ = invert + 1 · ช่วง 8 บิต −128…+127 · Sign-Mag มี 2 ศูนย์</div>
+<div>⑬ <b>Little-endian</b> = LSB ที่ address ต่ำสุด · <b>Big</b> = MSB ที่ address ต่ำสุด</div>
+<div>⑭ <b>Cache</b>: ดู Index → เทียบ Tag → เช็ก Valid · block ใหญ่ ≠ miss น้อยเสมอ</div>
+<div>⑮ <b>CPU time</b> = IC × CPI × Cycle time · “เร็วกว่า” = เวลาน้อยกว่า</div>
+</div>
+<div class="nt" style="margin-top:.6mm"><b>ตัวเลขที่ต้องจำ</b>: Arbitration <b>4</b> · I/O module <b>5</b> หน้าที่ · I/O command <b>4</b> · เทคนิค I/O <b>3</b> · Device ID <b>4</b> · RAID <b>0–6</b> · Pipeline <b>5</b> stage / <b>3</b> hazard · Flynn <b>4</b> · opcode <b>7</b> บิต · reg <b>5</b> บิต (32 ตัว) · instruction <b>32</b> บิต · Cache miss rate 1/2/4/8-way = <b>10.3 / 8.6 / 8.3 / 8.1 %</b> · IEEE bias <b>127</b></div>
+</div></div></section>
+<pre id="fit"></pre>
+<script>
+document.fonts.ready.then(()=>{
+  const MM=3.7795,cols=[],wide=[],secs=[],lhs=[];
+  const need=c=>{const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;return kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1)};
+  const fits=pg=>[...pg.querySelectorAll('.col')].every(c=>need(c)<=c.clientHeight-0.6);
+  document.querySelectorAll('.page').forEach(pg=>{ // ขยาย line-height จนพอดี (สูงสุด 1.42) ให้แต่ละหน้าโปร่งเท่ากันที่สุด
+    let lo=1.27,hi=1.42;pg.style.setProperty('--lh',lo);
+    if(fits(pg)){pg.style.setProperty('--lh',hi);if(!fits(pg)){for(let i=0;i<10;i++){const m=(lo+hi)/2;pg.style.setProperty('--lh',m);if(fits(pg))lo=m;else hi=m}pg.style.setProperty('--lh',lo)}else lo=hi}
+    lhs.push(+lo.toFixed(3));
+  });
+  document.querySelectorAll('.page').forEach((pg,pi)=>{
+    pg.querySelectorAll('.col').forEach((c,ci)=>{
+      const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;
+      const need=kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1);
+      kids.forEach(k=>{const h=k.querySelector('h3');secs.push({p:pi+1,c:ci+1,t:(h?h.textContent:k.className).slice(0,34),h:+(k.getBoundingClientRect().height/MM).toFixed(1)})});
+      cols.push({p:pi+1,c:ci+1,avail:+(c.clientHeight/MM).toFixed(1),need:+(need/MM).toFixed(1),over:c.scrollHeight>c.clientHeight+1});
+    });
+    pg.querySelectorAll('.bd,.bd *').forEach(e=>{if(e.scrollWidth>e.clientWidth+1&&e.clientWidth>0)wide.push('p'+(pi+1)+': '+(e.textContent||'').trim().slice(0,40))});
+  });
+  document.getElementById('fit').textContent=JSON.stringify({cols,secs,lhs,wide:[...new Set(wide)].slice(0,12)});
+});
+</script>
+</body>
+</html>

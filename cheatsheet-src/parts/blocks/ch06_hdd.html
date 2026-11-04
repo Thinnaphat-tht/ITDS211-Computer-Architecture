@@ -1,0 +1,10 @@
+<div class="sec"><h3><i>Ch06</i>Hard Disk<em>★ storage ออกไม่เยอะ เน้น “หลักการอ่าน/เขียน”</em></h3><div class="bd">
+<ul class="l">
+<li><b>เขียน</b>: จ่ายกระแสเข้าหัวเขียน (ขดลวด) → เกิด<b>สนามแม่เหล็ก</b> → จัดทิศอนุภาคบนผิว platter ซ้าย/ขวา = <b>0/1</b> · <b>อ่าน</b>: ขดลวดหัวอ่าน<b>เหนี่ยวนำ</b>ดูทิศ (inductive write / magnetoresistive read) · platter เคลือบวัสดุแม่เหล็ก · <b>1 head ต่อ 1 surface</b> · หัวแบบ Winchester ลอยด้วยแรงลม (aerodynamic)</li>
+<li><b>Platter</b> → <b>Track</b> (วงแหวนหนึ่งวง) → <b>Sector</b> (<b>ส่วนย่อยของ track</b> ⚠ ไม่ใช่กลุ่มของ track) · <b>Cylinder</b> = track ตำแหน่งเดียวกันทุก platter · มี gap ระหว่าง track/sector · sector ≈ 512 B (ใหม่ 4096) + ID + ECC</li>
+<li><b>Constant angular velocity</b> (หั่นเค้ก sector ขนาดไม่เท่ากัน) vs <b>Multiple-zone recording</b> (density/sector ใกล้เคียงกัน ดีกว่า · <b>ปัจจุบันใช้แบบนี้</b>)</li>
+<li>Seek time = เลื่อนหัวไปถึง track · Rotational delay = รอต้น sector มาถึงหัว · <b>Access time = seek + rotational delay</b> · transfer time = อ่านข้อมูลเมื่ออยู่ถูกตำแหน่ง</li>
+</ul>
+<div class="f">Disk access = queuing + seek + rotational latency + transfer + controller overhead<br>Rotational latency เฉลี่ย = ½ รอบ = 0.5 / (rpm/60)</div>
+<div class="ex"><b>ตย. สไลด์</b> sector 512 B, 15,000 rpm, seek เฉลี่ย 4 ms, transfer 100 MB/s, controller 0.2 ms, disk ว่าง → 4 + <b>2</b> + 0.005 + 0.2 = <b>6.2 ms</b> (rotational = 0.5/(15000/60) = 2 ms · ถ้า seek จริง 1 ms → <b>3.2 ms</b>)</div>
+</div></div>

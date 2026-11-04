@@ -1,0 +1,9 @@
+# เนื้อหาลิขสิทธิ์ของอาจารย์/คลาสติว ไม่ขึ้น public
+itds-211_comp_arch_Chapter*.pdf
+VIDEO/
+audio/
+Srt/
+*.mp4
+*.srt
+__pycache__/
+*.pyc

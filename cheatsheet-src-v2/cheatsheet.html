@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ITDS211 Cheat Sheet v2</title>
+<style>
+@page{size:A4;margin:0}
+:root{--fs:8.8pt;--navy:#0b2a6f;--blue:#1d4ed8;--sky:#e6efff;--sky2:#f4f8ff;--line:#b4c6ee;--ink:#14213d;--mute:#52627f;--amber:#b45309;--amberbg:#fff3de;--red:#b91c1c;--redbg:#ffecec}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:"Segoe UI","Leelawadee UI",Tahoma,sans-serif;font-size:var(--fs);line-height:1.27;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{line-height:var(--lh,1.27);width:210mm;height:297mm;padding:5mm 6mm 5mm;overflow:hidden;display:flex;flex-direction:column;break-after:page}
+.page:last-child{break-after:auto}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;border-bottom:1.4pt solid var(--blue);margin-bottom:1.8mm;padding-bottom:.8mm}
+.ph b{font-size:13pt;color:var(--navy)}.ph span{font-size:7pt;color:var(--mute)}
+.cols{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:3.2mm}
+.col{min-height:0;display:flex;flex-direction:column;justify-content:flex-start;gap:2.6mm;overflow:hidden}
+.col>*{flex:0 0 auto}
+.sec{border:.6pt solid var(--line);border-radius:1.2mm;overflow:hidden}
+.sec>h3{margin:0;background:var(--navy);color:#fff;font-size:1.075em;font-weight:700;padding:.6mm 1.8mm;display:flex;align-items:baseline;gap:1.6mm}
+.sec>h3 i{font-style:normal;font-size:.85em;background:#fff;color:var(--navy);border-radius:.8mm;padding:0 1mm;font-weight:700}
+.sec>h3 em{font-style:normal;font-weight:400;font-size:.88em;margin-left:auto;opacity:.9}
+.bd{padding:.9mm 1.8mm 1.1mm}
+.s{color:var(--amber);font-weight:700}
+b{font-weight:700}
+code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.94em;background:#edf2ff;padding:0 .6mm;border-radius:.5mm}
+ul.l{margin:0;padding:0;list-style:none}
+ul.l li{position:relative;padding-left:2.4mm;margin:.35mm 0}ul.l li.in{margin-left:3.2mm}
+ul.l li::before{content:"▪";position:absolute;left:0;color:var(--blue);font-size:7pt;top:-.1mm}
+.f{background:#e8f0ff;border-left:1mm solid var(--blue);padding:.5mm 1.6mm;margin:.7mm 0;font-weight:600}
+.ex{background:var(--sky2);border:.5pt dashed #8aa6e6;padding:.5mm 1.6mm;margin:.7mm 0}
+.tr{background:var(--redbg);border-left:1mm solid var(--red);padding:.4mm 1.6mm;margin:.7mm 0}
+.nt{color:var(--mute);font-size:.88em}
+table.t{border-collapse:collapse;width:100%;font-size:.95em;margin:.5mm 0}
+table.t th{background:#d9e6ff;font-weight:700;text-align:left}
+table.t th,table.t td{border:.4pt solid var(--line);padding:.25mm 1mm;vertical-align:top}
+table.t td.c,table.t th.c{text-align:center}
+.bits{display:flex;margin:.6mm 0;font-size:6.4pt;text-align:center}
+.bits div{border:.5pt solid var(--blue);border-right:none;background:#f4f8ff;padding:.2mm 0;white-space:nowrap}
+.bits div:last-child{border-right:.5pt solid var(--blue)}
+ol.n{margin:.3mm 0;padding:0 0 0 4.4mm}ol.n li{margin:.1mm 0;padding-left:.4mm}
+.sec2{background:#f4f8ff;border:.5pt solid var(--line);border-radius:.8mm;padding:.6mm 1.6mm;margin:.8mm 0}
+.f2{font-weight:600;color:var(--navy)}
+.bf{display:flex;align-items:stretch;margin:.5mm 0;font-size:.85em;text-align:center}
+.bf>b{flex:0 0 7.5mm;text-align:left;font-size:.88em;color:var(--navy);align-self:center}
+.bf>div{border:.5pt solid var(--blue);border-right:none;background:#f4f8ff;padding:.2mm 0;white-space:nowrap;overflow:hidden}
+.bf>div:last-child{border-right:.5pt solid var(--blue)}
+.bf .o{background:#fff0d6}.bf .r{background:#e4edff}
+.pyr{margin:.3mm 0 .8mm}
+.pr{display:flex;align-items:center;height:5.6mm;gap:1.6mm}
+.sh{flex:0 0 38mm;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.83em;font-weight:700;text-align:center;line-height:1.05;clip-path:polygon(calc(50% - var(--t)*.5%) 0,calc(50% + var(--t)*.5%) 0,calc(50% + var(--b)*.5%) 100%,calc(50% - var(--b)*.5%) 100%)}
+.ds{flex:1;font-size:.9em;line-height:1.2;white-space:nowrap}
+.full{margin-top:1.4mm}
+.cc{columns:3;column-gap:3mm}.cc>div{break-inside:avoid;margin:.2mm 0}
+code{white-space:nowrap}
+.x{color:var(--mute);font-weight:400}
+.idx{display:grid;grid-template-columns:repeat(3,1fr);gap:.6mm 3mm;border:.6pt solid var(--line);background:var(--sky2);border-radius:1.2mm;padding:1mm 2mm;margin:0 0 1.6mm;font-size:.92em}
+.idx b{color:var(--navy)}
+.p2 .sec>h3{background:#1e40af}.p3 .sec>h3{background:#0e5a8a}.p4 .sec>h3{background:#1d3f8f}
+.p2 .ph{border-color:#1e40af}.p3 .ph{border-color:#0e7bb8}.p4 .ph{border-color:#4a5fc1}
+.page{font-size:var(--fs)}.p1{--fs:9.5pt}.p2{--fs:11.4pt}.p3{--fs:11.2pt}.p4{--fs:9.1pt}
+.dg{display:block;width:100%;height:auto;margin:.9mm 0}.cap{font-size:.8em;color:var(--mute);text-align:center;margin:-.3mm 0 .6mm}
+#fit{display:none}
+</style>
+</head>
+<body><svg width="0" height="0" style="position:absolute"><defs><marker id="ar" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5z" fill="#1d4ed8"/></marker><marker id="ars" markerWidth="5" markerHeight="5" refX=".8" refY="2.5" orient="auto"><path d="M5,0 L0,2.5 L5,5z" fill="#1d4ed8"/></marker></defs></svg><section class="page p1"><div class="ph"><b>หน้า 1/4 · Ch01 พื้นฐาน · Performance · Ch02 Bus · Interrupt</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <span class="x">เทา</span> = เสริมจากสไลด์</span></div><div class="idx"><div><b>Register PC IR MAR MBR</b> → น.1</div><div><b>CPU time · CPI · Speedup</b> → น.1</div><div><b>Bus · Daisy chain</b> → น.1</div>
+<div><b>Interrupt · ISR · Nested</b> → น.1</div><div><b>2's Comp · Sign-Mag · IEEE</b> → น.2</div><div><b>RISC-V format · Branch</b> → น.2</div>
+<div><b>Cache · Tag/Index · Hit-Miss</b> → น.3</div><div><b>SRAM DRAM · Pyramid</b> → น.3</div><div><b>Write-through / back</b> → น.3</div>
+<div><b>DMA · I/O · RAID · HDD</b> → น.4</div><div><b>Pipeline · Hazard</b> → น.4</div><div><b>Flynn · SIMD · GPU</b> → น.4</div></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch01–02</i>CPU ทำงานยังไง · Register<em>★ ดู flow ให้ออก</em></h3><div class="bd">
+<svg class="dg" viewBox="0 0 200 34" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="22.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Fetch</text><text x="22" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">PC → Mem → IR</text><rect x="54" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="74.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Decode</text><text x="74" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">แยก opcode</text><rect x="106" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="126.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Execute</text><text x="126" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">ALU คำนวณ</text><rect x="158" y="2" width="40" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="178.0" y="10.6" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">Store</text><text x="178" y="21.5" text-anchor="middle" font-size="4.8" fill="#52627f">ผลลง Reg/Mem</text><line x1="42" y1="8.5" x2="54" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="94" y1="8.5" x2="106" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="146" y1="8.5" x2="158" y2="8.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><path d="M178 24 V31 H22 V24" fill="none" stroke="#1d4ed8" stroke-width=".7" stroke-dasharray="2 1.4" marker-end="url(#ar)"/><text x="100" y="29.3" text-anchor="middle" font-size="4.6" fill="#52627f">วนซ้ำ · PC ชี้คำสั่งถัดไป</text></svg><ul class="l">
+<li><b>CPU</b> = Control Unit + ALU + Registers + Bus</li>
+<li>วงจร: <b>Fetch → Decode → Execute → Store</b> (Write back)</li>
+<li><b>PC</b> เก็บ <b>ตำแหน่ง</b>คำสั่งถัดไป</li>
+<li><b>IR</b> เก็บ<b>คำสั่งที่ fetch มาแล้ว</b></li>
+<li><b>Status/Flag</b> เก็บ overflow, negative</li>
+<li><b>MAR</b> = address ใน Memory</li>
+<li><b>MBR</b> = data ที่เข้า/ออก Memory</li>
+<li><b>IOAR</b> = address ของ I/O</li>
+<li><b>IOBR</b> = data ที่รับจาก I/O</li>
+</ul>
+<div class="ex"><b>★ ตัวอย่างอาจารย์ (assignment)</b>
+<ul class="l">
+<li>PC = 300 → Mem[300] = <b>1940</b> → โหลดเข้า <b>IR</b></li>
+<li>1940: <b>4 บิตบน = opcode</b> (0001 = Load AC จาก Memory)</li>
+<li>ที่เหลือ <b>940 = address</b> ของข้อมูล</li>
+<li>Mem[940] = 0003 → <b>AC = 0003</b></li>
+</ul></div>
+</div></div>
+
+<div class="sec"><h3><i>Ch01</i>Performance · CPU time · CPI<em>★ ข้อคำนวณ</em></h3><div class="bd">
+<div class="f">X เร็วกว่า Y กี่เท่า = <b>Time<sub>Y</sub> / Time<sub>X</sub></b></div>
+<div class="f">CPU time = <b>IC × CPI × Cycle time</b><br>= IC × CPI / Clock rate</div>
+<div class="f">Clock rate = 1 / Clock period</div>
+<ul class="l">
+<li>เทียบ 2 เครื่อง ISA เดียวกัน → <b>ตัด IC ทิ้ง</b></li>
+<li>ไม่รู้ค่า IC ให้ติดตัวแปร I ไว้</li>
+<li>⚠ "เร็วกว่า" = ใช้เวลา<b>น้อยกว่า</b></li>
+<li>อ่านโจทย์ดีๆ ว่าใครหารใคร</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> A: cycle 250 ps, CPI 2.0 · B: cycle 500 ps, CPI 1.2
+<ul class="l">
+<li>A = I × 2.0 × 250 = <b>500I</b> ps</li>
+<li>B = I × 1.2 × 500 = <b>600I</b> ps</li>
+<li>→ <b>A เร็วกว่า 1.2 เท่า</b></li>
+</ul></div>
+<div class="ex x"><b>ตย. Clock</b> A: 2 GHz, 10 s · B ต้อง 6 s และใช้ cycles มากกว่า 1.2 เท่า
+<ul class="l"><li>Clock<sub>B</sub> = 1.2 × (10 × 2×10⁹) / 6 = <b>4 GHz</b></li></ul></div>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Von Neumann · Harvard<em></em></h3><div class="bd">
+<svg class="dg" viewBox="0 0 200 38" xmlns="http://www.w3.org/2000/svg"><text x="48" y="6" text-anchor="middle" font-size="5.6" fill="#0b2a6f" font-weight=700>Von Neumann</text><text x="152" y="6" text-anchor="middle" font-size="5.6" fill="#0b2a6f" font-weight=700>Harvard</text><rect x="2" y="14" width="26" height="16" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="15.0" y="24.1" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">CPU</text><rect x="58" y="10" width="38" height="24" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="77.0" y="24.1" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f"></text><text x="77" y="20" text-anchor="middle" font-size="5.4" fill="#0b2a6f" font-weight=700>Memory</text><text x="77" y="27" text-anchor="middle" font-size="4.6" fill="#52627f">คำสั่ง + ข้อมูล</text><line x1="28" y1="22" x2="58" y2="22" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)" marker-start="url(#ars)"/><rect x="104" y="14" width="26" height="16" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="117.0" y="24.1" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0b2a6f">CPU</text><rect x="150" y="9" width="46" height="11" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="173.0" y="16.18" text-anchor="middle" font-size="4.8" font-weight="700" fill="#0b2a6f">Instruction Mem</text><rect x="150" y="24" width="46" height="11" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="173.0" y="31.18" text-anchor="middle" font-size="4.8" font-weight="700" fill="#0b2a6f">Data Mem</text><line x1="130" y1="20" x2="150" y2="14.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)" marker-start="url(#ars)"/><line x1="130" y1="24" x2="150" y2="29.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)" marker-start="url(#ars)"/></svg><table class="t"><tr><th>Von Neumann</th><th>Harvard</th></tr>
+<tr><td><b>Memory ก้อนเดียว</b> เก็บทั้งคำสั่ง + ข้อมูล</td><td><b>แยก</b> Instruction Memory กับ Data Memory</td></tr>
+<tr><td>คอมพิวเตอร์ทั่วไป</td><td>ส่วนใหญ่เป็น <b>Microcontroller</b></td></tr>
+<tr><td><b>Hardware</b>: วงจรเฉพาะงาน เร็ว แต่ล็อกตายตัว</td><td><b>Software</b>: ชุดคำสั่ง ยืดหยุ่น แต่ต้อง "คิด" ทุกคำสั่ง</td></tr></table>
+<ul class="l">
+<li><b>Interrupt</b> = สิ่งที่<b>ขัด</b>การทำงานแบบ sequence ของ CPU</li>
+</ul>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch02</i>Bus · Arbitration<em>★ Daisy chain = priority</em></h3><div class="bd">
+<ul class="l">
+<li><b>Address bus</b> บอกตำแหน่งใน Memory</li>
+<li><b>Data bus</b> ส่งข้อมูล</li>
+<li><b>Control bus</b> สัญญาณเปิด/ปิด/เลือกอุปกรณ์</li>
+<li><b>Point-to-point</b>: แยกทุกหน้าที่ ง่ายสุดแต่ <b>เปลืองเส้น</b></li>
+<li><b>Multipoint</b>: ประหยัด (ไฮเวย์ + ซอย) แต่ต้องมี <b>โปรโตคอลควบคุม</b></li>
+</ul>
+<table class="t"><tr><th style="width:30%">Arbitration</th><th>หลักการ</th></tr>
+<tr><td><b>1 Daisy chain</b></td><td>ตาม <b>priority</b> (CPU &gt; Memory &gt; I/O)<br><b>นิยมสุด ใช้ถึงวันนี้</b><br>ข้อเสีย: priority ต่ำแทบไม่ได้ใช้ bus</td></tr>
+<tr><td><b>2 Centralized parallel</b></td><td>ทุกอุปกรณ์ต่อตรงเข้า <b>ตัวควบคุมกลาง</b></td></tr>
+<tr><td><b>3 Distributed self-detection</b></td><td>ไม่มีตัวกลาง ตัดสินกันเอง เช็กเองว่ามีใครส่งอยู่ไหม</td></tr>
+<tr><td><b>4 Distributed + collision detection</b></td><td>เหมือน 3 + ตรวจจับการชน ถ้าชน <b>ส่งซ้ำ</b></td></tr></table>
+<svg class="dg" viewBox="0 0 200 26" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="34" height="11" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="19.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">Arbiter</text><rect x="44" y="2" width="28" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="58.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">CPU</text><rect x="80" y="2" width="34" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="97.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">Memory</text><rect x="122" y="2" width="32" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="138.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">I/O 1</text><rect x="162" y="2" width="32" height="11" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="178.0" y="9.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">I/O 2</text><line x1="36" y1="7.5" x2="44" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="72" y1="7.5" x2="80" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="114" y1="7.5" x2="122" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="154" y1="7.5" x2="162" y2="7.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="44" y1="18" x2="194" y2="18" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><text x="119" y="23.6" text-anchor="middle" font-size="4.7" fill="#52627f">priority สูง → ต่ำ · ท้ายแถวแทบไม่ได้ใช้ bus</text></svg><ul class="l">
+<li><b class="s">★</b> ตัวเลือกว่าอุปกรณ์ไหนได้ใช้ bus = <b>Bus Arbitrator</b></li>
+<li><b>⚠ ไม่ใช่</b> Control Unit และ <b>ไม่ใช่</b> control line</li>
+<li>การ์ดจอเสียบเมนบอร์ดผ่าน <b>PCIe</b></li>
+<li><b>InfiniBand</b> = I/O ความเร็วสูงสุด ใช้กับ GPU ↔ memory</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ flow “จำไว้เลย”</em></h3><div class="bd">
+<div class="sec2"><b class="s">★ Interrupt flow</b>
+<ol class="n"><li><b>Save</b> register / PC / status ปัจจุบัน</li><li>เปิด <b>Interrupt Vector table</b> หา <b>ISR address</b> (เช่น เบอร์ 003 = คีย์บอร์ด)</li><li>ใส่ address นั้นใน <b>PC</b> → รัน <b>ISR</b></li><li><b>Restore</b> ค่าที่ save ไว้ → กลับไปทำงานเดิม</li></ol></div>
+<svg class="dg" viewBox="0 0 200 28" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="38" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="21.0" y="12.32" text-anchor="middle" font-size="5.2" font-weight="700" fill="#0b2a6f">โปรแกรมหลัก</text><line x1="40" y1="10.5" x2="54" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><text x="47" y="8" text-anchor="middle" font-size="4.2" fill="#b91c1c" font-weight=700>IRQ</text><rect x="54" y="4" width="30" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="69.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">1 Save</text><rect x="88" y="4" width="36" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="106.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">2 Vector</text><rect x="128" y="4" width="30" height="13" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="143.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">3 ISR</text><rect x="162" y="4" width="36" height="13" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="180.0" y="12.39" text-anchor="middle" font-size="5.4" font-weight="700" fill="#0b2a6f">4 Restore</text><line x1="84" y1="10.5" x2="88" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="124" y1="10.5" x2="128" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><line x1="158" y1="10.5" x2="162" y2="10.5" stroke="#1d4ed8" stroke-width=".7" marker-end="url(#ar)"/><path d="M180 17 V25 H21 V17" fill="none" stroke="#1d4ed8" stroke-width=".7" stroke-dasharray="2 1.4" marker-end="url(#ar)"/><text x="100" y="23.2" text-anchor="middle" font-size="4.6" fill="#52627f">กลับไปทำงานเดิมต่อ</text></svg><ul class="l">
+<li><b>Sequential</b>: เกิด → ทำ → กลับ → เกิดอีก → ทำ → กลับ</li>
+<li><b>Nested</b>: Y ซ้อนเข้ามาระหว่าง X → save X, ทำ Y, คืนค่า X, ทำ X ต่อ</li>
+<li>ซ้อนได้กี่ชั้น = จำนวน register ที่เก็บค่าได้</li>
+</ul>
+<table class="t"><tr><th style="width:30%">ระบุว่าใครส่ง interrupt</th><th>ลักษณะ</th></tr>
+<tr><td>Multiple lines</td><td>1 เส้น/อุปกรณ์ แต่ I/O เยอะ เส้นก็เยอะ</td></tr>
+<tr><td>Software poll</td><td>ไล่ถามทีละ module (ช้า)</td></tr>
+<tr><td>Daisy chain</td><td>ส่ง acknowledge ต่อกันเป็นลูกโซ่ ตาม priority</td></tr>
+<tr><td>Bus arbitration</td><td>ขอสิทธิ์คุม bus ก่อน แล้วส่ง vector ของ device</td></tr></table>
+</div></div>
+</div>
+</div></section>
+<section class="page p2"><div class="ph"><b>หน้า 2/4 · Ch03 Data Representation · Assembly</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <span class="x">เทา</span> = เสริมจากสไลด์</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch03</i>Data Representation<em>★ “จะมีข้อนี้แน่ๆ” ต้องทำได้เต็ม</em></h3><div class="bd">
+<table class="t"><tr><th style="width:16%"></th><th>Sign-Magnitude</th><th>2's Complement</th></tr>
+<tr><td><b>ค่าลบ</b></td><td>กลับ <b>sign bit</b> (0 = +, 1 = −) ที่เหลือคือ magnitude</td><td><b>กลับทุกบิต แล้ว +1</b></td></tr>
+<tr><td><b>8 บิต</b></td><td class="c">−127 … +127</td><td class="c"><b>−128 … +127</b></td></tr>
+<tr><td><b>ศูนย์</b></td><td>มี 2 ตัว<br>0000 0000 / 1000 0000</td><td><b>ตัวเดียว</b></td></tr>
+<tr><td><b>บวก/ลบ</b></td><td>sign เหมือน → บวก magnitude<br>sign ต่าง → ลบตัวเล็กจากตัวใหญ่ ใช้ sign ตัวใหญ่</td><td>A−B = A + (2's ของ B)<br>แล้ว <b>ทิ้ง carry-out</b></td></tr></table>
+<svg class="dg" viewBox="0 0 200 33" xmlns="http://www.w3.org/2000/svg"><rect x="1.0" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="6.9" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-8</text><text x="6.9" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1000</text><rect x="13.4" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="19.3" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-7</text><text x="19.3" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1001</text><rect x="25.8" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="31.700000000000003" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-6</text><text x="31.700000000000003" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1010</text><rect x="38.2" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="44.1" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-5</text><text x="44.1" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1011</text><rect x="50.6" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="56.5" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-4</text><text x="56.5" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1100</text><rect x="63.0" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="68.9" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-3</text><text x="68.9" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1101</text><rect x="75.4" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="81.30000000000001" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-2</text><text x="81.30000000000001" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1110</text><rect x="87.8" y="9" width="11.8" height="10" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="93.7" y="6.6" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>-1</text><text x="93.7" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">1111</text><rect x="100.2" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="106.10000000000001" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>0</text><text x="106.10000000000001" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0000</text><rect x="112.60000000000001" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="118.50000000000001" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>1</text><text x="118.50000000000001" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0001</text><rect x="125.0" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="130.9" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>2</text><text x="130.9" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0010</text><rect x="137.4" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="143.3" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>3</text><text x="143.3" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0011</text><rect x="149.8" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="155.70000000000002" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>4</text><text x="155.70000000000002" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0100</text><rect x="162.20000000000002" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="168.10000000000002" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>5</text><text x="168.10000000000002" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0101</text><rect x="174.6" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="180.5" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>6</text><text x="180.5" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0110</text><rect x="187.0" y="9" width="11.8" height="10" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="192.9" y="6.6" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>7</text><text x="192.9" y="15.6" text-anchor="middle" font-size="3.7" fill="#0b2a6f">0111</text><text x="50" y="25" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>sign bit = 1 → ลบ</text><text x="150" y="25" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>sign bit = 0 → บวก</text><text x="100" y="31" text-anchor="middle" font-size="4.8" fill="#0b2a6f">+5 = 0101 → กลับบิต 1010 → +1 → 1011 = −5</text></svg><div class="cap">2's Complement แบบ 4 บิต ช่วง −8 … +7 (ศูนย์ตัวเดียว)</div><div class="f2" style="margin:.8mm 0"><b>Shortcut 2's</b>: จาก LSB เจอ <b>1 ตัวแรก</b> คงไว้ แล้วกลับบิตทางซ้ายทั้งหมด<br>ตย. 0101011 → 1010101</div>
+<div class="ex"><b>ตย. สไลด์</b> 6 + (−5) แบบ 4 บิต
+<ul class="l"><li>0110 + 1011 = 1|<b>0001</b></li><li>ทิ้ง carry → ได้ <b>1</b></li><li class="x">Overflow: (+)+(+) ได้ลบ หรือ (−)+(−) ได้บวก</li></ul></div>
+<div class="ex x"><b>ตย. 16 บิต (แนว assignment)</b>
+<ul class="l">
+<li>+100 = 0000 0000 0110 0100</li>
+<li>+37 = 0000 0000 0010 0101</li>
+<li>−100 SM = 1000 0000 0110 0100</li>
+<li>−100 2's = 1111 1111 1001 1100</li>
+<li>−37 2's = 1111 1111 1101 1011</li>
+<li>100−37 = 1|0000 0000 0011 1111 → <b>63</b></li>
+<li>37−100 = 1111 1111 1100 0001 → <b>−63</b></li>
+</ul></div>
+<div class="sec2"><b>IEEE 754</b> &nbsp;<span class="f2">N = (−1)<sup>S</sup> × 1.m × 2<sup>E−127</sup></span>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:8;background:#e4edff">Exponent 8</div><div style="flex:23;background:#fff0d6">Mantissa 23</div></div>
+<div class="bits"><div style="flex:0 0 4mm;background:#cfe1ff">S</div><div style="flex:11;background:#e4edff">Exponent 11</div><div style="flex:52;background:#fff0d6">Mantissa 52</div></div>
+<ul class="l">
+<li><b class="s">★</b> <b>Single 32 บิต: exponent 8</b></li>
+<li><b class="s">★</b> <b>Double 64 บิต: exponent 11</b> (อาจารย์ถาม)</li>
+<li class="x">bias single 127 · double 1023</li>
+</ul></div>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch03</i>Assembly (RISC-V)<em>★ ช้อยส์ ไม่ต้องเขียนโค้ด</em></h3><div class="bd">
+<ul class="l">
+<li>ต้องรู้แค่ว่าคำสั่ง<b>ทำอะไร</b> ไม่เจาะจงตระกูล</li>
+<li><code>ADD A,B,C</code> = <b>B + C เก็บใน A</b></li>
+<li><b>LOAD</b> = Memory → Register</li>
+<li><b>STORE</b> = Register → Memory</li>
+<li><b>ADDI</b> = register + <b>ค่าคงที่ (immediate)</b></li>
+<li><code>addi x22,x22,4</code> = x22 ← x22 + 4</li>
+</ul>
+<div class="sec2"><b class="s">★ Instruction Format</b> (ถ้าออก <b>จะมี chart ให้</b>)
+<div class="bf"><b>R</b><div style="flex:7">funct7</div><div class="r" style="flex:5">rs2</div><div class="r" style="flex:5">rs1</div><div style="flex:3">f3</div><div class="o" style="flex:5">rd</div><div style="flex:7;background:#d9e6ff">opcode</div></div>
+<div class="bf"><b>I</b><div class="o" style="flex:12">immediate 12 บิต</div><div class="r" style="flex:5">rs1</div><div style="flex:3">f3</div><div class="o" style="flex:5">rd</div><div style="flex:7;background:#d9e6ff">opcode</div></div>
+<ul class="l">
+<li><b>opcode 7 บิตล่าง</b> → 2⁷ แบบ</li>
+<li><b>rs1, rs2, rd ละ 5 บิต</b> → 2⁵ = <b>32 register</b></li>
+<li>I-format: <b>12 บิตบน = immediate</b></li>
+<li><b>ตย.</b> <code>add x9,x20,x21</code> → <b>opcode = 51</b>, rd = 9, rs1 = 20, rs2 = 21</li>
+</ul></div>
+<table class="t"><tr><th style="width:26%">กลุ่ม</th><th>คำสั่ง</th></tr>
+<tr><td>Logic</td><td><b>AND · OR · XOR</b></td></tr>
+<tr><td>Shift</td><td><b>left = คูณ</b><br><b>right = หาร</b></td></tr>
+<tr><td>Branch<br><span class="nt">เช็กเงื่อนไขก่อน</span></td><td><code>beq</code> เท่ากัน<br><code>bne</code> ไม่เท่ากัน<br><code>blt</code> rs1 &lt; rs2<br><code>bge</code> rs1 ≥ rs2<br>→ กระโดดไป L1</td></tr>
+<tr><td>Procedure</td><td>= ฟังก์ชัน = <b>software interrupt</b><br><b>save ทุกค่าลง stack</b> แล้ว return คืนจาก stack</td></tr></table>
+<span class="nt">RISC-V ส่วน self-study ที่อาจารย์ทิ้งให้อ่านเอง: ไม่ออก</span>
+</div></div>
+
+<div class="sec"><h3><i>Ch03</i>Endian<em>★ สลับกันแค่นี้</em></h3><div class="bd">
+<ul class="l">
+<li><b>Little-Endian</b>: bit 0 (น้อยสุด) อยู่<b>ขวา</b></li>
+<li><b>Big-Endian</b>: bit 0 อยู่<b>ซ้าย</b></li>
+<li class="x">ตามสไลด์: Little เก็บ byte LSB ที่ address ต่ำสุด (RISC-V)</li>
+</ul>
+</div></div>
+</div>
+</div></section>
+<section class="page p3"><div class="ph"><b>หน้า 3/4 · Ch04 Memory &amp; Cache</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <span class="x">เทา</span> = เสริมจากสไลด์</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch04</i>Memory Hierarchy<em>★ จำรูปพีระมิด</em></h3><div class="bd">
+<div class="pyr">
+<div class="pr" style="--t:30;--b:44"><div class="sh" style="background:#0b2a6f">Registers</div><div class="ds"><b>เร็ว · แพง · จุน้อยสุด</b></div></div>
+<div class="pr" style="--t:44;--b:58"><div class="sh" style="background:#1e40af">Cache</div><div class="ds"><b>SRAM</b> 0.5–2.5 ns</div></div>
+<div class="pr" style="--t:58;--b:72"><div class="sh" style="background:#2563eb">Main memory</div><div class="ds"><b>DRAM</b> 50–70 ns</div></div>
+<div class="pr" style="--t:72;--b:86"><div class="sh" style="background:#5b8def;color:#06214f">Disk · CD · DVD</div><div class="ds"><b>Magnetic disk</b> 5–20 ms</div></div>
+<div class="pr" style="--t:86;--b:100"><div class="sh" style="background:#9dbcf5;color:#06214f">Magnetic tape</div><div class="ds"><b>ช้า · ถูก · จุมากสุด</b></div></div>
+</div>
+<ul class="l"><li><b>Magnetic tape</b> = <b>ถูกสุด จุมากสุด</b> (offline) <b class="s">★ อาจารย์ถาม</b></li></ul>
+<ul class="l">
+<li><b>RAM</b> = ชั่วคราว (ไฟดับหาย)</li>
+<li><b>ROM</b> = ถาวร (ปิดไฟแล้วอยู่)</li>
+<li><b>Cache</b> คั่นกลาง CPU ↔ Main memory เก็บข้อมูลที่<b>ใช้บ่อย/ซ้ำ</b></li>
+<li><b>L1</b> อยู่ใน CPU · <b>L2/L3</b> อยู่นอก CPU</li>
+<li><b>Hit</b> = เจอใน cache</li>
+<li><b>Miss</b> = ไม่เจอ → ดึงจาก main memory มาใส่ cache แล้วส่ง CPU</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>Associative · Write Policy<em>★ ถูกถาม</em></h3><div class="bd">
+<ul class="l">
+<li><b>Set-associative</b>: index เดียวเก็บได้หลายชุด</li>
+<li><b>2-way</b> เก็บ 2 · <b>4-way</b> เก็บ 4 · <b>8-way</b> เก็บ 8</li>
+<li>แค่เพิ่มที่เก็บต่อ index → โอกาส hit มากขึ้น</li>
+<li><b>★ Fully associative = miss น้อยสุด</b> (hit มากสุด)</li>
+<li>Miss rate: <b>1-way 10.3% · 2-way 8.6% · 4-way 8.3% · 8-way 8.1%</b></li>
+<li>ดีขึ้นแต่ได้น้อยลงเรื่อยๆ</li>
+</ul>
+<table class="t"><tr><th style="width:30%">Write policy</th><th>ความหมาย</th></tr>
+<tr><td><b>Write-through</b></td><td>เขียนลง cache แล้วส่ง CPU เลย</td></tr>
+<tr><td><b>Write-back</b></td><td>ส่ง CPU <b>ก่อน</b> แล้วค่อยอัปเดต cache ทีหลัง</td></tr>
+<tr><td><b>Write-allocate</b></td><td>อีกทางเลือกของ write-through</td></tr></table>
+<span class="nt">ปัจจุบัน memory เร็วขึ้น กลไกการเขียนหมดความสำคัญ เน้นยัดโค้ดที่ใช้บ่อยเข้า L1 · แต่ต้องรู้ชื่อทั้ง 3 คำ</span>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch04</i>Direct-Mapped Cache<em>★ ข้อคำนวณ hit/miss</em></h3><div class="bd">
+<div class="f">Cache index = (Block address) <b>mod</b> (#Blocks)<br>→ ใช้ <b>บิตล่าง</b> เป็น index</div>
+<div class="f">Address = <b>[ Tag | Index | Offset ]</b></div>
+<ul class="l">
+<li>เช็ก hit: ดู <b>Index</b> → เทียบ <b>Tag</b> → ดู <b>Valid (V) = Y</b></li>
+<li>เริ่มต้น cache <b>ว่าง (V = N)</b></li>
+<li><b>ครั้งแรกของทุก address = Miss แน่นอน</b></li>
+<li>ข้อเสีย: หลาย address ชิงช่อง index เดียวกัน</li>
+</ul>
+<div class="ex"><b>★ ตย. สไลด์</b> cache 8 block · Tag = 2 บิตบน · Index = 3 บิตล่าง
+<table class="t" style="margin-top:.6mm"><tr><th>ขอ</th><th class="c">22</th><th class="c">26</th><th class="c">22</th><th class="c">26</th><th class="c">16</th><th class="c">3</th><th class="c">16</th><th class="c">18</th></tr>
+<tr><td>Tag Idx</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 000</td><td class="c">00 011</td><td class="c">10 000</td><td class="c">10 010</td></tr>
+<tr><td><b>ผล</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c"><b>Hit</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c">Miss*</td></tr></table>
+<span class="nt">*18: index 010 มี tag 11 แต่ขอ tag 10 → <b>tag ไม่ตรง = Miss</b> แล้วเขียนทับ</span></div>
+<svg class="dg" viewBox="0 0 200 46" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="56" height="10" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="30.0" y="8.75" text-anchor="middle" font-size="5" font-weight="700" fill="#0b2a6f">Tag (บิตบน)</text><rect x="58" y="2" width="70" height="10" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="93.0" y="8.75" text-anchor="middle" font-size="5" font-weight="700" fill="#0b2a6f">Index (บิตกลาง)</text><rect x="128" y="2" width="70" height="10" rx="1.6" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".6"/><text x="163.0" y="8.75" text-anchor="middle" font-size="5" font-weight="700" fill="#0b2a6f">Offset (บิตล่าง)</text><rect x="2.0" y="20" width="23.7" height="22" fill="#e4edff" stroke="#1d4ed8" stroke-width=".5"/><text x="13.85" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>000</text><text x="13.85" y="28" text-anchor="middle" font-size="4.1" fill="#0b2a6f">V=Y tag 10</text><text x="13.85" y="36" text-anchor="middle" font-size="4.3" fill="#0b2a6f" font-weight=700>ข้อมูล 16</text><rect x="26.5" y="20" width="23.7" height="22" fill="#fff" stroke="#1d4ed8" stroke-width=".5"/><text x="38.35" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>001</text><text x="38.35" y="32.5" text-anchor="middle" font-size="4.3" fill="#52627f">V=N</text><rect x="51.0" y="20" width="23.7" height="22" fill="#e4edff" stroke="#1d4ed8" stroke-width=".5"/><text x="62.85" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>010</text><text x="62.85" y="28" text-anchor="middle" font-size="4.1" fill="#0b2a6f">V=Y tag 10</text><text x="62.85" y="36" text-anchor="middle" font-size="4.3" fill="#0b2a6f" font-weight=700>ข้อมูล 18</text><rect x="75.5" y="20" width="23.7" height="22" fill="#e4edff" stroke="#1d4ed8" stroke-width=".5"/><text x="87.35" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>011</text><text x="87.35" y="28" text-anchor="middle" font-size="4.1" fill="#0b2a6f">V=Y tag 00</text><text x="87.35" y="36" text-anchor="middle" font-size="4.3" fill="#0b2a6f" font-weight=700>ข้อมูล 3</text><rect x="100.0" y="20" width="23.7" height="22" fill="#fff" stroke="#1d4ed8" stroke-width=".5"/><text x="111.85" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>100</text><text x="111.85" y="32.5" text-anchor="middle" font-size="4.3" fill="#52627f">V=N</text><rect x="124.5" y="20" width="23.7" height="22" fill="#fff" stroke="#1d4ed8" stroke-width=".5"/><text x="136.35" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>101</text><text x="136.35" y="32.5" text-anchor="middle" font-size="4.3" fill="#52627f">V=N</text><rect x="149.0" y="20" width="23.7" height="22" fill="#e4edff" stroke="#1d4ed8" stroke-width=".5"/><text x="160.85" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>110</text><text x="160.85" y="28" text-anchor="middle" font-size="4.1" fill="#0b2a6f">V=Y tag 10</text><text x="160.85" y="36" text-anchor="middle" font-size="4.3" fill="#0b2a6f" font-weight=700>ข้อมูล 22</text><rect x="173.5" y="20" width="23.7" height="22" fill="#fff" stroke="#1d4ed8" stroke-width=".5"/><text x="185.35" y="17.5" text-anchor="middle" font-size="4.4" fill="#0b2a6f" font-weight=700>111</text><text x="185.35" y="32.5" text-anchor="middle" font-size="4.3" fill="#52627f">V=N</text></svg><div class="cap">สถานะ cache หลังขอครบตามตัวอย่าง (index 010: 18 เขียนทับ 26)</div><div class="ex"><b>★ ตย. บล็อกใหญ่</b> 64 block × 16 B/block, address <b>1200</b>
+<ul class="l">
+<li>Block address = ⌊1200 / 16⌋ = <b>75</b></li>
+<li>Block number = 75 mod 64 = <b>11</b></li>
+</ul></div>
+<div class="f2" style="margin:.5mm 0">Block address = ⌊address / bytes per block⌋<br>Block number = Block address mod #blocks</div>
+</div></div>
+
+<div class="sec"><h3><i>Ch04</i>คำนวณบิต Tag/Index/Offset<em>เสริม</em></h3><div class="bd">
+<div class="f">Offset = log₂(bytes ต่อ block)<br>Index = log₂(จำนวน block)<br><b>Tag = บิต address − Index − Offset</b></div>
+<div class="ex x"><b>ตย.</b> 4 KB direct-mapped, 16 B/block, address 32 บิต
+<ul class="l">
+<li>4096 / 16 = <b>256 block</b></li>
+<li>Index 8 · Offset 4 · Tag 32 − 8 − 4 = <b>20</b></li>
+<li>ถ้า <b>2-way</b>: sets = 128 → Index 7 · Tag <b>21</b></li>
+</ul></div>
+<ul class="l x">
+<li>Hit ratio = hits / accesses</li>
+<li>Miss ratio = 1 − hit ratio</li>
+<li>Block ใหญ่ขึ้น: miss rate ลด (spatial locality)</li>
+<li>แต่ cache เท่าเดิมมี block น้อยลง แย่งกันมากขึ้น miss penalty สูงขึ้น → <b>ใหญ่ ≠ ดีเสมอ</b></li>
+</ul>
+</div></div>
+</div>
+</div></section>
+<section class="page p4"><div class="ph"><b>หน้า 4/4 · Ch05 I/O · Ch06 Storage · Ch07 Pipeline · Ch08 Parallel</b><span><b class="s">★</b> อาจารย์เน้น · <b style="color:var(--red)">⚠</b> ข้อหลอก · <span class="x">เทา</span> = เสริมจากสไลด์</span></div><div class="cols"><div class="col">
+<div class="sec"><h3><i>Ch05</i>I/O<em>★ DMA เร็วสุด</em></h3><div class="bd">
+<ul class="l">
+<li><b>I/O module</b> 5 หน้าที่:</li>
+<li class="in">Control &amp; timing</li>
+<li class="in">สื่อสารกับ processor</li>
+<li class="in">สื่อสารกับ device</li>
+<li class="in">Data buffering (I/O ช้ากว่า memory จึงต้องมี buffer)</li>
+<li class="in">Error detection</li>
+<li>I/O command 4 แบบ: <b>Control · Test · Read · Write</b></li>
+</ul>
+<table class="t"><tr><th style="width:28%">เทคนิค</th><th>หลักการ</th></tr>
+<tr><td><b>Programmed I/O</b></td><td>ง่ายสุด CPU สั่งแล้ว <b>นั่งรอ</b> → เสียเวลา CPU</td></tr>
+<tr><td><b>Interrupt-driven</b></td><td>CPU สั่งแล้ว<b>ไปทำงานอื่น</b> I/O พร้อมค่อย interrupt<br>ต้องรอ <b>จบ instruction cycle</b> ก่อนถูกขัด</td></tr>
+<tr><td><b>DMA</b></td><td><b>I/O คุย Memory ตรง</b> CPU ไม่ยุ่ง<br><b>แทรกได้ทุก slot ของ cycle</b><br>→ <b class="s">★ เร็วที่สุด</b> ใช้เป็นหลักปัจจุบัน</td></tr></table>
+</div></div>
+
+<div class="sec"><h3><i>Ch06</i>Storage · HDD · RAID<em>★ เน้น HDD</em></h3><div class="bd">
+<ul class="l">
+<li><b>เขียน</b>: กระแสไฟเข้าหัวเขียน → สนามแม่เหล็ก → จัดทิศอนุภาคบนจาน (ซ้าย/ขวา = 0/1)</li>
+<li><b>อ่าน</b>: ขดลวด<b>เหนี่ยวนำ</b>สัญญาณ</li>
+<li><b>Platter</b> หลายชั้น · 1 หัวต่อ 1 ผิว</li>
+<li><b>Track</b> = วงแหวน 1 วง</li>
+<li><b>Sector</b> = <b>ส่วนย่อยของ track</b> <b class="s">⚠ ไม่ใช่กลุ่มของ track</b></li>
+<li>ปัจจุบันใช้ <b>Multi-zone recording</b> (sector ขนาดใกล้เคียงกัน)</li>
+<li><b>SSD</b> เร็วกว่า ประหยัดไฟกว่า แต่<b>แพงกว่า</b> HDD</li>
+<li><b>DVD</b> จุมากกว่า CD (sector เล็กกว่า density สูงกว่า)</li>
+<li><b>Tape</b> ถูกสุด</li>
+</ul>
+<svg class="dg" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg"><text x="30" y="5" text-anchor="middle" font-size="4.8" fill="#0b2a6f" font-weight=700>RAID 0</text><rect x="8" y="8.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="15.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A1</text><rect x="25" y="8.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="32.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A2</text><rect x="8" y="16.5" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="15.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A3</text><rect x="25" y="16.5" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="32.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A4</text><text x="30" y="29" text-anchor="middle" font-size="4.3" fill="#52627f">แบ่งกระจาย</text><text x="100" y="5" text-anchor="middle" font-size="4.8" fill="#0b2a6f" font-weight=700>RAID 1</text><rect x="77" y="8.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="84.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A1</text><rect x="94" y="8.0" width="14" height="7" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="101.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A1</text><rect x="77" y="16.5" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="84.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A2</text><rect x="94" y="16.5" width="14" height="7" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="101.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A2</text><text x="100" y="29" text-anchor="middle" font-size="4.3" fill="#52627f">ก๊อปคู่ (mirror)</text><text x="168" y="5" text-anchor="middle" font-size="4.8" fill="#0b2a6f" font-weight=700>RAID 5</text><rect x="143" y="8.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="150.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A1</text><rect x="160" y="8.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="167.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">A2</text><rect x="177" y="8.0" width="14" height="7" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="184.0" y="13.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#b45309">P</text><rect x="143" y="16.5" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="150.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">B1</text><rect x="160" y="16.5" width="14" height="7" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="167.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#b45309">P</text><rect x="177" y="16.5" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="184.0" y="21.54" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">B2</text><rect x="143" y="25.0" width="14" height="7" rx="1.6" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".6"/><text x="150.0" y="30.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#b45309">P</text><rect x="160" y="25.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="167.0" y="30.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">C1</text><rect x="177" y="25.0" width="14" height="7" rx="1.6" fill="#e4edff" stroke="#1d4ed8" stroke-width=".6"/><text x="184.0" y="30.04" text-anchor="middle" font-size="4.4" font-weight="700" fill="#0b2a6f">C2</text><text x="168" y="35" text-anchor="middle" font-size="4.3" fill="#52627f">P = parity หมุนเวียน</text></svg><table class="t"><tr><th style="width:14%">RAID</th><th>ลักษณะ</th></tr>
+<tr><td><b>0</b></td><td><b>Striping</b> กระจายเป็นชิ้นเล็กลงหลายดิสก์ (ไม่มีสำรอง)</td></tr>
+<tr><td><b>1</b></td><td><b>Mirror</b> เขียนซ้ำ 2 ดิสก์ เปลืองแต่<b>ปลอดภัย</b></td></tr>
+<tr><td><b>2</b></td><td>เก็บ <b>parity bit / ECC</b> กู้ข้อมูลได้</td></tr>
+<tr><td><b>3</b></td><td>ระดับ <b>byte</b> + parity <b>ดิสก์เดียว</b></td></tr>
+<tr><td><b>4</b></td><td>ระดับ <b>block</b> + parity disk แยก → <b>คอขวด</b></td></tr>
+<tr><td><b>5</b></td><td>block + parity <b>หมุนเวียน</b>ทุกดิสก์ (แก้คอขวด RAID 4)</td></tr>
+<tr><td><b>6</b></td><td>เหมือน 5 แต่ parity <b>2 ชุด</b></td></tr></table>
+</div></div>
+</div>
+<div class="col">
+<div class="sec"><h3><i>Ch07</i>Pipeline · Hazard<em>★ ถามชนิด/วิธีแก้</em></h3><div class="bd">
+<ul class="l">
+<li><b>Pipeline</b> = แบ่งงานเป็น <b>stage</b> ใช้ resource ไม่ชนกัน</li>
+<li>ทำหลายคำสั่งพร้อมกัน → <b>เร็วขึ้น</b> แต่เกิด hazard</li>
+<li class="x">เปรียบ: ซักผ้า → อบ → รีด → เก็บ</li>
+<li>Stage: <b>IF → ID → EX → MEM → WB</b></li>
+<li>ลำดับที่อาจารย์ย้ำ: <b>Fetch → Decode → Execute → Write back</b></li>
+<li><b class="s">⚠ ใช้ได้ทั้ง RISC (ARM) และ CISC (Intel)</b> ไม่ใช่เฉพาะ RISC</li>
+</ul>
+<svg class="dg" viewBox="0 0 200 62" xmlns="http://www.w3.org/2000/svg"><text x="30.85" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>1</text><text x="53.35" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>2</text><text x="75.85" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>3</text><text x="98.35" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>4</text><text x="120.85" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>5</text><text x="143.35" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>6</text><text x="165.85" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>7</text><text x="188.35" y="5" text-anchor="middle" font-size="4.4" fill="#52627f" font-weight=700>8</text><text x="2" y="13.3" text-anchor="start" font-size="4.8" fill="#0b2a6f" font-weight=700>I1</text><rect x="20.0" y="8" width="21.7" height="7.6" rx="1" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="30.85" y="13.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>IF</text><rect x="42.5" y="8" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="53.35" y="13.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>ID</text><rect x="65.0" y="8" width="21.7" height="7.6" rx="1" fill="#c4d7ff" stroke="#1d4ed8" stroke-width=".4"/><text x="75.85" y="13.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>EX</text><rect x="87.5" y="8" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="98.35" y="13.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>MEM</text><rect x="110.0" y="8" width="21.7" height="7.6" rx="1" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="120.85" y="13.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>WB</text><text x="2" y="22.3" text-anchor="start" font-size="4.8" fill="#0b2a6f" font-weight=700>I2</text><rect x="42.5" y="17" width="21.7" height="7.6" rx="1" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="53.35" y="22.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>IF</text><rect x="65.0" y="17" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="75.85" y="22.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>ID</text><rect x="87.5" y="17" width="21.7" height="7.6" rx="1" fill="#c4d7ff" stroke="#1d4ed8" stroke-width=".4"/><text x="98.35" y="22.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>EX</text><rect x="110.0" y="17" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="120.85" y="22.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>MEM</text><rect x="132.5" y="17" width="21.7" height="7.6" rx="1" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="143.35" y="22.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>WB</text><text x="2" y="31.3" text-anchor="start" font-size="4.8" fill="#0b2a6f" font-weight=700>I3</text><rect x="65.0" y="26" width="21.7" height="7.6" rx="1" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="75.85" y="31.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>IF</text><rect x="87.5" y="26" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="98.35" y="31.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>ID</text><rect x="110.0" y="26" width="21.7" height="7.6" rx="1" fill="#c4d7ff" stroke="#1d4ed8" stroke-width=".4"/><text x="120.85" y="31.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>EX</text><rect x="132.5" y="26" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="143.35" y="31.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>MEM</text><rect x="155.0" y="26" width="21.7" height="7.6" rx="1" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="165.85" y="31.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>WB</text><text x="2" y="40" text-anchor="start" font-size="4.8" fill="#b91c1c" font-weight=700>Data hazard: sub รอค่าจาก add</text><text x="2" y="48.3" text-anchor="start" font-size="4.8" fill="#0b2a6f" font-weight=700>add</text><rect x="20.0" y="43" width="21.7" height="7.6" rx="1" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="30.85" y="48.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>IF</text><rect x="42.5" y="43" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="53.35" y="48.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>ID</text><rect x="65.0" y="43" width="21.7" height="7.6" rx="1" fill="#c4d7ff" stroke="#1d4ed8" stroke-width=".4"/><text x="75.85" y="48.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>EX</text><rect x="87.5" y="43" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="98.35" y="48.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>MEM</text><rect x="110.0" y="43" width="21.7" height="7.6" rx="1" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="120.85" y="48.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>WB</text><text x="2" y="57.3" text-anchor="start" font-size="4.8" fill="#0b2a6f" font-weight=700>sub</text><rect x="42.5" y="52" width="21.7" height="7.6" rx="1" fill="#e4edff" stroke="#1d4ed8" stroke-width=".4"/><text x="53.35" y="57.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>IF</text><rect x="65.0" y="52" width="66.7" height="7.6" rx="1" fill="#fff0d6" stroke="#b45309" stroke-width=".5"/><text x="98.35" y="57.3" text-anchor="middle" font-size="4.6" fill="#b45309" font-weight=700>ID (stall รอ x19)</text><rect x="132.5" y="52" width="21.7" height="7.6" rx="1" fill="#c4d7ff" stroke="#1d4ed8" stroke-width=".4"/><text x="143.35" y="57.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>EX</text><rect x="155.0" y="52" width="21.7" height="7.6" rx="1" fill="#d9e6ff" stroke="#1d4ed8" stroke-width=".4"/><text x="165.85" y="57.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>MEM</text><rect x="177.5" y="52" width="21.7" height="7.6" rx="1" fill="#fff0d6" stroke="#1d4ed8" stroke-width=".4"/><text x="188.35" y="57.3" text-anchor="middle" font-size="4.6" fill="#0b2a6f" font-weight=700>WB</text></svg></div></div>
+
+<div class="sec"><h3><i>Ch07</i>Hazard 3 แบบ<em>★ ถามชนิด/วิธีแก้</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">Hazard</th><th style="width:30%">เกิดเมื่อ</th><th>วิธีแก้</th></tr>
+<tr><td><b>Structural</b></td><td><b>ใช้ resource ชนกัน</b> ในเวลาเดียวกัน</td><td><b>Stall</b> (bubble) จนกว่า resource ว่าง</td></tr>
+<tr><td><b>Data</b></td><td><b>ข้อมูลยังไม่พร้อม</b><br><code>add x19,x0,x1</code><br><code>sub x2,x19,x3</code><br>(add ยังไม่ write back)</td><td>① <b>Stall</b> ง่ายสุด แต่ช้า<br>② <b>Forwarding / Bypassing</b> ส่งผล Execute <b>กลับเป็น input</b> ไม่รอ write back (เพิ่ม hardware)<br>③ <b>Code scheduling</b> compiler เอาคำสั่งไม่เกี่ยวมา<b>คั่น</b> (ไม่เพิ่ม hardware)</td></tr>
+<tr><td><b>Control</b></td><td>คำสั่งก่อนหน้าเป็น <b>branch/jump</b> → คำสั่งที่ fetch มา <b>ไม่ถูกใช้</b></td><td>① <b>Stall / bubble</b> ง่ายสุด<br>② <b>Branch prediction</b> เดาด้วยสถิติ แต่ <b>hardware แพง</b> → ส่วนใหญ่ <b>นิยม stall</b></td></tr></table>
+<ul class="l">
+<li>ทุก stage ต้องมี <b>pipeline register</b> เก็บข้อมูลจาก stage ก่อนหน้า</li>
+<li>ไม่งั้นข้อมูลถูกคำสั่งถัดไป<b>ทับ</b> (เพิ่ม hardware = ต้นทุน)</li>
+</ul>
+</div></div>
+
+<div class="sec"><h3><i>Ch08</i>Parallel · Flynn · GPU<em>★ จับคู่ SISD/SIMD/MIMD</em></h3><div class="bd">
+<table class="t"><tr><th style="width:17%">Flynn</th><th>ที่อาจารย์อธิบาย</th></tr>
+<tr><td><b>SISD</b></td><td>CPU ปกติ <b>1 คำสั่ง 1 ข้อมูล</b></td></tr>
+<tr><td><b>SIMD</b></td><td><b>vector / array · GPU</b><br>คำสั่งเดียว ข้อมูลหลายตัวพร้อมกัน (เช่นลบ background ภาพ)</td></tr>
+<tr><td><b>MISD</b></td><td>แทบไม่มี</td></tr>
+<tr><td><b>MIMD</b></td><td><b>Shared memory = SMP</b> (PC / Intel)<br><b>Distributed memory = cluster</b></td></tr></table>
+<ul class="l">
+<li><b>Multi-core</b> = duplicate core จริง</li>
+<li><b>Multithread</b> = ซอยงานเป็น thread แล้ว schedule ไม่เพิ่ม hardware</li>
+<li>VM = ซอย hardware ให้ ไม่มี core จริงรองรับ</li>
+<li><b>Shared memory</b>: sync ง่าย แต่ทุก core <b>แย่งกัน</b> access</li>
+<li><b>Distributed</b>: sync ข้อมูลยาก</li>
+<li><b>GPU</b> = SIMD · <b>Fermi</b> = vector-based · <b>Tesla</b> = multiprocessor</li>
+<li><b>DGX</b> ใช้ train AI · ตอนรันโมเดลใช้การ์ดทั่วไป (PCIe) ได้</li>
+</ul>
+</div></div>
+</div>
+</div><div class="sec"><h3><i>คลิป 5</i>เฉลยโจทย์ที่อาจารย์ถามทบทวน<em>★ แนวข้อสอบ</em></h3><div class="bd">
+<table class="t"><tr><th style="width:22%">โจทย์</th><th style="width:28%">ตอบ</th><th style="width:22%">โจทย์</th><th>ตอบ</th></tr>
+<tr><td>DVD vs CD ใครจุมากกว่า</td><td><b>DVD</b> sector เล็กกว่า density สูงกว่า</td><td>Cache แบบไหน miss น้อยสุด</td><td><b>Fully associative</b></td></tr>
+<tr><td>Sector คืออะไร</td><td><b>ส่วนย่อยของ track</b> ไม่ใช่กลุ่มของ track</td><td>วิธีเขียนลง cache</td><td>Write-through · Write-back · Write-allocate</td></tr>
+<tr><td>SISD ทำหลายคำสั่งพร้อมกัน?</td><td><b>ไม่ได้</b> 1 คำสั่ง 1 ข้อมูล</td><td>Daisy chain เกี่ยวกับ</td><td><b>Priority</b></td></tr>
+<tr><td>Pipeline ใช้ได้เฉพาะ RISC?</td><td><b>ผิด</b> RISC และ CISC มีหมด</td><td>ตัวเลือกว่าใครได้ใช้ bus</td><td><b>Bus Arbitrator</b> (ไม่ใช่ Control Unit)</td></tr>
+<tr><td>Exponent single / double</td><td><b>8 / 11</b> บิต</td><td>I/O เทคนิคไหนเร็วสุด</td><td><b>DMA</b> แทรกได้ทุก cycle</td></tr>
+<tr><td>จุมากสุดในพีระมิด</td><td><b>Magnetic tape</b> (offline)</td><td>การ์ดจอต่อเมนบอร์ดผ่าน</td><td><b>PCIe</b></td></tr>
+<tr><td>RAM vs ROM</td><td>RAM <b>ชั่วคราว</b> · ROM <b>ถาวร</b></td><td>SRAM vs DRAM</td><td>SRAM <b>เร็วกว่า</b> · DRAM ช้า <b>ถูกกว่า</b></td></tr></table>
+</div></div></section>
+<pre id="fit"></pre>
+<script>
+document.fonts.ready.then(()=>{
+  const MM=3.7795,cols=[],wide=[],secs=[],lhs=[];
+  const need=c=>{const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;return kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1)};
+  const fits=pg=>[...pg.querySelectorAll('.col')].every(c=>need(c)<=c.clientHeight-0.6);
+  document.querySelectorAll('.page').forEach(pg=>{ // ขยาย line-height จนพอดี (สูงสุด 1.42) ให้แต่ละหน้าโปร่งเท่ากันที่สุด
+    let lo=1.27,hi=1.42;pg.style.setProperty('--lh',lo);
+    if(fits(pg)){pg.style.setProperty('--lh',hi);if(!fits(pg)){for(let i=0;i<10;i++){const m=(lo+hi)/2;pg.style.setProperty('--lh',m);if(fits(pg))lo=m;else hi=m}pg.style.setProperty('--lh',lo)}else lo=hi}
+    lhs.push(+lo.toFixed(3));
+  });
+  document.querySelectorAll('.page').forEach((pg,pi)=>{
+    pg.querySelectorAll('.col').forEach((c,ci)=>{
+      const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;
+      const need=kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1);
+      kids.forEach(k=>{const h=k.querySelector('h3');secs.push({p:pi+1,c:ci+1,t:(h?h.textContent:k.className).slice(0,34),h:+(k.getBoundingClientRect().height/MM).toFixed(1)})});
+      cols.push({p:pi+1,c:ci+1,avail:+(c.clientHeight/MM).toFixed(1),need:+(need/MM).toFixed(1),over:c.scrollHeight>c.clientHeight+1});
+    });
+    pg.querySelectorAll('.bd,.bd *').forEach(e=>{if(e.scrollWidth>e.clientWidth+1&&e.clientWidth>0)wide.push('p'+(pi+1)+': '+(e.textContent||'').trim().slice(0,40))});
+  });
+  document.getElementById('fit').textContent=JSON.stringify({cols,secs,lhs,wide:[...new Set(wide)].slice(0,12)});
+});
+</script>
+</body>
+</html>

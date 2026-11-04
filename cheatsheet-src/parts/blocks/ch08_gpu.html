@@ -1,0 +1,5 @@
+<div class="sec"><h3><i>Ch08</i>GPU<em>★ อาจารย์ปิดคลาสด้วยหัวข้อนี้</em></h3><div class="bd"><ul class="l">
+<li><b>หลักการ = SIMD</b>: คำสั่งเดียว (บวก/ลบ) ทำกับข้อมูลจำนวนมากพร้อมกัน (ตย. ลบ <b>background</b> ภาพ — pixel = array/vector) · <b>highly multithreaded</b> (สลับ thread ซ่อน memory latency) · พึ่ง multi-level cache น้อยกว่า CPU · graphics memory กว้าง/bandwidth สูง · <b>heterogeneous</b>: CPU ทำ sequential, GPU ทำ parallel · API: CUDA, OpenGL, DirectX</li>
+<li><b>Nvidia Fermi</b>: vector-based · SIMD processor 16 lanes · SIMD instruction ทำกับ 32 element รันบน 16-wide ใน 2 cycle · <b>Tesla</b>: multiprocessor (หลาย compute unit ทำร่วมกัน) · <b>DGX</b> = train AI model (แพง) · <b>รันโมเดลแล้ว</b> ใช้การ์ดจอปกติเสียบ <b>PCIe</b> ใน PC ได้</li>
+<li>Multicore SIMD vs GPU: SIMD processor 4–8 vs 8–16 · SIMD lane/processor 2–4 vs 8–16 · SIMD thread/processor 2–4 vs 16–32 · cache ใหญ่สุด 8 MB vs 0.75 MB · main memory 8–256 GB vs 4–6 GB</li>
+</ul></div></div>

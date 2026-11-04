@@ -1,0 +1,25 @@
+<pre id="fit"></pre>
+<script>
+document.fonts.ready.then(()=>{
+  const MM=3.7795,cols=[],wide=[],secs=[],lhs=[];
+  const need=c=>{const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;return kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1)};
+  const fits=pg=>[...pg.querySelectorAll('.col')].every(c=>need(c)<=c.clientHeight-0.6);
+  document.querySelectorAll('.page').forEach(pg=>{ // ขยาย line-height จนพอดี (สูงสุด 1.42) ให้แต่ละหน้าโปร่งเท่ากันที่สุด
+    let lo=1.27,hi=1.42;pg.style.setProperty('--lh',lo);
+    if(fits(pg)){pg.style.setProperty('--lh',hi);if(!fits(pg)){for(let i=0;i<10;i++){const m=(lo+hi)/2;pg.style.setProperty('--lh',m);if(fits(pg))lo=m;else hi=m}pg.style.setProperty('--lh',lo)}else lo=hi}
+    lhs.push(+lo.toFixed(3));
+  });
+  document.querySelectorAll('.page').forEach((pg,pi)=>{
+    pg.querySelectorAll('.col').forEach((c,ci)=>{
+      const kids=[...c.children],gap=parseFloat(getComputedStyle(c).rowGap)||0;
+      const need=kids.reduce((s,k)=>s+k.getBoundingClientRect().height,0)+gap*Math.max(0,kids.length-1);
+      kids.forEach(k=>{const h=k.querySelector('h3');secs.push({p:pi+1,c:ci+1,t:(h?h.textContent:k.className).slice(0,34),h:+(k.getBoundingClientRect().height/MM).toFixed(1)})});
+      cols.push({p:pi+1,c:ci+1,avail:+(c.clientHeight/MM).toFixed(1),need:+(need/MM).toFixed(1),over:c.scrollHeight>c.clientHeight+1});
+    });
+    pg.querySelectorAll('.bd,.bd *').forEach(e=>{if(e.scrollWidth>e.clientWidth+1&&e.clientWidth>0)wide.push('p'+(pi+1)+': '+(e.textContent||'').trim().slice(0,40))});
+  });
+  document.getElementById('fit').textContent=JSON.stringify({cols,secs,lhs,wide:[...new Set(wide)].slice(0,12)});
+});
+</script>
+</body>
+</html>

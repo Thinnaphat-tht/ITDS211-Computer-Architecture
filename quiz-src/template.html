@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ITDS211 ข้อสอบกลางภาค</title>
+<script>try{var t=localStorage.getItem('itds211.theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* พาเลตต์เดียวกับ ITDS211-Summary.html: navy header · ฟ้าอ่อน · ปุ่มน้ำเงิน */
+:root{
+  --bg:#f4f8fc; --surface:#ffffff; --surface2:#e9f0f8; --ink:#0f2540; --muted:#55677d;
+  --line:#dbe5f0; --accent:#1565a8; --accent-ink:#ffffff; --accent-soft:#e1edf9;
+  --navy:#0f2a4a; --navy-ink:#ffffff;
+  --key:#e4eefb; --key-b:#1565a8; --formula:#fdf0dc; --formula-b:#c27a12;
+  --ex:#e3f3ea; --ex-b:#2f8f5b; --warn:#fde8e4; --warn-b:#c2410c;
+  --code-bg:#0f2540; --code-ink:#e6eefb;
+  --skyc:#e9f1fa;
+  --shadow:0 1px 2px rgba(15,37,64,.06),0 8px 22px rgba(15,37,64,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#0c1726; --surface:#13233a; --surface2:#1a3050; --ink:#e7eef8; --muted:#9bb0c8;
+  --line:#25405f; --accent:#5aa9ea; --accent-ink:#06192e; --accent-soft:#183a5f;
+  --navy:#08111e; --navy-ink:#ffffff;
+  --key:#142f4f; --key-b:#5aa9ea; --formula:#3a2d12; --formula-b:#e0a82e;
+  --ex:#12362a; --ex-b:#4fc489; --warn:#3a1f19; --warn-b:#f08a5d;
+  --code-bg:#08111e; --code-ink:#d8e6f6;
+  --skyc:#10243d;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "IBM Plex Sans Thai",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+code,pre{font-family:"JetBrains Mono",ui-monospace,monospace}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+main.wrap{padding-bottom:80px}
+
+/* topbar navy เหมือน Summary */
+.topbar{position:sticky;top:0;z-index:20;background:var(--navy);color:var(--navy-ink);box-shadow:0 2px 10px rgba(15,37,64,.12)}
+.topbar .in{max-width:820px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.brand{font-weight:700;color:var(--navy-ink);text-decoration:none;white-space:nowrap;display:flex;align-items:center}
+.brand span{opacity:.75;font-weight:500;margin-left:.35em}
+.brand::before{content:"M";display:inline-grid;place-items:center;width:30px;height:30px;margin-right:10px;border-radius:8px;background:rgba(255,255,255,.14);font-weight:700}
+.topbar .sp{flex:1}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-height:42px;padding:0 14px;border-radius:10px;font-size:.92rem;text-decoration:none;display:inline-flex;align-items:center}
+.btn:hover{border-color:var(--accent)}
+.topbar .btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22);min-height:40px}
+.topbar .btn:hover{border-color:#fff}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.btn.danger.armed{background:var(--warn-b);color:#fff;border-color:var(--warn-b)}
+.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* hero พื้นฟ้าอ่อน */
+.hero{background:var(--skyc);padding:30px 0 24px;margin-bottom:18px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--navy);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+:root[data-theme="dark"] .eyebrow{color:var(--accent)}
+.hero h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.2;margin:.2em 0 .3em;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin:0;color:var(--muted);max-width:60ch;font-size:1rem}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.tab{border:1px solid transparent;background:var(--surface);box-shadow:var(--shadow);border-radius:14px;padding:12px 14px;text-align:left;min-height:68px}
+.tab b{display:block;font-size:.98rem}
+.tab span{display:block;font-size:.8rem;color:var(--muted)}
+.tab:hover{border-color:var(--accent)}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.tab[aria-selected="true"] span{color:rgba(255,255,255,.75)}
+:root[data-theme="dark"] .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+:root[data-theme="dark"] .tab[aria-selected="true"] span{color:var(--accent-ink);opacity:.8}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.tab[aria-selected="true"] .bar{background:rgba(255,255,255,.25)}
+.tab[aria-selected="true"] .bar i{background:#fff}
+:root[data-theme="dark"] .tab[aria-selected="true"] .bar{background:rgba(6,25,46,.25)}
+:root[data-theme="dark"] .tab[aria-selected="true"] .bar i{background:var(--accent-ink)}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px;align-items:center}
+.tools .sp{flex:1}
+details.sum{background:var(--surface);box-shadow:var(--shadow);border-radius:14px;padding:0 16px;margin-bottom:16px}
+details.sum summary{cursor:pointer;min-height:50px;display:flex;align-items:center;font-weight:600}
+.sumgrid{display:grid;gap:10px;padding:2px 0 16px}
+.sumgrid .note{color:var(--muted);font-size:.85rem;margin-top:4px}
+.srow{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:.9rem}
+.srow .bar{margin:0}
+.srow em{font-style:normal;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.card{background:var(--surface);box-shadow:var(--shadow);border:1px solid transparent;border-radius:14px;padding:18px;margin-bottom:14px}
+.card.ok{border-color:var(--ex-b)}
+.card.bad{border-color:var(--warn-b)}
+.qhead{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:.82rem;color:var(--muted)}
+.qnum{font-weight:700;color:var(--accent)}
+.chip{background:var(--key);color:var(--key-b);border-radius:99px;padding:0 10px;font-weight:600;font-size:.78rem}
+.qtext{margin:0 0 10px;font-weight:500}
+pre.code{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:12px 14px;overflow-x:auto;margin:0 0 12px;font-size:.88rem;line-height:1.55}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;min-height:46px}
+.opt .l{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:.82rem;font-weight:600;margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ex);border-color:var(--ex-b)}
+.opt.right .l{background:var(--ex-b);border-color:var(--ex-b);color:var(--surface)}
+.opt.wrong{background:var(--warn);border-color:var(--warn-b)}
+.opt.wrong .l{background:var(--warn-b);border-color:var(--warn-b);color:var(--surface)}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem;border-left:4px solid}
+.fb.ok{background:var(--ex);border-color:var(--ex-b)}
+.fb.bad{background:var(--warn);border-color:var(--warn-b)}
+.fb strong{display:block;margin-bottom:2px}
+.help{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.exp{margin-top:10px;background:var(--key);border-left:4px solid var(--key-b);border-radius:10px;padding:10px 14px;font-size:.95rem}
+.exp h4{margin:0 0 4px;font-size:.9rem;color:var(--accent)}
+.ask{margin-top:12px}
+.ask textarea{width:100%;min-height:72px;resize:vertical;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit}
+.ask .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.ask .ans{white-space:pre-wrap;margin-top:10px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:.95rem}
+.ask .note{color:var(--muted);font-size:.82rem}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+@media (max-width:560px){
+  .srow{grid-template-columns:1fr 80px}
+  .srow .bar{grid-column:1 / -1;order:3}
+  .brand span{display:none}
+  .tab span:nth-of-type(1){font-size:.74rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <a class="brand" href="ITDS211-Summary.html">ITDS-211 <span>Computer Architecture</span></a>
+  <span class="sp"></span>
+  <a class="btn" href="ITDS211-Summary.html">← สรุปบทเรียน</a>
+  <button class="btn" id="themeBtn" type="button" aria-label="สลับธีมสว่าง/มืด">🌙 ธีม</button>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">ITDS-211 · Midterm Practice</div>
+  <h1>ข้อสอบ<em>กลางภาค</em></h1>
+  <p>ข้อสอบจำลอง 3 ชุด ชุดละ 30 ข้อ (รวม 90 ข้อ) แต่ละชุดครอบคลุม Ch01–08 โดย Ch03 กับ Ch04 ออกมากสุด กดตอบแล้วรู้ผลทันที ข้อสอบนี้ Claude แต่งเองจากสไลด์และสรุป ไม่ใช่ข้อสอบจริงของอาจารย์</p>
+</div></div>
+
+<main class="wrap">
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <details class="sum" id="sum">
+    <summary>สรุปคะแนน (รายชุดและรายบท)</summary>
+    <div class="sumgrid" id="sumgrid"></div>
+  </details>
+
+  <div class="tools">
+    <button class="btn" id="fWrong" type="button" aria-pressed="false">เฉพาะข้อที่ผิด</button>
+    <button class="btn" id="fTodo" type="button" aria-pressed="false">เฉพาะข้อที่ยังไม่ทำ</button>
+    <span class="sp"></span>
+    <button class="btn danger" id="rPart" type="button">Reset ชุดนี้</button>
+    <button class="btn danger" id="rAll" type="button">Reset ทั้งหมด</button>
+  </div>
+
+  <div id="list"></div>
+</main>
+
+<script>
+const DATA = /*__DATA__*/[];
+const KEY = 'itds211-midterm-quiz-v2';
+const THEME_KEY = 'itds211.theme';
+const LET = ['ก','ข','ค','ง'];
+const PARTS = [
+  {n:1, title:'ชุด 1', sub:'ผสม Ch01–08 · 30 ข้อ'},
+  {n:2, title:'ชุด 2', sub:'ผสม Ch01–08 · 30 ข้อ'},
+  {n:3, title:'ชุด 3', sub:'ผสม Ch01–08 · 30 ข้อ'}
+];
+const CH = ['Ch01','Ch02','Ch03','Ch04','Ch05','Ch06','Ch07','Ch08'];
+
+let S = load();
+let part = 1, onlyWrong = false, onlyTodo = false;
+const openHelp = new Set();
+let sample = null;
+
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if(s && s.perm && s.ans) return s;
+  }catch(e){}
+  return {perm:{}, ans:{}};
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function perm(q){
+  const p = S.perm[q.id];
+  if(!Array.isArray(p) || p.length!==4){ S.perm[q.id] = shuffle([0,1,2,3]); save(); }
+  return S.perm[q.id];
+}
+const $ = s => document.querySelector(s);
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+
+function stats(list){
+  let done=0, right=0;
+  for(const q of list){
+    const a = S.ans[q.id];
+    if(a!=null){ done++; if(perm(q)[a]===q.a) right++; }
+  }
+  return {done, right, total:list.length};
+}
+const inPart = n => DATA.filter(q=>q.part===n);
+
+function renderTabs(){
+  const box = $('#tabs'); box.textContent='';
+  for(const p of PARTS){
+    const st = stats(inPart(p.n));
+    const b = el('button','tab'); b.type='button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', String(p.n===part));
+    b.append(el('b',null,p.title), el('span',null,p.sub), el('span',null,`ทำแล้ว ${st.done}/${st.total} · ถูก ${st.right}`));
+    const bar = el('div','bar'); const i=el('i'); i.style.width=(st.done/st.total*100)+'%'; bar.append(i); b.append(bar);
+    b.addEventListener('click',()=>{ part=p.n; render(); window.scrollTo({top:0}); });
+    box.append(b);
+  }
+}
+
+function srow(label, st){
+  const r = el('div','srow');
+  const pct = st.done ? Math.round(st.right/st.done*100) : 0;
+  const bar = el('div','bar'); const i=el('i'); i.style.width=(st.total? st.right/st.total*100:0)+'%'; bar.append(i);
+  r.append(el('span',null,label), bar, el('em',null,`${st.right}/${st.done}${st.done?' ('+pct+'%)':''}`));
+  return r;
+}
+function renderSum(){
+  const g = $('#sumgrid'); g.textContent='';
+  g.append(srow('รวม 90 ข้อ', stats(DATA)));
+  for(const p of PARTS) g.append(srow(p.title, stats(inPart(p.n))));
+  g.append(el('div','note','รายบท (ถูก/ทำแล้ว):'));
+  for(const c of CH) g.append(srow(c, stats(DATA.filter(q=>q.ch===c))));
+}
+
+function renderCard(q, idx){
+  const p = perm(q);
+  const a = S.ans[q.id];
+  const answered = a!=null;
+  const correctPos = p.indexOf(q.a);
+  const isRight = answered && a===correctPos;
+  const card = el('article','card'+(answered?(isRight?' ok':' bad'):''));
+  card.id = 'q-'+q.id;
+
+  const head = el('div','qhead');
+  head.append(el('span','qnum','ข้อ '+idx), el('span','chip',q.ch));
+  card.append(head, el('p','qtext',q.q));
+  if(q.code){ const pre = el('pre','code'); pre.textContent=q.code; card.append(pre); }
+
+  const opts = el('div','opts');
+  p.forEach((orig, pos)=>{
+    const b = el('button','opt'); b.type='button';
+    b.append(el('span','l',LET[pos]), el('span',null,q.c[orig]));
+    if(answered){
+      b.disabled = true;
+      if(pos===correctPos) b.classList.add('right');
+      else if(pos===a) b.classList.add('wrong');
+    }
+    b.addEventListener('click',()=>{ S.ans[q.id]=pos; save(); refreshCard(q, idx); renderTabs(); renderSum(); });
+    opts.append(b);
+  });
+  card.append(opts);
+
+  if(answered){
+    const fb = el('div','fb '+(isRight?'ok':'bad'));
+    fb.setAttribute('role','status');
+    fb.append(el('strong',null, isRight ? 'ถูกต้อง' : `ผิด — คำตอบที่ถูกคือ ${LET[correctPos]}`), document.createTextNode(q.e));
+    card.append(fb);
+
+    const help = el('div','help');
+    const hb = el('button','btn','ไม่เข้าใจ? อธิบายเพิ่ม'); hb.type='button';
+    hb.setAttribute('aria-expanded', String(openHelp.has(q.id)));
+    hb.addEventListener('click',()=>{ openHelp.has(q.id)?openHelp.delete(q.id):openHelp.add(q.id); refreshCard(q, idx); });
+    help.append(hb); card.append(help);
+
+    if(openHelp.has(q.id)){
+      const ex = el('div','exp'); ex.append(el('h4',null,'อธิบายละเอียด'), document.createTextNode(q.d));
+      card.append(ex);
+      if(sample) card.append(askBox(q, a, correctPos));
+    }
+  }
+  return card;
+}
+function refreshCard(q, idx){
+  const old = document.getElementById('q-'+q.id);
+  const fresh = renderCard(q, idx);
+  if(old) old.replaceWith(fresh);
+  if(onlyWrong || onlyTodo) renderList();
+}
+
+function askBox(q, a, correctPos){
+  const box = el('div','ask');
+  const ta = el('textarea'); ta.placeholder='พิมพ์ส่วนที่ยังไม่เข้าใจ เช่น ทำไมข้อ ก ถึงผิด หรือขอตัวอย่างเพิ่ม'; ta.setAttribute('aria-label','คำถามถึง Claude');
+  const row = el('div','row');
+  const go = el('button','btn primary','ถาม Claude'); go.type='button';
+  const note = el('span','note','Claude จะเห็นโจทย์ ตัวเลือก และเฉลยของข้อนี้');
+  row.append(go, note);
+  const out = el('div','ans'); out.hidden = true; out.setAttribute('aria-live','polite');
+  go.addEventListener('click', async ()=>{
+    const ask = ta.value.trim(); if(!ask) return;
+    const p = perm(q);
+    const choices = p.map((o,i)=>`${LET[i]}. ${q.c[o]}`).join('\n');
+    const prompt = `คุณเป็นติวเตอร์วิชา Computer Architecture (ITDS211) ระดับมหาวิทยาลัย ตอบเป็นภาษาไทย แทรกศัพท์เทคนิคภาษาอังกฤษได้ อธิบายสั้น ตรงประเด็น ไม่เกิน 10 บรรทัด\n\nโจทย์: ${q.q}\n${q.code?q.code+'\n':''}ตัวเลือก:\n${choices}\nเฉลย: ${LET[correctPos]}\nนักศึกษาตอบ: ${LET[a]}\nเฉลยย่อ: ${q.e}\n\nคำถามของนักศึกษา: ${ask}`;
+    go.disabled = true; out.hidden=false; out.textContent='กำลังคิด...';
+    try{
+      const r = await sample(prompt, {cache:false, onText:({text})=>{ out.textContent = text; }});
+      out.textContent = r.text;
+    }catch(err){
+      out.textContent = err && err.code==='rate_limited' ? 'ถามถี่เกินไป รอสักครู่แล้วลองใหม่' : 'ถามไม่สำเร็จ ลองอ่านคำอธิบายด้านบนก่อน';
+    }finally{ go.disabled=false; }
+  });
+  box.append(ta,row,out);
+  return box;
+}
+
+function renderList(){
+  const box = $('#list'); box.textContent='';
+  const items = inPart(part).map((q,i)=>({q, idx:i+1}));
+  let shown = 0;
+  for(const {q,idx} of items){
+    const a = S.ans[q.id];
+    if(onlyWrong && !(a!=null && perm(q)[a]!==q.a)) continue;
+    if(onlyTodo && a!=null) continue;
+    box.append(renderCard(q, idx)); shown++;
+  }
+  if(!shown) box.append(el('p','empty', onlyWrong ? 'ยังไม่มีข้อที่ผิดในชุดนี้' : onlyTodo ? 'ทำครบทุกข้อในชุดนี้แล้ว' : 'ไม่มีข้อสอบ'));
+}
+function render(){ renderTabs(); renderSum(); renderList(); }
+
+function arm(btn, label, action){
+  let t = null;
+  btn.addEventListener('click',()=>{
+    if(btn.classList.contains('armed')){ clearTimeout(t); btn.classList.remove('armed'); btn.textContent=label; action(); return; }
+    btn.classList.add('armed'); btn.textContent='กดอีกครั้งเพื่อยืนยัน';
+    t = setTimeout(()=>{ btn.classList.remove('armed'); btn.textContent=label; }, 3000);
+  });
+}
+function resetIds(ids){
+  for(const id of ids){ delete S.ans[id]; delete S.perm[id]; openHelp.delete(id); }
+  save(); render(); window.scrollTo({top:0});
+}
+arm($('#rPart'),'Reset ชุดนี้',()=>resetIds(inPart(part).map(q=>q.id)));
+arm($('#rAll'),'Reset ทั้งหมด',()=>resetIds(DATA.map(q=>q.id)));
+$('#fWrong').addEventListener('click',e=>{ onlyWrong=!onlyWrong; if(onlyWrong) onlyTodo=false; syncFilters(); renderList(); });
+$('#fTodo').addEventListener('click',e=>{ onlyTodo=!onlyTodo; if(onlyTodo) onlyWrong=false; syncFilters(); renderList(); });
+function syncFilters(){ $('#fWrong').setAttribute('aria-pressed',String(onlyWrong)); $('#fTodo').setAttribute('aria-pressed',String(onlyTodo)); }
+
+/* ธีม: ใช้ key เดียวกับหน้า Summary เพื่อให้สองหน้าตามกัน */
+const root = document.documentElement;
+function applyTheme(t){ root.setAttribute('data-theme',t); $('#themeBtn').textContent = t==='dark' ? '☀️ ธีม' : '🌙 ธีม'; }
+applyTheme(root.getAttribute('data-theme')==='dark' ? 'dark' : 'light');
+$('#themeBtn').addEventListener('click',()=>{
+  const t = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  applyTheme(t);
+  try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+});
+
+render();
+
+/* ช่องถาม Claude: ใช้ได้เฉพาะเมื่อเปิดผ่าน Artifact */
+(async ()=>{
+  try{
+    if(window.claude && typeof window.claude.use==='function'){
+      const s = await window.claude.use('sample');
+      if(s){ sample = s; renderList(); }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

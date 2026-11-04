@@ -1,0 +1,14 @@
+<div class="sec"><h3><i>Ch02</i>Interrupt<em>★ flow “จำไว้เลย”</em></h3><div class="bd">
+<div class="sec2"><b class="s">★ Interrupt flow</b>
+<ol class="n"><li><b>Save</b> register / PC / status ปัจจุบัน</li><li>เปิด <b>Interrupt Vector table</b> หา <b>ISR address</b> (เช่น เบอร์ 003 = คีย์บอร์ด)</li><li>ใส่ address นั้นใน <b>PC</b> → รัน <b>ISR</b></li><li><b>Restore</b> ค่าที่ save ไว้ → กลับไปทำงานเดิม</li></ol></div>
+<ul class="l">
+<li><b>Sequential</b>: เกิด → ทำ → กลับ → เกิดอีก → ทำ → กลับ</li>
+<li><b>Nested</b>: Y ซ้อนเข้ามาระหว่าง X → save X, ทำ Y, คืนค่า X, ทำ X ต่อ</li>
+<li>ซ้อนได้กี่ชั้น = จำนวน register ที่เก็บค่าได้</li>
+</ul>
+<table class="t"><tr><th style="width:30%">ระบุว่าใครส่ง interrupt</th><th>ลักษณะ</th></tr>
+<tr><td>Multiple lines</td><td>1 เส้น/อุปกรณ์ แต่ I/O เยอะ เส้นก็เยอะ</td></tr>
+<tr><td>Software poll</td><td>ไล่ถามทีละ module (ช้า)</td></tr>
+<tr><td>Daisy chain</td><td>ส่ง acknowledge ต่อกันเป็นลูกโซ่ ตาม priority</td></tr>
+<tr><td>Bus arbitration</td><td>ขอสิทธิ์คุม bus ก่อน แล้วส่ง vector ของ device</td></tr></table>
+</div></div>

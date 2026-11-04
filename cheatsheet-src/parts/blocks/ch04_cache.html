@@ -1,0 +1,19 @@
+<div class="sec"><h3><i>Ch04</i>Cache: Hit/Miss · Direct-Mapped<em>★ อาจารย์ “เน้นเรื่อง Cache”</em></h3><div class="bd">
+<ul class="l">
+<li><b>Cache</b> = หน่วยความจำเร็วคั่นกลาง CPU↔Main memory เก็บข้อมูลที่<b>ใช้บ่อย/ซ้ำ</b> · <b>Block (line)</b> = หน่วยที่ copy · <b>Hit</b> = เจอใน cache · <b>Miss</b> = ไม่เจอ → ดึง block จาก main memory มาใส่ cache แล้วส่ง CPU (เวลา = <b>miss penalty</b>) · Hit ratio = hits/accesses · Miss ratio = 1 − hit ratio</li>
+</ul>
+<div class="f">Direct-mapped: Cache index = (Block address) modulo (#Blocks in cache) → ใช้ <b>บิตล่าง</b> เป็น index<br>Address = <b>[ Tag | Index | Block offset ]</b> &nbsp; offset = log₂(bytes/block) · index = log₂(#blocks) · tag = ที่เหลือ</div>
+<ul class="l">
+<li>เช็ก hit/miss: ดู <b>Index</b> → เทียบ <b>Tag</b> → ดู <b>Valid bit (V)</b> = 1 (เริ่มต้น cache ว่าง V=0) · ข้อเสีย: หลาย address ชิงช่องเดียวกัน (แย่งกัน/conflict)</li>
+</ul>
+<div class="ex"><b>ตย. สไลด์</b> cache 8 blocks, 1 word/block (Tag = 2 บิตบน · Index = 3 บิตล่าง)
+<table class="t" style="margin-top:.6mm"><tr><th>ขอ</th><th class="c">22</th><th class="c">26</th><th class="c">22</th><th class="c">26</th><th class="c">16</th><th class="c">3</th><th class="c">16</th><th class="c">18</th></tr>
+<tr><td>Tag Idx</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 110</td><td class="c">11 010</td><td class="c">10 000</td><td class="c">00 011</td><td class="c">10 000</td><td class="c">10 010</td></tr>
+<tr><td><b>ผล</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c"><b>Hit</b></td><td class="c">Miss</td><td class="c">Miss</td><td class="c"><b>Hit</b></td><td class="c">Miss*</td></tr></table>
+<span class="nt">*18: index 010 มี tag 11 แต่ขอ tag 10 → tag ไม่ตรง → Miss แล้ว <b>เขียนทับ</b> · ครั้งแรกของทุกตัว = Miss แน่นอน (cache ว่าง)</span></div>
+<div class="ex"><b>ตย. ★ บล็อกใหญ่</b> 64 blocks × 16 B/block, address <b>1200</b>: Block address = floor(1200/16) = <b>75</b> → Block number = 75 mod 64 = <b>11</b> · fields: offset 4 บิต [3:0] · index 6 บิต [9:4] · tag 22 บิต [31:10]<br>
+16 KB, 4 word (16 B)/block, address 32 บิต: 1024 blocks → offset 4 · index 10 · tag <b>18</b> (+ valid + dirty) · bits ทั้งหมด † = #blocks × (8×bytes/block + tag + 1)<br><b>ตย. †</b> 4 KB direct-mapped, 16 B/block, address 32 บิต → 4096/16 = <b>256 blocks</b> → index 8 · offset 4 · tag 32−8−4 = <b>20</b> · ถ้า <b>2-way</b>: sets = 128 → index 7 · tag 21</div>
+<ul class="l">
+<li><b>Block ใหญ่ขึ้น</b>: miss rate ลด (spatial locality) แต่ cache ขนาดคงที่ → blocks น้อยลง แย่งกัน miss rate กลับเพิ่ม · miss penalty สูงขึ้น · ใหญ่ ≠ ดีเสมอ ⚠</li>
+</ul>
+</div></div>
