@@ -69,4 +69,4 @@ python -X utf8 build.py
 - เนื้อหาเป็นสื่อช่วยทบทวนส่วนตัว อาจมีข้อผิดพลาด โปรดเทียบกับสไลด์ต้นฉบับ
 - ข้อความที่อ้างคำพูดอาจารย์มาจากซับคลาสติว ซึ่งเวลาอาจเพี้ยน
 
-<div align="center"><sub>ทำโดย ทินภัทร · Mahidol ICT DST</sub></div>
+<div align="center"><sub>ทำโดย Thinnaphat · Mahidol ICT DST</sub></div>
